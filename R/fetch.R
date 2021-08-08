@@ -288,7 +288,7 @@ fetch_omop <-
 
       } else {
 
-        Sys.sleep(0.01)
+        Sys.sleep(0.25)
 
       }
 
@@ -333,7 +333,7 @@ fetch_omop <-
 
       } else {
 
-        Sys.sleep(0.01)
+        Sys.sleep(0.25)
 
       }
       relationship_ct_output[[vocabulary_id]] <-
