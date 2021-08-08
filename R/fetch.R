@@ -149,7 +149,8 @@ load_from_cache <-
 #' @param schema PARAM_DESCRIPTION, Default: 'omop_vocabulary'
 #' @param verbose PARAM_DESCRIPTION, Default: FALSE
 #' @param render_sql PARAM_DESCRIPTION, Default: FALSE
-#' @param version_key PARAM_DESCRIPTION, Default: get_version_key()
+#' @param version_key A list object that serves as the hash for caching. Set to NULL
+#' to cache under a generic hash.
 #' @return OUTPUT_DESCRIPTION
 #' @details DETAILS
 #' @examples
@@ -179,9 +180,14 @@ fetch_omop <-
            schema = "omop_vocabulary",
            verbose = FALSE,
            render_sql = FALSE,
-           version_key = get_version_key()) {
+           version_key) {
 
     stopifnot(!missing(version_key))
+    # Converted to list for consumption by R.cache
+    if (is.null(version_key)) {
+      version_key <- list(NULL)
+    }
+    stopifnot(is.list(version_key))
 
     sql <- read_sql_template(file = "total_concept_class_ct.sql")
     sql <- glue::glue(sql)
@@ -249,10 +255,11 @@ fetch_omop <-
     names(relationship_output) <- vocabulary_ids
 
     cli::cli_progress_bar(
-      format = "\nQuerying {vocabulary_id} | {pb_bar} {pb_current}/{pb_total} {pb_percent} ({pb_elapsed})\n",
+      format = "\n{activity} {vocabulary_id} | {pb_bar} {pb_current}/{pb_total} {pb_percent} ({pb_elapsed})\n",
       clear = FALSE,
       total = 2*length(vocabulary_ids))
 
+    activity <- "Fetching"
     for (vocabulary_id in vocabulary_ids) {
 
       sql <- read_sql_template(file = "relationship.sql")
@@ -296,6 +303,7 @@ fetch_omop <-
                length(vocabulary_ids))
     names(relationship_ct_output) <- vocabulary_ids
 
+    activity <- "Calculating"
     for (vocabulary_id in vocabulary_ids) {
 
       sql <- read_sql_template(file = "relationship_ct.sql")
