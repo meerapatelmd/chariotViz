@@ -21,9 +21,13 @@ library(tidyverse)
 
 ```{r,results='hide'}
 # Fetch from Postgres  
+version_key <- 
+  get_version_key()
 nodes_and_edges <-
-  fetch_concept_classes()
+  fetch_omop(version_key = version_key)
+```
 
+```{r}
 # # Customize Nodes Attributes  
 # nodes_and_edges <-
 #   map_node_attributes(nodes_and_edges)

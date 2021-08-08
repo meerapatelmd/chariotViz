@@ -7,8 +7,7 @@ Authors@R:
            role = c("aut", "cre"),
            email = "mpatel@concertai.com",
            comment = c(ORCID = "0000-0002-3401-3948"))
-Description: Setup and visualize the OMOP Vocabularies as 
-Nodes and Edges.  
+Description: Setup and visualize the OMOP Vocabularies as Nodes and Edges.  
 License: Apache License 2.0
 Encoding: UTF-8
 LazyData: true

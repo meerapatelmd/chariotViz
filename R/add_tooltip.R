@@ -21,39 +21,14 @@
 #' @importFrom tidyr pivot_longer unite
 #' @importFrom tibble rowid_to_column
 add_tooltip <-
-  function(nodes_and_edges) {
+  function(nodes_and_edges,
+           node_tooltip_fields,
+           edge_tooltip_fields) {
     nodes_and_edges@nodes@data <-
     dplyr::left_join(
     nodes_and_edges@nodes@data,
     nodes_and_edges@nodes@data %>%
-      dplyr::select(!dplyr::any_of(c('type',
-                'label',
-                'shape',
-                'style',
-                'penwidth',
-                'color',
-                'fillcolor',
-                'image',
-                'fontname',
-                'fontsize',
-                'fontcolor',
-                'peripheries',
-                'height',
-                'width',
-                'x',
-                'y',
-                'group',
-                'tooltip',
-                'xlabel',
-                'URL',
-                'sides',
-                'orientation',
-                'skew',
-                'distortion',
-                'gradientangle',
-                'fixedsize',
-                'labelloc',
-                'margin'))) %>%
+      dplyr::select(id, dplyr::all_of(node_tooltip_fields)) %>%
       dplyr::mutate_at(dplyr::vars(!id), as.character) %>%
       tidyr::pivot_longer(cols = !id) %>%
       tidyr::unite(col = tooltip_row,
@@ -70,123 +45,39 @@ add_tooltip <-
     by = "id") %>%
       dplyr::distinct()
 
-    nodes_and_edges@edges@data <-
-      dplyr::left_join(
+    edges_data_w_id <-
         nodes_and_edges@edges@data %>%
-          dplyr::select(
-            !dplyr::any_of(
-              c('label',
-                'rel',
-                'style',
-                'penwidth',
-                'color',
-                'arrowsize',
-                'arrowhead',
-                'arrowtail',
-                'fontname',
-                'fontsize',
-                'fontcolor',
-                'len',
-                'tooltip',
-                'URL',
-                'label',
-                'labelfontname',
-                'labelfontsize',
-                'labelfontcolor',
-                'labeltooltip',
-                'labelURL',
-                'edgetooltip',
-                'edgeURL',
-                'dir',
-                'headtooltip',
-                'headURL',
-                'headclip',
-                'headlabel',
-                'headport',
-                'tailtooltip',
-                'tailURL',
-                'tailclip',
-                'taillabel',
-                'tailport',
-                'decorate'))) %>%
-          dplyr::select(
-            relationship_id,
-            relationship_name,
-            relationship_source,
-            is_hierarchical,
-            defines_ancestry,
-            from,
-            ends_with("_1"),
-            to,
-            ends_with("_2")) %>%
           dplyr::mutate_all(as.character) %>%
-          tibble::rowid_to_column(),
-    nodes_and_edges@edges@data %>%
-      dplyr::select(
-        !dplyr::any_of(
-          c('label_1',
-            'label_2',
-            'label',
-            'rel',
-            'style',
-            'penwidth',
-            'color',
-            'arrowsize',
-            'arrowhead',
-            'arrowtail',
-            'fontname',
-            'fontsize',
-            'fontcolor',
-            'len',
-            'tooltip',
-            'URL',
-            'label',
-            'labelfontname',
-            'labelfontsize',
-            'labelfontcolor',
-            'labeltooltip',
-            'labelURL',
-            'edgetooltip',
-            'edgeURL',
-            'dir',
-            'headtooltip',
-            'headURL',
-            'headclip',
-            'headlabel',
-            'headport',
-            'tailtooltip',
-            'tailURL',
-            'tailclip',
-            'taillabel',
-            'tailport',
-            'decorate'))) %>%
-      dplyr::select(
-        label,
-        relationship_id,
-        relationship_name,
-        relationship_source,
-        is_hierarchical,
-        defines_ancestry,
-        from,
-        ends_with("_1"),
-        to,
-        ends_with("_2")) %>%
-      dplyr::mutate_all(as.character) %>%
-      tibble::rowid_to_column() %>%
-      tidyr::pivot_longer(cols = !rowid) %>%
-      tidyr::unite(tooltip_row,
-                   name,
-                   value,
-                   sep = ": ",
-                   na.rm = FALSE) %>%
-      dplyr::group_by(rowid) %>%
-      dplyr::summarize(labeltooltip =
-                         paste(tooltip_row,
-                               collapse = "\n"),
-                       .groups = "drop") %>%
-      dplyr::ungroup(),
-    by = "rowid") %>%
-      dplyr::select(-rowid)
+          tibble::rowid_to_column()
+
+    edges_data_w_tooltip <-
+    dplyr::left_join(
+      edges_data_w_id,
+      edges_data_w_id %>%
+        dplyr::select(dplyr::all_of(edge_tooltip_fields)) %>%
+        tidyr::pivot_longer(cols = !rowid) %>%
+        tidyr::unite(tooltip_row,
+                     name,
+                     value,
+                     sep = ": ",
+                     na.rm = FALSE) %>%
+        dplyr::group_by(rowid) %>%
+        dplyr::summarize(labeltooltip =
+                           paste(tooltip_row,
+                                 collapse = "\n"),
+                         .groups = "drop") %>%
+        dplyr::ungroup(),
+      by = "rowid") %>%
+    dplyr::select(-rowid) %>%
+    dplyr::distinct()
+
+    if (nrow(edges_data_w_tooltip) != nrow(nodes_and_edges@edges@data)) {
+
+
+      cli::cli_abort("Edges with tooltip has {nrow(edges_data_w_tooltip)} while input has {nrow(nodes_and_edges@edges@data)}.")
+
+    }
+
 
 
     nodes_and_edges

@@ -15,7 +15,7 @@
 read_sql_template <-
   function(file) {
       readLines(
-        system.file(package = "chariot2",
+        system.file(package = "chariotViz",
                     "sql",
                     file)) %>%
       paste(collapse = "\n")
@@ -110,7 +110,7 @@ save_to_cache <-
     R.cache::saveCache(
       object = resultset,
       key    = c(sql, version_key),
-      dirs   = "chariot2"
+      dirs   = "chariotViz"
     )
   }
 
@@ -137,7 +137,7 @@ load_from_cache <-
 
       R.cache::loadCache(
         key = c(sql, version_key),
-        dirs = "chariot2")
+        dirs = "chariotViz")
 
   }
 
