@@ -19,6 +19,7 @@ using any of chariotViz's features.
 
 ```{r setup}
 library(chariotViz)
+library(tidyverse)
 ```
 
 A version key is derived from the log created by default when loading the OMOP Vocabularies 

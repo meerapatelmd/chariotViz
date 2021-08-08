@@ -12,7 +12,7 @@ fetch_omop(
   schema = "omop_vocabulary",
   verbose = FALSE,
   render_sql = FALSE,
-  version_key = get_version_key()
+  version_key
 )
 }
 \arguments{
@@ -28,7 +28,8 @@ fetch_omop(
 
 \item{render_sql}{PARAM_DESCRIPTION, Default: FALSE}
 
-\item{version_key}{PARAM_DESCRIPTION, Default: get_version_key()}
+\item{version_key}{A list object that serves as the hash for caching. Set to NULL
+to cache under a generic hash.}
 }
 \value{
 OUTPUT_DESCRIPTION

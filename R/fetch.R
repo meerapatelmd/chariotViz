@@ -192,7 +192,7 @@ fetch_omop <-
     sql <- read_sql_template(file = "total_concept_class_ct.sql")
     sql <- glue::glue(sql)
 
-
+    cli::cli_progress_step("Getting total concept class counts")
     total_concept_class_ct <-
       load_from_cache(sql = sql,
                       version_key = version_key)
@@ -218,7 +218,7 @@ fetch_omop <-
     sql <- read_sql_template(file = "total_vocabulary_ct.sql")
     sql <- glue::glue(sql)
 
-
+    cli::cli_progress_step("Getting total vocabulary counts")
     total_vocabulary_ct <-
       load_from_cache(sql = sql,
                       version_key = version_key)
@@ -254,6 +254,7 @@ fetch_omop <-
                length(vocabulary_ids))
     names(relationship_output) <- vocabulary_ids
 
+    cli::cli_progress_step("Getting OMOP data")
     cli::cli_progress_bar(
       format = "\n{activity} {vocabulary_id} | {pb_bar} {pb_current}/{pb_total} {pb_percent} ({pb_elapsed})\n",
       clear = FALSE,
