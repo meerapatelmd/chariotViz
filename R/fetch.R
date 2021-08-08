@@ -254,7 +254,7 @@ fetch_omop <-
                length(vocabulary_ids))
     names(relationship_output) <- vocabulary_ids
 
-    cli::cli_progress_step("Getting OMOP data")
+#    cli::cli_progress_step("Getting OMOP data")
     cli::cli_progress_bar(
       format = "\n{activity} {vocabulary_id} | {pb_bar} {pb_current}/{pb_total} {pb_percent} ({pb_elapsed})\n",
       clear = FALSE,
