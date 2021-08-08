@@ -169,7 +169,7 @@ load_from_cache <-
 #' @importFrom glue glue
 #' @importFrom pg13 query
 #' @importFrom dplyr arrange distinct select any_of left_join bind_rows rename
-#' @importFrom cli cli_progress_bar cli_progress_update cli_warn
+#' @import cli
 #' @importFrom purrr transpose map reduce
 fetch_omop <-
   function(conn,
