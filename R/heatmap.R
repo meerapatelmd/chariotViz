@@ -1,39 +1,37 @@
 # ## Add Heatmap
 
+#' @title FUNCTION_TITLE
+#' @description FUNCTION_DESCRIPTION
+#' @param vocabulary_id_1 PARAM_DESCRIPTION
+#' @param schema PARAM_DESCRIPTION, Default: 'omop_vocabulary'
+#' @param verbose PARAM_DESCRIPTION, Default: FALSE
+#' @param render_sql PARAM_DESCRIPTION, Default: FALSE
+#' @param conn_fun PARAM_DESCRIPTION, Default: 'pg13::local_connect(verbose=FALSE)'
+#' @return OUTPUT_DESCRIPTION
+#' @details DETAILS
+#' @examples 
+#' \dontrun{
+#' if(interactive()){
+#'  #EXAMPLE1
+#'  }
+#' }
+#' @seealso 
+#'  \code{\link[glue]{glue}}
+#'  \code{\link[pg13]{query}}
+#'  \code{\link[dplyr]{mutate-joins}},\code{\link[dplyr]{distinct}},\code{\link[dplyr]{mutate}},\code{\link[dplyr]{select}}
+#'  \code{\link[purrr]{map}},\code{\link[purrr]{character(0)}},\code{\link[purrr]{transpose}}
+#' @rdname fetch_heatmap
+#' @export 
+#' @importFrom glue glue
+#' @importFrom pg13 query
+#' @importFrom dplyr left_join distinct mutate select
+#' @importFrom purrr map select transpose
 fetch_heatmap <-
   function(vocabulary_id_1,
            schema = "omop_vocabulary",
            verbose = FALSE,
            render_sql = FALSE,
            conn_fun = "pg13::local_connect(verbose=FALSE)") {
-
-    require(chariot)
-    require(glue)
-    require(scales)
-
-    # sql <-
-    # as.character(
-    #   glue::glue(
-    #     "
-    #   SELECT
-    #     c1.vocabulary_id AS vocabulary_id_1,
-    #     c1.concept_class_id AS concept_class_id_1,
-    #     c1.concept_id AS concept_id_1,
-    #     c2.vocabulary_id AS vocabulary_id_2,
-    #     c2.concept_class_id AS concept_class_id_2,
-    #     c2.concept_id AS concept_id_2,
-    #     cr.relationship_id
-    #   FROM {schema}.concept_relationship cr
-    #   INNER JOIN (SELECT * FROM {schema}.concept WHERE invalid_reason IS NULL AND vocabulary_id IN ('{vocabulary_id_1}')) c1
-    #   ON c1.concept_id = cr.concept_id_1
-    #   INNER JOIN (SELECT * FROM {schema}.concept WHERE invalid_reason IS NULL) c2
-    #   ON c2.concept_id = cr.concept_id_2
-    #   WHERE
-    #     cr.invalid_reason IS NULL;
-    #   "))
-
-    # vocabulary_id_1_relationships <-
-    #   queryAthena(sql_statement = sql)
 
     vocabulary_id <- vocabulary_id_1
     sql <- read_sql_template("relationship_ct.sql")
@@ -64,18 +62,18 @@ fetch_heatmap <-
 
     data_to_plot <-
     vocabulary_id_1_relationships %>%
-        left_join(all_vocabulary_concept_counts,
+        dplyr::left_join(all_vocabulary_concept_counts,
                   by = c("vocabulary_id_1" = "vocabulary_id",
                          "concept_class_id_1" = "concept_class_id")) %>%
-      left_join(all_vocabulary_concept_counts,
+        dplyr::left_join(all_vocabulary_concept_counts,
                 by = c("vocabulary_id_2" = "vocabulary_id",
                        "concept_class_id_2" = "concept_class_id"),
                 suffix = c("_1", "_2")) %>%
-      distinct() %>%
-      mutate(label_1_coverage = concept_count_1/total_concept_class_ct_1,
+      dplyr::distinct() %>%
+      dplyr::mutate(label_1_coverage = concept_count_1/total_concept_class_ct_1,
              label_2_coverage = concept_count_2/total_concept_class_ct_2) %>%
-        mutate(label_2 = sprintf("%s %s", vocabulary_id_2, concept_class_id_2)) %>%
-      mutate(label_1 = sprintf("%s %s", vocabulary_id_1, concept_class_id_1))
+      dplyr::mutate(label_2 = sprintf("%s %s", vocabulary_id_2, concept_class_id_2)) %>%
+      dplyr::mutate(label_1 = sprintf("%s %s", vocabulary_id_1, concept_class_id_1))
 
     data_to_plot <-
       data_to_plot  %>%
@@ -83,27 +81,71 @@ fetch_heatmap <-
 
     legend <-
       data_to_plot %>%
-      map(function(x) x %>% select(vocabulary_id_1, concept_class_id_1, relationship_id, vocabulary_id_2, concept_class_id_2,
-                                   label_1, total_concept_class_ct_1, concept_count_1, label_1_coverage,
-                                   label_2, total_concept_class_ct_2, concept_count_2, label_2_coverage))
+      purrr::map(
+        function(x)
+          x %>%
+          dplyr::select(
+            vocabulary_id_1,
+            concept_class_id_1,
+            relationship_id,
+            vocabulary_id_2,
+            concept_class_id_2,
+            label_1,
+            total_concept_class_ct_1,
+            concept_count_1,
+            label_1_coverage,
+            label_2,
+            total_concept_class_ct_2,
+            concept_count_2,
+            label_2_coverage))
 
     data_to_plot <-
       data_to_plot %>%
-      map(function(x) x%>%
-      select(-vocabulary_id_2,
+      purrr::map(function(x) x%>%
+      purrr::select(-vocabulary_id_2,
              -concept_class_id_2) %>%
-      select(-vocabulary_id_1,
+      dplyr::select(-vocabulary_id_1,
              -concept_class_id_1)) %>%
-      map(select, -label_1) %>%
-      map(function(x) x %>% select(label_2, relationship_id, label_1_coverage, label_2_coverage))
+      purrr::map(select, -label_1) %>%
+      purrr::map(
+        function(x)
+          x %>%
+          select(
+            label_2,
+            relationship_id,
+            label_1_coverage,
+            label_2_coverage)
+        )
 
 
     list(data = data_to_plot,
          legend = legend) %>%
-      transpose()
+      purrr::transpose()
 
   }
 
+#' @title FUNCTION_TITLE
+#' @description FUNCTION_DESCRIPTION
+#' @param data PARAM_DESCRIPTION
+#' @param x PARAM_DESCRIPTION, Default: label_2
+#' @param y PARAM_DESCRIPTION, Default: relationship_id
+#' @param fill PARAM_DESCRIPTION, Default: label_1_coverage
+#' @param fontsize PARAM_DESCRIPTION, Default: 6
+#' @return OUTPUT_DESCRIPTION
+#' @details DETAILS
+#' @examples 
+#' \dontrun{
+#' if(interactive()){
+#'  #EXAMPLE1
+#'  }
+#' }
+#' @seealso 
+#'  \code{\link[dplyr]{tidyeval-compat}}
+#'  \code{\link[ggplot2]{ggplot}},\code{\link[ggplot2]{geom_raster}},\code{\link[ggplot2]{scale_colour_viridis_d}},\code{\link[ggplot2]{theme}},\code{\link[ggplot2]{margin}}
+#' @rdname plot_heatmap
+#' @export 
+#' @importFrom dplyr enquo
+#' @importFrom ggplot2 ggplot geom_tile scale_fill_viridis_c theme element_text
 plot_heatmap <-
   function(data,
            x = label_2,
@@ -111,15 +153,18 @@ plot_heatmap <-
            fill = label_1_coverage,
            fontsize = 6) {
 
-    require(ggplot2)
-    fill <- enquo(fill)
-    x    <- enquo(x)
-    y    <- enquo(y)
-    ggp <- ggplot2::ggplot(data, aes(!!x, !!y)) +
-      geom_tile(aes(fill = !!fill)) +
-      scale_fill_viridis_c(option = "B", direction = -1) +
-      theme(text = element_text(size=fontsize),
-            axis.text.x = element_text(angle = 45, vjust = 1, hjust=1))
+    fill <- dplyr::enquo(fill)
+    x    <- dplyr::enquo(x)
+    y    <- dplyr::enquo(y)
+    ggp <-
+      ggplot2::ggplot(data, aes(!!x, !!y)) +
+      ggplot2::geom_tile(aes(fill = !!fill)) +
+      ggplot2::scale_fill_viridis_c(option = "B", direction = -1) +
+      ggplot2::theme(
+        text =
+          ggplot2::element_text(size = fontsize),
+        axis.text.x =
+          ggplot2::element_text(angle = 45, vjust = 1, hjust=1))
     ggp
 
   }

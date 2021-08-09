@@ -68,34 +68,24 @@ nodes_and_edges
 nodes_and_edges <- 
   nodes_and_edges %>% 
   add_tooltip()
-```
-
-```{r}
 nodes_and_edges
 ```
-
 
 ```{r}
 graph <- 
   construct_graph(nodes_and_edges)
 ```
 
-
 ```{r}
 library(DiagrammeR)
 subgraph <- 
-graph$graph %>% 
-  select_nodes(vocabulary_id == "HemOnc") %>%
-  trav_out_edge() %>%
-  transform_to_subgraph_ws() 
-```
+  graph$graph %>% 
+    select_nodes(vocabulary_id == "HemOnc") %>%
+    trav_out_edge() %>%
+    transform_to_subgraph_ws() 
 
-```{r}
 create_legend(subgraph)
-```
 
-
-```{r}
 render_graph(subgraph)
 ```
 

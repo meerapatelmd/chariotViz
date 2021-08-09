@@ -104,10 +104,13 @@ omop.relationships <-
   setClass("omop.relationships",
            list(data = "data.frame"))
 
-
-# omop.graph <-
-#   setClass("omop.graph",
-#            contains = "dgr_graph")
+#' omop.graph S4 class
+#' @importClassesFrom DiagrammeR dgr_graph
+setOldClass("dgr_graph")
+omop.graph <-
+  setClass("omop.graph",
+           slots    = c(graph = "dgr_graph",
+                        src   = "list"))
 
 
 
