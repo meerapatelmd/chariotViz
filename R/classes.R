@@ -109,12 +109,12 @@ omop.relationships <-
            list(data = "data.frame"))
 
 
-#'
-#' setOldClass("dgr_graph")
-#' omop.graph <-
-#'   setClass("omop.graph",
-#'            slots    = c(graph = "dgr_graph",
-#'                         src   = "list"))
+
+# setOldClass("dgr_graph")
+# omop.graph <-
+#   setClass("omop.graph",
+#            slots    = c(graph = "dgr_graph",
+#                         src   = "list"))
 
 #
 #
