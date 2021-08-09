@@ -9,19 +9,19 @@
 #' @param conn_fun PARAM_DESCRIPTION, Default: 'pg13::local_connect(verbose=FALSE)'
 #' @return OUTPUT_DESCRIPTION
 #' @details DETAILS
-#' @examples 
+#' @examples
 #' \dontrun{
 #' if(interactive()){
 #'  #EXAMPLE1
 #'  }
 #' }
-#' @seealso 
+#' @seealso
 #'  \code{\link[glue]{glue}}
 #'  \code{\link[pg13]{query}}
 #'  \code{\link[dplyr]{mutate-joins}},\code{\link[dplyr]{distinct}},\code{\link[dplyr]{mutate}},\code{\link[dplyr]{select}}
 #'  \code{\link[purrr]{map}},\code{\link[purrr]{character(0)}},\code{\link[purrr]{transpose}}
 #' @rdname fetch_heatmap
-#' @export 
+#' @export
 #' @importFrom glue glue
 #' @importFrom pg13 query
 #' @importFrom dplyr left_join distinct mutate select
@@ -133,17 +133,17 @@ fetch_heatmap <-
 #' @param fontsize PARAM_DESCRIPTION, Default: 6
 #' @return OUTPUT_DESCRIPTION
 #' @details DETAILS
-#' @examples 
+#' @examples
 #' \dontrun{
 #' if(interactive()){
 #'  #EXAMPLE1
 #'  }
 #' }
-#' @seealso 
+#' @seealso
 #'  \code{\link[dplyr]{tidyeval-compat}}
 #'  \code{\link[ggplot2]{ggplot}},\code{\link[ggplot2]{geom_raster}},\code{\link[ggplot2]{scale_colour_viridis_d}},\code{\link[ggplot2]{theme}},\code{\link[ggplot2]{margin}}
 #' @rdname plot_heatmap
-#' @export 
+#' @export
 #' @importFrom dplyr enquo
 #' @importFrom ggplot2 ggplot geom_tile scale_fill_viridis_c theme element_text
 plot_heatmap <-

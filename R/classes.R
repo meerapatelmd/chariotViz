@@ -2,6 +2,7 @@
 #' @slot data nodes dataframe
 #' @slot required_fields required fields for a nodes s4 class object
 #' @slot attribute_fields fields denoting node attributes
+#' @export
 
 nodes <-
   setClass(
@@ -45,6 +46,7 @@ nodes <-
 #' @slot data edges dataframe
 #' @slot required_fields required fields for a edges s4 class object
 #' @slot attribute_fields fields denoting edge attributes
+#' @export
 
 edges <-
 setClass(
@@ -91,6 +93,7 @@ setClass(
 )
 
 #' @title nodes.and.edges S4 class
+#' @export
 
 nodes.and.edges <-
   setClass("nodes.and.edges",
@@ -99,6 +102,7 @@ nodes.and.edges <-
 
 
 #' @title raw.omop.data S4 class
+#' @export
 
 omop.relationships <-
   setClass("omop.relationships",
