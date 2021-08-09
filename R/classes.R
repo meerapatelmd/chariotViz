@@ -1,4 +1,4 @@
-#' nodes S4 class
+#' @title nodes S4 class
 #' @slot data nodes dataframe
 #' @slot required_fields required fields for a nodes s4 class object
 #' @slot attribute_fields fields denoting node attributes
@@ -41,7 +41,7 @@ nodes <-
                        )
                      ))
 
-#' edges S4 class
+#' @title edges S4 class
 #' @slot data edges dataframe
 #' @slot required_fields required fields for a edges s4 class object
 #' @slot attribute_fields fields denoting edge attributes
@@ -90,7 +90,7 @@ setClass(
                    ))
 )
 
-#' nodes.and.edges S4 class
+#' @title nodes.and.edges S4 class
 
 nodes.and.edges <-
   setClass("nodes.and.edges",
@@ -98,13 +98,13 @@ nodes.and.edges <-
                 edges = "edges"))
 
 
-#' raw.omop.data S4 class
+#' @title raw.omop.data S4 class
 
 omop.relationships <-
   setClass("omop.relationships",
            list(data = "data.frame"))
 
-#' omop.graph S4 class
+#' @title omop.graph S4 class
 
 setOldClass("dgr_graph")
 omop.graph <-
