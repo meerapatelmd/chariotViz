@@ -34,19 +34,68 @@ version_key
 ```
 
 ```{r}
-nodes_and_edges <-
+omop_relationships <-
   fetch_omop(version_key = version_key)
 ```
 
 The list used as the hash is fully customizable by the user. The object can also be set to NULL if a hash is not desired. 
 
 ```{r,eval=FALSE}
-nodes_and_edges <- 
+omop_relationships <- 
   fetch_omop(version_key = list(A = 1, 
                                 B = 2))
 
-nodes_and_edges <- 
+omop_relationships <- 
   fetch_omop(version_key = NULL)
 ```
 
+```{r}
+nodes_and_edges <-
+omop_relationships %>%
+  create_nodes_and_edges()
+nodes_and_edges
+```
+
+```{r}
+nodes_and_edges <- 
+  nodes_and_edges %>%
+  map_node_attributes() %>%
+  map_edge_attributes()
+nodes_and_edges
+```
+
+```{r}
+nodes_and_edges <- 
+  nodes_and_edges %>% 
+  add_tooltip()
+```
+
+```{r}
+nodes_and_edges
+```
+
+
+```{r}
+graph <- 
+  construct_graph(nodes_and_edges)
+```
+
+
+```{r}
+library(DiagrammeR)
+subgraph <- 
+graph$graph %>% 
+  select_nodes(vocabulary_id == "HemOnc") %>%
+  trav_out_edge() %>%
+  transform_to_subgraph_ws() 
+```
+
+```{r}
+create_legend(subgraph)
+```
+
+
+```{r}
+render_graph(subgraph)
+```
 

@@ -4,7 +4,7 @@
 \alias{add_tooltip}
 \title{FUNCTION_TITLE}
 \usage{
-add_tooltip(nodes_and_edges, node_tooltip_fields, edge_tooltip_fields)
+add_tooltip(nodes_and_edges)
 }
 \arguments{
 \item{nodes_and_edges}{PARAM_DESCRIPTION}

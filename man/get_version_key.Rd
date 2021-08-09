@@ -49,3 +49,4 @@ if(interactive()){
 \code{\link[glue]{glue}}
 \code{\link[pg13]{query}}
 }
+\keyword{internal}

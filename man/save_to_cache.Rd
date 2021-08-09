@@ -22,13 +22,6 @@ FUNCTION_DESCRIPTION
 \details{
 DETAILS
 }
-\examples{
-\dontrun{
-if(interactive()){
- #EXAMPLE1
- }
-}
-}
 \seealso{
 \code{\link[R.cache]{saveCache}}
 }

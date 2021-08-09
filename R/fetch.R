@@ -1,17 +1,6 @@
+#' Read SQL from Installation Directory
+#' @noRd
 
-#' @title FUNCTION_TITLE
-#' @description FUNCTION_DESCRIPTION
-#' @param file PARAM_DESCRIPTION
-#' @return OUTPUT_DESCRIPTION
-#' @details DETAILS
-#' @examples
-#' \dontrun{
-#' if(interactive()){
-#'  #EXAMPLE1
-#'  }
-#' }
-#' @rdname read_sql_template
-#' @export
 read_sql_template <-
   function(file) {
       readLines(
@@ -44,7 +33,7 @@ read_sql_template <-
 #'  \code{\link[glue]{glue}}
 #'  \code{\link[pg13]{query}}
 #' @rdname get_version_key
-#' @export
+#' @keywords internal
 #' @importFrom glue glue
 #' @importFrom pg13 query
 get_version_key <-
@@ -90,12 +79,6 @@ get_version_key <-
 #' @param version_key PARAM_DESCRIPTION
 #' @return OUTPUT_DESCRIPTION
 #' @details DETAILS
-#' @examples
-#' \dontrun{
-#' if(interactive()){
-#'  #EXAMPLE1
-#'  }
-#' }
 #' @seealso
 #'  \code{\link[R.cache]{saveCache}}
 #' @rdname save_to_cache
@@ -129,7 +112,6 @@ save_to_cache <-
 #' @seealso
 #'  \code{\link[R.cache]{loadCache}}
 #' @rdname load_from_cache
-#' @export
 #' @importFrom R.cache loadCache
 load_from_cache <-
   function(sql,
@@ -141,8 +123,10 @@ load_from_cache <-
 
   }
 
-#' @title FUNCTION_TITLE
-#' @description FUNCTION_DESCRIPTION
+#' @title
+#' Fetch OMOP Data
+#' @description
+#' Fetch concept class relationships in a Postgres instance of the OMOP vocabularies.
 #' @param conn PARAM_DESCRIPTION
 #' @param conn_fun PARAM_DESCRIPTION, Default: 'pg13::local_connect(verbose=FALSE)'
 #' @param type_from PARAM_DESCRIPTION, Default: concept_class_id
@@ -152,19 +136,14 @@ load_from_cache <-
 #' @param version_key A list object that serves as the hash for caching. Set to NULL
 #' to cache under a generic hash.
 #' @return OUTPUT_DESCRIPTION
-#' @details DETAILS
-#' @examples
-#' \dontrun{
-#' if(interactive()){
-#'  #EXAMPLE1
-#'  }
-#' }
-#' @seealso
-#'  \code{\link[glue]{glue}}
-#'  \code{\link[pg13]{query}}
-#'  \code{\link[dplyr]{arrange}},\code{\link[dplyr]{distinct}},\code{\link[dplyr]{select}},\code{\link[dplyr]{reexports}},\code{\link[dplyr]{mutate-joins}},\code{\link[dplyr]{bind}},\code{\link[dplyr]{rename}}
-#'  \code{\link[cli]{cli_progress_bar}},\code{\link[cli]{cli_abort}}
-#'  \code{\link[purrr]{transpose}},\code{\link[purrr]{map}},\code{\link[purrr]{reduce}}
+#' @details
+#' The OMOP vocabularies are transformed into nodes and edges by first normalizing
+#' OMOP concepts to their associated concept classes. The distinct `concept_id` count
+#' is preserved to determine the extent of coverage between concept classes across
+#' relationships.
+#'
+#' This function queries excludes invalid concepts and concept relationships as well
+#' as relationships to self.
 #' @rdname fetch_omop
 #' @export
 #' @importFrom glue glue
@@ -254,7 +233,6 @@ fetch_omop <-
                length(vocabulary_ids))
     names(relationship_output) <- vocabulary_ids
 
-#    cli::cli_progress_step("Getting OMOP data")
     cli::cli_progress_bar(
       format = "\n{activity} {vocabulary_id} | {pb_bar} {pb_current}/{pb_total} {pb_percent} ({pb_elapsed})\n",
       clear = FALSE,
@@ -511,10 +489,11 @@ create_nodes_and_edges <-
         ccr_df %>%
           dplyr::select(ends_with("_2")) %>%
           dplyr::rename_all(stringr::str_remove_all, "_2")) %>%
-      dplyr::distinct() %>%
-      tibble::rowid_to_column("id") %>%
       dplyr::mutate(type = !!type_from) %>%
-      dplyr::mutate(label = glue::glue(label_glue))
+      dplyr::mutate(label = glue::glue(label_glue)) %>%
+      dplyr::select(-concept_count) %>%
+      dplyr::distinct() %>%
+      tibble::rowid_to_column("id")
 
 
     # Add label_1 and label_2 fields
@@ -537,19 +516,31 @@ create_nodes_and_edges <-
 
     # Join by any matches to "(^.*)_[1,2]"
 
-    omop_edge <-
+    omop_edge2 <-
       omop_edge %>%
       dplyr::left_join(omop_node %>%
                          dplyr::rename(from = id) %>%
                          dplyr::rename_at(dplyr::vars(!from),
                                           ~paste0(., "_1")),
-                       by = c("label_1", "domain_id_1", "vocabulary_id_1", "concept_class_id_1", "standard_concept_1", "concept_count_1", "total_concept_class_ct_1", "total_vocabulary_ct_1")) %>%
+                       by = c("label_1",
+                              "domain_id_1",
+                              "vocabulary_id_1",
+                              "concept_class_id_1",
+                              "standard_concept_1",
+                              "total_concept_class_ct_1",
+                              "total_vocabulary_ct_1")) %>%
       dplyr::distinct() %>%
       dplyr::left_join(omop_node %>%
                          dplyr::rename(to = id) %>%
                          dplyr::rename_at(dplyr::vars(!to),
                                           ~paste0(., "_2")),
-                       by = c("label_2", "domain_id_2", "vocabulary_id_2", "concept_class_id_2", "standard_concept_2", "concept_count_2", "total_concept_class_ct_2", "total_vocabulary_ct_2")) %>%
+                       by = c("label_2",
+                              "domain_id_2",
+                              "vocabulary_id_2",
+                              "concept_class_id_2",
+                              "standard_concept_2",
+                              "total_concept_class_ct_2",
+                              "total_vocabulary_ct_2")) %>%
       dplyr::distinct() %>%
       mutate(concept_1_coverage_frac = glue::glue("{concept_count_1}/{total_concept_class_ct_1}"),
              concept_2_coverage_frac = glue::glue("{concept_count_2}/{total_concept_class_ct_2}")) %>%
@@ -559,13 +550,13 @@ create_nodes_and_edges <-
       mutate(headtooltip = unlist(headtooltip))
 
 
-    if (nrow(ccr_df) != nrow(omop_edge)) {
+    if (nrow(ccr_df) != nrow(omop_edge2)) {
 
 
       cli::cli_warn("Modified edges contains different row count than provided edges.")
 
       return(list(edges = ccr_df,
-                  modified_edges = omop_edge))
+                  modified_edges = omop_edge2))
 
     }
 
@@ -575,7 +566,7 @@ create_nodes_and_edges <-
 
     omopEdge <-
       new("edges",
-          data = omop_edge)
+          data = omop_edge2)
     new("nodes.and.edges",
         nodes = omopNode,
         edges = omopEdge)

@@ -2,7 +2,7 @@
 % Please edit documentation in R/fetch.R
 \name{fetch_omop}
 \alias{fetch_omop}
-\title{FUNCTION_TITLE}
+\title{Fetch OMOP Data}
 \usage{
 fetch_omop(
   conn,
@@ -35,22 +35,14 @@ to cache under a generic hash.}
 OUTPUT_DESCRIPTION
 }
 \description{
-FUNCTION_DESCRIPTION
+Fetch concept class relationships in a Postgres instance of the OMOP vocabularies.
 }
 \details{
-DETAILS
-}
-\examples{
-\dontrun{
-if(interactive()){
- #EXAMPLE1
- }
-}
-}
-\seealso{
-\code{\link[glue]{glue}}
-\code{\link[pg13]{query}}
-\code{\link[dplyr]{arrange}},\code{\link[dplyr]{distinct}},\code{\link[dplyr]{select}},\code{\link[dplyr]{reexports}},\code{\link[dplyr]{mutate-joins}},\code{\link[dplyr]{bind}},\code{\link[dplyr]{rename}}
-\code{\link[cli]{cli_progress_bar}},\code{\link[cli]{cli_abort}}
-\code{\link[purrr]{transpose}},\code{\link[purrr]{map}},\code{\link[purrr]{reduce}}
+The OMOP vocabularies are transformed into nodes and edges by first normalizing
+OMOP concepts to their associated concept classes. The distinct \code{concept_id} count
+is preserved to determine the extent of coverage between concept classes across
+relationships.
+
+This function queries excludes invalid concepts and concept relationships as well
+as relationships to self.
 }
