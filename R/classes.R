@@ -106,6 +106,7 @@ omop.relationships <-
 
 #' omop.graph S4 class
 #' @importClassesFrom DiagrammeR dgr_graph
+
 setOldClass("dgr_graph")
 omop.graph <-
   setClass("omop.graph",
