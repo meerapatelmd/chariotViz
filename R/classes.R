@@ -112,18 +112,18 @@ omop.graph <-
            slots    = c(graph = "dgr_graph",
                         src   = "list"))
 
-
-
-
-
-setMethod("print",
-          signature(x = "nodes"),
-          function(x,...) print(x@data,...))
-
-setMethod("print",
-          signature(x = "nodes"),
-          function(x,...) print(x@data,...))
-
-setMethod("print",
-          signature(x = "nodes.and.edges"),
-          function(x, ...) print(list(x@Nodes,x@Edges)))
+#
+#
+#
+#
+# setMethod("print",
+#           signature(x = "nodes"),
+#           function(x,...) print(x@data,...))
+#
+# setMethod("print",
+#           signature(x = "nodes"),
+#           function(x,...) print(x@data,...))
+#
+# setMethod("print",
+#           signature(x = "nodes.and.edges"),
+#           function(x, ...) print(list(x@Nodes,x@Edges)))
