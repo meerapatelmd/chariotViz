@@ -71,7 +71,7 @@
 #'  \code{\link[tibble]{as_tibble}}
 #' @rdname map_node_attributes
 #' @export
-#' @importFrom cli cli_alert_info
+#' @import cli
 #' @importFrom dplyr enquo mutate
 #' @importFrom purrr keep
 #' @importFrom tibble as_tibble
