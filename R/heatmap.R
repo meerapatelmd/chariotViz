@@ -130,7 +130,7 @@ fetch_heatmap <-
 #' @rdname plot_heatmap
 #' @export
 #' @importFrom dplyr enquo
-#' @importFrom ggplot2 ggplot geom_tile scale_fill_viridis_c theme element_text
+#' @import ggplot2
 plot_heatmap <-
   function(data,
            x = label_2,
