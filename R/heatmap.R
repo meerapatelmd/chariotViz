@@ -1,5 +1,3 @@
-# ## Add Heatmap
-
 #' @title FUNCTION_TITLE
 #' @description FUNCTION_DESCRIPTION
 #' @param vocabulary_id_1 PARAM_DESCRIPTION
@@ -7,19 +5,6 @@
 #' @param verbose PARAM_DESCRIPTION, Default: FALSE
 #' @param render_sql PARAM_DESCRIPTION, Default: FALSE
 #' @param conn_fun PARAM_DESCRIPTION, Default: 'pg13::local_connect(verbose=FALSE)'
-#' @return OUTPUT_DESCRIPTION
-#' @details DETAILS
-#' @examples
-#' \dontrun{
-#' if(interactive()){
-#'  #EXAMPLE1
-#'  }
-#' }
-#' @seealso
-#'  \code{\link[glue]{glue}}
-#'  \code{\link[pg13]{query}}
-#'  \code{\link[dplyr]{mutate-joins}},\code{\link[dplyr]{distinct}},\code{\link[dplyr]{mutate}},\code{\link[dplyr]{select}}
-#'  \code{\link[purrr]{map}},\code{\link[purrr]{character(0)}},\code{\link[purrr]{transpose}}
 #' @rdname fetch_heatmap
 #' @export
 #' @importFrom glue glue

@@ -23,25 +23,6 @@ fetch_heatmap(
 
 \item{conn_fun}{PARAM_DESCRIPTION, Default: 'pg13::local_connect(verbose=FALSE)'}
 }
-\value{
-OUTPUT_DESCRIPTION
-}
 \description{
 FUNCTION_DESCRIPTION
-}
-\details{
-DETAILS
-}
-\examples{
-\dontrun{
-if(interactive()){
- #EXAMPLE1
- }
-}
-}
-\seealso{
-\code{\link[glue]{glue}}
-\code{\link[pg13]{query}}
-\code{\link[dplyr]{mutate-joins}},\code{\link[dplyr]{distinct}},\code{\link[dplyr]{mutate}},\code{\link[dplyr]{select}}
-\code{\link[purrr]{map}},\code{\link[purrr]{character(0)}},\code{\link[purrr]{transpose}}
 }
