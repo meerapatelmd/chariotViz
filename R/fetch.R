@@ -148,7 +148,7 @@ load_from_cache <-
 #' @export
 #' @importFrom glue glue
 #' @importFrom pg13 query
-#' @importFrom dplyr arrange distinct select any_of left_join bind_rows rename
+#' @import dplyr
 #' @import cli
 #' @importFrom purrr transpose map reduce
 fetch_omop <-
@@ -452,21 +452,9 @@ fetch_omop <-
 #' @param type_from PARAM_DESCRIPTION, Default: concept_class_id
 #' @return OUTPUT_DESCRIPTION
 #' @details DETAILS
-#' @examples
-#' \dontrun{
-#' if(interactive()){
-#'  #EXAMPLE1
-#'  }
-#' }
-#' @seealso
-#'  \code{\link[dplyr]{tidyeval-compat}},\code{\link[dplyr]{bind}},\code{\link[dplyr]{select}},\code{\link[dplyr]{select_all}},\code{\link[dplyr]{distinct}},\code{\link[dplyr]{mutate}},\code{\link[dplyr]{reexports}},\code{\link[dplyr]{vars}},\code{\link[dplyr]{mutate-joins}},\code{\link[dplyr]{rename}}
-#'  \code{\link[stringr]{str_remove}}
-#'  \code{\link[tibble]{rownames}}
-#'  \code{\link[glue]{glue}}
-#'  \code{\link[cli]{cli_abort}}
 #' @rdname create_nodes_and_edges
 #' @export
-#' @importFrom dplyr enquo bind_rows select rename_all distinct mutate bind_cols ends_with rename_at vars left_join rename
+#' @import dplyr
 #' @importFrom stringr str_remove_all
 #' @importFrom tibble rowid_to_column
 #' @importFrom glue glue

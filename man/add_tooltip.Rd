@@ -18,15 +18,3 @@ FUNCTION_DESCRIPTION
 \details{
 DETAILS
 }
-\examples{
-\dontrun{
-if(interactive()){
- #EXAMPLE1
- }
-}
-}
-\seealso{
-\code{\link[dplyr]{mutate-joins}},\code{\link[dplyr]{select}},\code{\link[dplyr]{reexports}},\code{\link[dplyr]{group_by}},\code{\link[dplyr]{summarise}},\code{\link[dplyr]{distinct}},\code{\link[dplyr]{mutate_all}}
-\code{\link[tidyr]{pivot_longer}},\code{\link[tidyr]{unite}}
-\code{\link[tibble]{rownames}}
-}

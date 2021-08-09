@@ -5,16 +5,6 @@
 #' @param nodes_and_edges PARAM_DESCRIPTION
 #' @return OUTPUT_DESCRIPTION
 #' @details DETAILS
-#' @examples
-#' \dontrun{
-#' if(interactive()){
-#'  #EXAMPLE1
-#'  }
-#' }
-#' @seealso
-#'  \code{\link[dplyr]{mutate-joins}},\code{\link[dplyr]{select}},\code{\link[dplyr]{reexports}},\code{\link[dplyr]{group_by}},\code{\link[dplyr]{summarise}},\code{\link[dplyr]{distinct}},\code{\link[dplyr]{mutate_all}}
-#'  \code{\link[tidyr]{pivot_longer}},\code{\link[tidyr]{unite}}
-#'  \code{\link[tibble]{rownames}}
 #' @rdname add_tooltip
 #' @export
 #' @importFrom dplyr left_join select any_of group_by summarize ungroup distinct mutate_all

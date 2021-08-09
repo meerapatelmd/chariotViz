@@ -24,17 +24,3 @@ FUNCTION_DESCRIPTION
 \details{
 DETAILS
 }
-\examples{
-\dontrun{
-if(interactive()){
- #EXAMPLE1
- }
-}
-}
-\seealso{
-\code{\link[dplyr]{tidyeval-compat}},\code{\link[dplyr]{bind}},\code{\link[dplyr]{select}},\code{\link[dplyr]{select_all}},\code{\link[dplyr]{distinct}},\code{\link[dplyr]{mutate}},\code{\link[dplyr]{reexports}},\code{\link[dplyr]{vars}},\code{\link[dplyr]{mutate-joins}},\code{\link[dplyr]{rename}}
-\code{\link[stringr]{str_remove}}
-\code{\link[tibble]{rownames}}
-\code{\link[glue]{glue}}
-\code{\link[cli]{cli_abort}}
-}
