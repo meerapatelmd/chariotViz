@@ -9,8 +9,8 @@
 #' @export
 #' @importFrom glue glue
 #' @importFrom pg13 query
-#' @importFrom dplyr left_join distinct mutate select
-#' @importFrom purrr map select transpose
+#' @import dplyr
+#' @importFrom purrr map transpose
 fetch_heatmap <-
   function(vocabulary_id_1,
            schema = "omop_vocabulary",
@@ -87,15 +87,15 @@ fetch_heatmap <-
     data_to_plot <-
       data_to_plot %>%
       purrr::map(function(x) x%>%
-      purrr::select(-vocabulary_id_2,
+      dplyr::select(-vocabulary_id_2,
              -concept_class_id_2) %>%
       dplyr::select(-vocabulary_id_1,
              -concept_class_id_1)) %>%
-      purrr::map(select, -label_1) %>%
+      purrr::map(dplyr::select, -label_1) %>%
       purrr::map(
         function(x)
           x %>%
-          select(
+          dplyr::select(
             label_2,
             relationship_id,
             label_1_coverage,
