@@ -36,6 +36,7 @@ read_sql_template <-
 #' @keywords internal
 #' @importFrom glue glue
 #' @importFrom pg13 query
+#' @export
 get_version_key <-
   function(conn,
            conn_fun = "pg13::local_connect(verbose=FALSE)",
