@@ -19,6 +19,7 @@ add_tooltip <-
     nodes_and_edges@nodes@data %>%
       dplyr::select(id,
                     !dplyr::matches(nodes_and_edges@nodes@attribute_fields),
+                    !dplyr::any_of("label"),
                     dplyr::any_of("tooltip")) %>%
       dplyr::mutate_at(dplyr::vars(!id), as.character) %>%
       tidyr::pivot_longer(cols = !id) %>%
@@ -45,7 +46,9 @@ add_tooltip <-
     dplyr::left_join(
       edges_data_w_id,
       edges_data_w_id %>%
-        dplyr::select(!dplyr::matches(nodes_and_edges@edges@attribute_fields)) %>%
+        dplyr::select(!dplyr::matches(nodes_and_edges@edges@attribute_fields),
+                      !dplyr::any_of("label"),
+                      !dplyr::any_of("rel")) %>%
         tidyr::pivot_longer(cols = !rowid) %>%
         tidyr::unite(tooltip_row,
                      name,
