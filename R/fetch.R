@@ -246,19 +246,24 @@ fetch_omop <-
 
     }
     Sys.sleep(0.5)
-  ############
-    vocabulary_ids <-
-      total_vocabulary_ct %>%
-      dplyr::arrange(total_vocabulary_ct) %>%
-      dplyr::distinct(vocabulary_id) %>%
-      unlist() %>%
-      unname()
 
 
     if (!missing(...)) {
 
 
       vocabulary_ids <- unlist(rlang::list2(...))
+
+
+    } else {
+
+
+      ############
+      vocabulary_ids <-
+        total_vocabulary_ct %>%
+        dplyr::arrange(total_vocabulary_ct) %>%
+        dplyr::distinct(vocabulary_id) %>%
+        unlist() %>%
+        unname()
 
 
     }
