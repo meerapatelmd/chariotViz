@@ -19,6 +19,12 @@ construct_ndf <-
         node_fields,
         attrs)
 
+
+    if (any(duplicated(all_fields))) {
+      stop("Duplicate fields found!")
+    }
+
+
     omop_ndf <-
       eval(
         rlang::parse_expr(
@@ -58,6 +64,9 @@ construct_edf <-
         edge_fields,
         attrs)
 
+    if (any(duplicated(all_fields))) {
+      stop("Duplicate fields found!")
+    }
 
     omop_edf <-
       eval(
@@ -70,10 +79,14 @@ construct_edf <-
             paste(collapse = ""))
       )
 
+
+    omop_edf$id <- nodes_and_edges@edges@data$id
+
     omop_edf
 
 
   }
+
 
 
 
@@ -91,6 +104,49 @@ construct_edf <-
 construct_graph <-
   function(nodes_and_edges,
            attr_theme = "lr") {
+
+
+
+    ndf <- construct_ndf(nodes_and_edges@nodes)
+    edf <- construct_edf(nodes_and_edges@edges)
+
+    final_graph <-
+      DiagrammeR::create_graph(
+        nodes_df = omop_ndf,
+        edges_df = omop_edf,
+        attr_theme = attr_theme
+      )
+
+
+    final_data <-
+      new("omop.graph",
+          graph = final_graph,
+          src   = nodes_and_edges
+      )
+
+
+  }
+
+
+
+
+
+#' @title FUNCTION_TITLE
+#' @description FUNCTION_DESCRIPTION
+#' @param nodes_and_edges PARAM_DESCRIPTION
+#' @param attr_theme PARAM_DESCRIPTION, Default: 'lr'
+#' @return OUTPUT_DESCRIPTION
+#' @rdname construct_graph2
+#' @export
+#' @importFrom rlang parse_expr
+#' @importFrom glue glue
+#' @importFrom DiagrammeR create_graph
+construct_graph2 <-
+  function(nodes_and_edges,
+           attr_theme = "lr") {
+
+
+    .Deprecated()
 
 
     attrs <-
