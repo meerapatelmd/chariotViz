@@ -78,11 +78,3 @@ snomed_graph@graph %>%
   render_graph()
 ```
 
-```{r}
-snomed_graph@graph %>% 
-  select_nodes(concept_class_id == "Qualifier Value") %>%
-  select_nodes(vocabulary_id == "SNOMED", set_op = "union") %>%
-  transform_to_subgraph_ws() %>%
-  render_graph()
-```
-
