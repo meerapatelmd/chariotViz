@@ -258,9 +258,7 @@ fetch_omop <-
     if (!missing(...)) {
 
 
-      vocabulary_ids2 <- unlist(rlang::list2(...))
-      vocabulary_ids <-
-        vocabulary_ids[vocabulary_ids %in% vocabulary_ids2]
+      vocabulary_ids <- unlist(rlang::list2(...))
 
 
     }
