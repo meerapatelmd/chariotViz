@@ -286,6 +286,53 @@ setValidity(
   method = validEdgeCount
 )
 
+
+validNodeId <-
+  function(object) {
+
+    if (all(!is.na(object@nodes@data$id))) {
+
+      TRUE
+
+    } else {
+
+      glue::glue("Some `id` are <NA>.")
+    }
+
+
+
+
+  }
+
+
+validEdgeId <-
+  function(object) {
+
+    if (all(!is.na(object@edges@data$id))) {
+
+      TRUE
+
+    } else {
+
+      glue::glue("Some `id` are <NA>.")
+    }
+
+
+
+
+  }
+
+setValidity(
+  Class = "nodes.and.edges",
+  method = validNodeId
+)
+
+
+setValidity(
+  Class = "nodes.and.edges",
+  method = validEdgeId
+)
+
 # setMethod("print",
 #           signature(x = "nodes"),
 #           function(x,...) print(x@data,...))

@@ -13,8 +13,7 @@ knitr::opts_chunk$set(
   comment = "#>",
   cache.path = file.path(R.cache::getCachePath(),
                          "chariotViz",
-                         "vignettes"),
-  cache = TRUE
+                         "vignettes")
 )
 ```
 
@@ -123,10 +122,47 @@ snomed_graph@graph %>%
 snomed_graph4 %>% 
   count_nodes()
 
-snomed_graph4$nodes_df
 
 snomed_graph4 %>% 
   count_edges()
+```
 
-snomed_graph4$edges_df
+```{r}
+snomed_graph5 <- 
+snomed_graph@graph %>% 
+  select_nodes(concept_class_id == "Qualifier Value") %>%
+  select_nodes(vocabulary_id == "SNOMED", set_op = "intersect") %>%
+  select_nodes(vocabulary_id == "RxNorm", set_op = "union") %>%
+  transform_to_subgraph_ws() 
+
+
+snomed_graph5 %>% 
+  count_nodes()
+
+
+snomed_graph5 %>% 
+  count_edges()
+
+render_graph(snomed_graph5)
+```
+
+
+```{r}
+snomed_graph6 <- 
+snomed_graph@graph %>% 
+  select_edges(
+    from = 
+    snomed_graph@graph %>% 
+    select_nodes(concept_class_id == "Qualifier Value") %>%
+    select_nodes(vocabulary_id == "SNOMED", set_op = "intersect") %>%
+    get_selection()) %>% 
+  transform_to_subgraph_ws() 
+
+
+snomed_graph6 %>% 
+  count_nodes()
+
+
+snomed_graph6 %>% 
+  count_edges()
 ```

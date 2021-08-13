@@ -6,6 +6,7 @@
 \usage{
 chariotViz(
   omop_graph,
+  force = FALSE,
   layout = NULL,
   output = NULL,
   as_svg = FALSE,
