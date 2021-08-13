@@ -152,12 +152,12 @@ filter_graph <-
       }
 
     for (pred in preds) {
-      omop_graph@nodes_and_edges@nodes <-
-        omop_graph@nodes_and_edges@nodes %>%
+      omop_graph@src@nodes@data <-
+        omop_graph@src@nodes@data %>%
         apply_filter(!!pred)
 
-      omop_graph@nodes_and_edges@edges <-
-        omop_graph@nodes_and_edges@edges %>%
+      omop_graph@src@edges@data <-
+        omop_graph@src@edges@data %>%
         apply_filter(!!pred)
 
     }
