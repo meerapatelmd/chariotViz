@@ -152,10 +152,11 @@ filter_graph <-
       }
 
     for (pred in preds) {
-      omop_graph@src@nodes@data <-
+      nodes0 <-
         omop_graph@src@nodes@data %>%
         apply_filter(!!pred)
 
+      edges0 <-
       omop_graph@src@edges@data <-
         omop_graph@src@edges@data %>%
         apply_filter(!!pred)
@@ -165,16 +166,29 @@ filter_graph <-
     # If the filter is applied to a node, then
     # then filtering edges based on `from` and `to`
 
-    # omop_graph@src@edges@data <-
-    #   dplyr::bind_rows(
-    #     omop_graph@src@edges@data %>%
-    #       dplyr::filter(omop_graph@src@edges@data$from %in% omop_graph@src@nodes@data$id),
-    #     omop_graph@src@edges@data %>%
-    #       dplyr::filter(omop_graph@src@edges@data$to %in% omop_graph@src@nodes@data$id)) %>%
-    #   dplyr::distinct()
+   edges1 <-
+      dplyr::bind_rows(
+        edges0 %>%
+          dplyr::filter(from %in% nodes0$id),
+        edges0 %>%
+          dplyr::filter(to %in% nodes0$id)) %>%
+      dplyr::distinct() %>%
+     distinct()
+
+
+   nodes1 <-
+   omop_graph@src@nodes@data %>%
+     dplyr::filter(id %in% unique(c(edges1$from, edges1$to))) %>%
+     distinct()
+
+   new_nodes_and_edges <-
+     new(Class = "nodes.and.edges",
+         list(nodes = nodes1,
+              edges = edges1))
+
 
 
     construct_graph(
-      nodes_and_edges = omop_graph@src
+      nodes_and_edges = new_nodes_and_edges
     )
   }
