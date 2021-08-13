@@ -1,10 +1,6 @@
 pandoc: 2.11.4
 pkgdown: 1.6.1
 pkgdown_sha: ~
-articles:
-  atc-concept-class-graph: atc-concept-class-graph.html
-  hemonc-concept-class-graph: hemonc-concept-class-graph.html
-  rescale-graph: rescale-graph.html
-  rxnorm-extension-concept-class-graph: rxnorm-extension-concept-class-graph.html
-last_built: 2021-08-07T01:12Z
+articles: {}
+last_built: 2021-08-13T07:58Z
 

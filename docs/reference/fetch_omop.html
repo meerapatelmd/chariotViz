@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Articles • chariot2</title>
+<title>Fetch OMOP Data — fetch_omop • chariotViz</title>
 
 
 <!-- jquery -->
@@ -39,7 +39,9 @@
 
 
 
-<meta property="og:title" content="Articles" />
+<meta property="og:title" content="Fetch OMOP Data — fetch_omop" />
+<meta property="og:description" content="Fetch concept class relationships in a
+Postgres instance of the OMOP vocabularies." />
 
 
 
@@ -58,7 +60,7 @@
   </head>
 
   <body data-spy="scroll" data-target="#toc">
-    <div class="container template-article-index">
+    <div class="container template-reference-topic">
       <header>
       <div class="navbar navbar-default navbar-fixed-top" role="navigation">
   <div class="container">
@@ -70,7 +72,7 @@
         <span class="icon-bar"></span>
       </button>
       <span class="navbar-brand">
-        <a class="navbar-link" href="../index.html">chariot2</a>
+        <a class="navbar-link" href="../index.html">chariotViz</a>
         <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.0.0.9000</span>
       </span>
     </div>
@@ -85,27 +87,6 @@
 </li>
 <li>
   <a href="../reference/index.html">Reference</a>
-</li>
-<li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-    Articles
-     
-    <span class="caret"></span>
-  </a>
-  <ul class="dropdown-menu" role="menu">
-    <li>
-      <a href="../articles/atc-concept-class-graph.html">ATC Concept Class Graph</a>
-    </li>
-    <li>
-      <a href="../articles/hemonc-concept-class-graph.html">HemOnc Concept Class Graph</a>
-    </li>
-    <li>
-      <a href="../articles/rescale-graph.html">Rescale Graph</a>
-    </li>
-    <li>
-      <a href="../articles/rxnorm-extension-concept-class-graph.html">RxNorm Extension Concept Class Graph</a>
-    </li>
-  </ul>
 </li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
@@ -128,24 +109,83 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-      <h1>Articles</h1>
+    <h1>Fetch OMOP Data</h1>
+    <small class="dont-index">Source: <a href='https://github.com/mpatel-cai/chariot2/blob/master/R/fetch.R'><code>R/fetch.R</code></a></small>
+    <div class="hidden name"><code>fetch_omop.Rd</code></div>
     </div>
 
-    <div class="section ">
-      <h3>All vignettes</h3>
-      <p class="section-desc"></p>
-
-      <dl>
-        <dt><a href="atc-concept-class-graph.html">ATC Concept Class Graph</a></dt>
-        <dd></dt>
-        <dt><a href="hemonc-concept-class-graph.html">HemOnc Concept Class Graph</a></dt>
-        <dd></dt>
-        <dt><a href="rescale-graph.html">Rescale Graph</a></dt>
-        <dd></dt>
-        <dt><a href="rxnorm-extension-concept-class-graph.html">RxNorm Extension Concept Class Graph</a></dt>
-        <dd></dt>
-      </dl>
+    <div class="ref-description">
+    <p>Fetch concept class relationships in a
+Postgres instance of the OMOP vocabularies.</p>
     </div>
+
+    <pre class="usage"><span class='fu'>fetch_omop</span><span class='op'>(</span>
+  <span class='va'>...</span>,
+  <span class='va'>conn</span>,
+  conn_fun <span class='op'>=</span> <span class='st'>"pg13::local_connect(verbose=FALSE)"</span>,
+  type_from <span class='op'>=</span> <span class='va'>concept_class_id</span>,
+  label_glue <span class='op'>=</span> <span class='st'>"{vocabulary_id}\n{concept_class_id}\n({standard_concept})\n"</span>,
+  schema <span class='op'>=</span> <span class='st'>"omop_vocabulary"</span>,
+  verbose <span class='op'>=</span> <span class='cn'>FALSE</span>,
+  render_sql <span class='op'>=</span> <span class='cn'>FALSE</span>,
+  <span class='va'>version_key</span>
+<span class='op'>)</span></pre>
+
+    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
+    <table class="ref-arguments">
+    <colgroup><col class="name" /><col class="desc" /></colgroup>
+    <tr>
+      <th>conn</th>
+      <td><p>PARAM_DESCRIPTION</p></td>
+    </tr>
+    <tr>
+      <th>conn_fun</th>
+      <td><p>PARAM_DESCRIPTION, Default: 'pg13::local_connect(verbose=FALSE)'</p></td>
+    </tr>
+    <tr>
+      <th>type_from</th>
+      <td><p>PARAM_DESCRIPTION, Default: concept_class_id</p></td>
+    </tr>
+    <tr>
+      <th>schema</th>
+      <td><p>PARAM_DESCRIPTION, Default: 'omop_vocabulary'</p></td>
+    </tr>
+    <tr>
+      <th>verbose</th>
+      <td><p>PARAM_DESCRIPTION, Default: FALSE</p></td>
+    </tr>
+    <tr>
+      <th>render_sql</th>
+      <td><p>PARAM_DESCRIPTION, Default: FALSE</p></td>
+    </tr>
+    <tr>
+      <th>version_key</th>
+      <td><p>A list object that serves
+as the hash for caching. Set to NULL to cache under a generic hash.</p></td>
+    </tr>
+    </table>
+
+    <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
+
+    <p>OUTPUT_DESCRIPTION</p>
+    <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
+
+    <p>The OMOP vocabularies are transformed into nodes
+and edges by first normalizing
+OMOP concepts to their associated concept classes.
+The distinct <code>concept_id</code> count
+is preserved to determine the extent of coverage
+between concept classes across
+relationships.</p>
+<p>This function queries excludes invalid concepts
+and concept relationships as well
+as relationships to self.</p>
+
+  </div>
+  <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
+    <nav id="toc" data-toggle="toc" class="sticky-top">
+      <h2 data-toc-skip>Contents</h2>
+    </nav>
   </div>
 </div>
 

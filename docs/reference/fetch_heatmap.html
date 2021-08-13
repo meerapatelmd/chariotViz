@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Pipe operator — %&gt;% • chariotViz</title>
+<title>FUNCTION_TITLE — fetch_heatmap • chariotViz</title>
 
 
 <!-- jquery -->
@@ -39,8 +39,8 @@
 
 
 
-<meta property="og:title" content="Pipe operator — %&gt;%" />
-<meta property="og:description" content="See magrittr::%&amp;gt;% for details." />
+<meta property="og:title" content="FUNCTION_TITLE — fetch_heatmap" />
+<meta property="og:description" content="FUNCTION_DESCRIPTION" />
 
 
 
@@ -108,33 +108,48 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Pipe operator</h1>
-    <small class="dont-index">Source: <a href='https://github.com/mpatel-cai/chariot2/blob/master/R/utils-pipe.R'><code>R/utils-pipe.R</code></a></small>
-    <div class="hidden name"><code>pipe.Rd</code></div>
+    <h1>FUNCTION_TITLE</h1>
+    <small class="dont-index">Source: <a href='https://github.com/mpatel-cai/chariot2/blob/master/R/heatmap.R'><code>R/heatmap.R</code></a></small>
+    <div class="hidden name"><code>fetch_heatmap.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>See <code>magrittr::%&gt;%</code> for details.</p>
+    <p>FUNCTION_DESCRIPTION</p>
     </div>
 
-    <pre class="usage"><span class='va'>lhs</span> <span class='op'>%&gt;%</span> <span class='va'>rhs</span></pre>
+    <pre class="usage"><span class='fu'>fetch_heatmap</span><span class='op'>(</span>
+  <span class='va'>vocabulary_id_1</span>,
+  schema <span class='op'>=</span> <span class='st'>"omop_vocabulary"</span>,
+  verbose <span class='op'>=</span> <span class='cn'>FALSE</span>,
+  render_sql <span class='op'>=</span> <span class='cn'>FALSE</span>,
+  conn_fun <span class='op'>=</span> <span class='st'>"pg13::local_connect(verbose=FALSE)"</span>
+<span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>lhs</th>
-      <td><p>A value or the magrittr placeholder.</p></td>
+      <th>vocabulary_id_1</th>
+      <td><p>PARAM_DESCRIPTION</p></td>
     </tr>
     <tr>
-      <th>rhs</th>
-      <td><p>A function call using the magrittr semantics.</p></td>
+      <th>schema</th>
+      <td><p>PARAM_DESCRIPTION, Default: 'omop_vocabulary'</p></td>
+    </tr>
+    <tr>
+      <th>verbose</th>
+      <td><p>PARAM_DESCRIPTION, Default: FALSE</p></td>
+    </tr>
+    <tr>
+      <th>render_sql</th>
+      <td><p>PARAM_DESCRIPTION, Default: FALSE</p></td>
+    </tr>
+    <tr>
+      <th>conn_fun</th>
+      <td><p>PARAM_DESCRIPTION, Default: 'pg13::local_connect(verbose=FALSE)'</p></td>
     </tr>
     </table>
 
-    <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
-
-    <p>The result of calling <code>rhs(lhs)</code>.</p>
 
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
