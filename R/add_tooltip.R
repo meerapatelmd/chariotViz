@@ -36,7 +36,7 @@ add_tooltip <-
 
     edges_data_w_id <-
         nodes_and_edges@edges@data %>%
-          dplyr::mutate_all(as.character) # %>%
+          dplyr::mutate_at(dplyr::vars(!id), as.character) # %>%
  #         tibble::rowid_to_column()
 
     edges_data_w_tooltip <-
