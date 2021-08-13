@@ -99,7 +99,8 @@ setClass(
 nodes.and.edges <-
   setClass("nodes.and.edges",
            list(nodes = "nodes",
-                edges = "edges"))
+                edges = "edges",
+                overlapping_fields = "character"))
 
 
 #' @title raw.omop.data S4 class
@@ -157,14 +158,14 @@ setValidity(
 
 
 
-setMethod("print",
-          signature(x = "nodes"),
-          function(x,...) print(x@data,...))
+# setMethod("print",
+#           signature(x = "nodes"),
+#           function(x,...) print(x@data,...))
 
-setMethod("print",
-          signature(x = "nodes"),
-          function(x,...) print(x@data,...))
+# setMethod("print",
+#           signature(x = "edges"),
+#           function(x,...) print(x@data,...))
 
-setMethod("print",
-          signature(x = "nodes.and.edges"),
-          function(x, ...) print(list(x@Nodes,x@Edges)))
+# setMethod("print",
+#           signature(x = "nodes.and.edges"),
+#           function(x, ...) print(list(x@nodes@data,x@edges@data)))

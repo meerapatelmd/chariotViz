@@ -67,3 +67,46 @@ construct_graph <-
     final_data
   }
 
+
+chariotViz <-
+  function(omop_graph,
+           layout = NULL,
+           output = NULL,
+           as_svg = FALSE,
+           title = NULL,
+           width = NULL,
+           height = NULL) {
+
+
+    DiagrammeR::render_graph(
+      graph = omop_graph@graph,
+      layout = layout,
+      output = output,
+      as_svg = as_svg,
+      title = title,
+      width = width,
+      height = height
+    )
+
+
+  }
+
+
+
+
+filter_graph <-
+  function(omop_graph,
+           ...) {
+
+    cols <- dplyr::enquos(...)
+
+    nodes <-
+      omop_graph@nodes_and_edges@nodes
+    edges <-
+      omop_graph@nodes_and_edges@edges
+
+
+
+
+
+  }
