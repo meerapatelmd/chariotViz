@@ -147,7 +147,8 @@ filter_nodes <-
         tryCatch(
           omop_graph@graph %>%
           DiagrammeR::select_nodes(conditions = !!pred) %>%
-            dplyr::filter(...),
+          DiagrammeR::trav_both() %>%
+          DiagrammeR::transform_to_subgraph_ws(),
           error = function(e) omop_graph@graph
         )
 
@@ -200,7 +201,8 @@ filter_edges <-
           tryCatch(
             omop_graph@graph %>%
               DiagrammeR::select_edges(conditions = !!pred) %>%
-              dplyr::filter(...),
+              DiagrammeR::trav_both() %>%
+              DiagrammeR::transform_to_subgraph_ws(),
             error = function(e) omop_graph@graph
           )
 
