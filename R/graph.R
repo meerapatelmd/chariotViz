@@ -1,6 +1,6 @@
 
 construct_ndf <-
-  function(nodes) {
+  function(nodes_and_edges) {
 
     required <-
       colnames(nodes_and_edges@nodes@data)[colnames(nodes_and_edges@nodes@data) %in% nodes_and_edges@nodes@required_fields]
@@ -45,7 +45,7 @@ construct_ndf <-
 
 
 construct_edf <-
-  function(edges) {
+  function(nodes_and_edges) {
 
 
     required <-
@@ -107,8 +107,8 @@ construct_graph <-
 
 
 
-    ndf <- construct_ndf(nodes_and_edges@nodes)
-    edf <- construct_edf(nodes_and_edges@edges)
+    ndf <- construct_ndf(nodes_and_edges)
+    edf <- construct_edf(nodes_and_edges)
 
     final_graph <-
       DiagrammeR::create_graph(
