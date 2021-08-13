@@ -168,9 +168,9 @@ filter_graph <-
     omop_graph@src@edges@data <-
       dplyr::bind_rows(
         omop_graph@src@edges@data %>%
-          dplyr::filter(omop_graph@src@edges@data$from %in% omop_graph@src@nodes@data@id),
+          dplyr::filter(omop_graph@src@edges@data$from %in% omop_graph@src@nodes@data$id),
         omop_graph@src@edges@data %>%
-          dplyr::filter(omop_graph@src@edges@data$to %in% omop_graph@src@nodes@data@id)) %>%
+          dplyr::filter(omop_graph@src@edges@data$to %in% omop_graph@src@nodes@data$id)) %>%
       dplyr::distinct()
 
 
