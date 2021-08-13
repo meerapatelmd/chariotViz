@@ -162,7 +162,19 @@ filter_graph <-
 
     }
 
-    omop_graph
+    # If the filter is applied to a node, then
+    # then filtering edges based on `from` and `to`
+
+    omop_graph@src@edges@data <-
+      dplyr::bind_rows(
+        omop_graph@src@edges@data %>%
+          dplyr::filter(omop_graph@src@edges@data$from %in% omop_graph@src@nodes@data@id),
+        omop_graph@src@edges@data %>%
+          dplyr::filter(omop_graph@src@edges@data$to %in% omop_graph@src@nodes@data@id)) %>%
+      dplyr::distinct()
 
 
+    construct_graph(
+      nodes_and_edges = omop_graph@src
+    )
   }
