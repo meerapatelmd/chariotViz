@@ -82,7 +82,6 @@ setClass(
                      'len',
                      'tooltip',
                      'URL',
-                     'label',
                      'labelfontname',
                      'labelfontsize',
                      'labelfontcolor',
@@ -242,7 +241,7 @@ validEdgeRows <-
 validEdgeCount <-
   function(object) {
 
-    if (nrow(object@data) == nrow(object@data %>% distinct(label_1, label_2, relationship_id))) {
+    if (nrow(object@data) == nrow(object@data %>% dplyr::distinct(label_1, label_2, relationship_id))) {
 
 
       TRUE
@@ -250,7 +249,7 @@ validEdgeCount <-
 
     } else {
 
-      glue::glue("There are {nrow(object@data %>% distinct(label_1, label_2, relationship_id))} unique edge{?s} (defined by unique combinations of label_1, label_2, and relationship_id) while there are {nrow(object@data)} row{?s} in `edges`.")
+      glue::glue("There are {nrow(object@data %>% dplyr::distinct(label_1, label_2, relationship_id))} unique edge{?s} (defined by unique combinations of label_1, label_2, and relationship_id) while there are {nrow(object@data)} row{?s} in `edges`.")
 
 
     }
