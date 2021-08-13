@@ -608,7 +608,7 @@ create_nodes_and_edges <-
           data = omop_edge2)
 
     overlapping_fields <-
-      colnames(omopNodes@data)[colnames(omopNodes@data) %in% colnames(omopEdges@data)]
+      colnames(omopNode@data)[colnames(omopNode@data) %in% colnames(omopEdge@data)]
 
     new("nodes.and.edges",
         nodes = omopNode,
