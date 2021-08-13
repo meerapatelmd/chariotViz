@@ -131,7 +131,8 @@ validNE <-
 
     } else {
 
-      missing_fields <- object@required_fields[!(object@required_fields %in% colnames(object@data))]
+      missing_fields <-
+        object@required_fields[!(object@required_fields %in% colnames(object@data))]
       glue::glue("Required fields missing from data: {glue::backtick(missing_fields)}.")
 
 

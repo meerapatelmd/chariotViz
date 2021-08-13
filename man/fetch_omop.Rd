@@ -29,21 +29,26 @@ fetch_omop(
 
 \item{render_sql}{PARAM_DESCRIPTION, Default: FALSE}
 
-\item{version_key}{A list object that serves as the hash for caching. Set to NULL
-to cache under a generic hash.}
+\item{version_key}{A list object that serves
+as the hash for caching. Set to NULL to cache under a generic hash.}
 }
 \value{
 OUTPUT_DESCRIPTION
 }
 \description{
-Fetch concept class relationships in a Postgres instance of the OMOP vocabularies.
+Fetch concept class relationships in a
+Postgres instance of the OMOP vocabularies.
 }
 \details{
-The OMOP vocabularies are transformed into nodes and edges by first normalizing
-OMOP concepts to their associated concept classes. The distinct \code{concept_id} count
-is preserved to determine the extent of coverage between concept classes across
+The OMOP vocabularies are transformed into nodes
+and edges by first normalizing
+OMOP concepts to their associated concept classes.
+The distinct \code{concept_id} count
+is preserved to determine the extent of coverage
+between concept classes across
 relationships.
 
-This function queries excludes invalid concepts and concept relationships as well
+This function queries excludes invalid concepts
+and concept relationships as well
 as relationships to self.
 }

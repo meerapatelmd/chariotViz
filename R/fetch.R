@@ -143,25 +143,33 @@ delete_cache <-
 
 #' @title
 #' Fetch OMOP Data
+#'
 #' @description
-#' Fetch concept class relationships in a Postgres instance of the OMOP vocabularies.
+#' Fetch concept class relationships in a
+#' Postgres instance of the OMOP vocabularies.
+#'
 #' @param conn PARAM_DESCRIPTION
 #' @param conn_fun PARAM_DESCRIPTION, Default: 'pg13::local_connect(verbose=FALSE)'
 #' @param type_from PARAM_DESCRIPTION, Default: concept_class_id
 #' @param schema PARAM_DESCRIPTION, Default: 'omop_vocabulary'
 #' @param verbose PARAM_DESCRIPTION, Default: FALSE
 #' @param render_sql PARAM_DESCRIPTION, Default: FALSE
-#' @param version_key A list object that serves as the hash for caching. Set to NULL
-#' to cache under a generic hash.
+#' @param version_key A list object that serves
+#' as the hash for caching. Set to NULL to cache under a generic hash.
 #' @return OUTPUT_DESCRIPTION
 #' @details
-#' The OMOP vocabularies are transformed into nodes and edges by first normalizing
-#' OMOP concepts to their associated concept classes. The distinct `concept_id` count
-#' is preserved to determine the extent of coverage between concept classes across
+#' The OMOP vocabularies are transformed into nodes
+#' and edges by first normalizing
+#' OMOP concepts to their associated concept classes.
+#' The distinct `concept_id` count
+#' is preserved to determine the extent of coverage
+#' between concept classes across
 #' relationships.
 #'
-#' This function queries excludes invalid concepts and concept relationships as well
+#' This function queries excludes invalid concepts
+#' and concept relationships as well
 #' as relationships to self.
+#'
 #' @rdname fetch_omop
 #' @export
 #' @importFrom glue glue
@@ -395,19 +403,30 @@ fetch_omop <-
 
     omop_relationships1 <-
     omop_relationships %>%
-      purrr::map(purrr::reduce, dplyr::left_join, by = c("relationship_id", "vocabulary_id_1", "concept_class_id_1", "vocabulary_id_2", "concept_class_id_2")) %>%
+      purrr::map(
+        purrr::reduce,
+        dplyr::left_join,
+        by =
+          c("relationship_id",
+            "vocabulary_id_1",
+            "concept_class_id_1",
+            "vocabulary_id_2",
+            "concept_class_id_2")) %>%
       purrr::map(dplyr::distinct) %>%
       dplyr::bind_rows()
 
 
     omop_relationships2 <-
       omop_relationships1 %>%
-      dplyr::left_join(total_vocabulary_ct,
-                       by = c("vocabulary_id_1" = "vocabulary_id")) %>%
+      dplyr::left_join(
+        total_vocabulary_ct,
+        by = c("vocabulary_id_1" = "vocabulary_id")) %>%
       dplyr::distinct() %>%
-      dplyr::rename(total_vocabulary_ct_1 = total_vocabulary_ct) %>%
-      dplyr::left_join(total_vocabulary_ct,
-                       by = c("vocabulary_id_2" = "vocabulary_id")) %>%
+      dplyr::rename(
+        total_vocabulary_ct_1 = total_vocabulary_ct) %>%
+      dplyr::left_join(
+        total_vocabulary_ct,
+        by = c("vocabulary_id_2" = "vocabulary_id")) %>%
       dplyr::distinct() %>%
       dplyr::rename(total_vocabulary_ct_2 = total_vocabulary_ct) %>%
       dplyr::distinct()
@@ -560,12 +579,14 @@ create_nodes_and_edges <-
                               "total_concept_class_ct_2",
                               "total_vocabulary_ct_2")) %>%
       dplyr::distinct() %>%
-      mutate(concept_1_coverage_frac = glue::glue("{concept_count_1}/{total_concept_class_ct_1}"),
+      dplyr::mutate(concept_1_coverage_frac = glue::glue("{concept_count_1}/{total_concept_class_ct_1}"),
              concept_2_coverage_frac = glue::glue("{concept_count_2}/{total_concept_class_ct_2}")) %>%
-      mutate(tailtooltip = map(concept_1_coverage_frac, function(x) scales::percent(eval(rlang::parse_expr(x))))) %>%
-      mutate(headtooltip = map(concept_2_coverage_frac, function(x) scales::percent(eval(rlang::parse_expr(x))))) %>%
-      mutate(tailtooltip = unlist(tailtooltip)) %>%
-      mutate(headtooltip = unlist(headtooltip))
+      dplyr::mutate(tailtooltip = purrr::map(concept_1_coverage_frac, function(x) scales::percent(eval(rlang::parse_expr(x))))) %>%
+      dplyr::mutate(headtooltip = purrr::map(concept_2_coverage_frac, function(x) scales::percent(eval(rlang::parse_expr(x))))) %>%
+      dplyr::mutate(tailtooltip = unlist(tailtooltip)) %>%
+      dplyr::mutate(headtooltip = unlist(headtooltip)) %>%
+      dplyr::mutate(rel = relationship_id,
+                    label = relationship_name)
 
 
     if (nrow(ccr_df) != nrow(omop_edge2)) {
