@@ -607,8 +607,17 @@ create_nodes_and_edges <-
       new("edges",
           data = omop_edge2)
 
+    edge_cols <-
+    colnames(omopEdge@data) %>%
+      grep(pattern = "_1$|_2$",
+           value   = TRUE) %>%
+      stringr::str_remove_all(pattern = "_1$|_2$") %>%
+      unique()
+
     overlapping_fields <-
-      colnames(omopNode@data)[colnames(omopNode@data) %in% colnames(omopEdge@data)]
+      colnames(omopNode@data)[colnames(omopNode@data) %in% edge_cols]
+    overlapping_fields <-
+      overlapping_fields[!(overlapping_fields %in% c("id", "label"))]
 
     new("nodes.and.edges",
         nodes = omopNode,
