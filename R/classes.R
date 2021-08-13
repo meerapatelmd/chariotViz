@@ -116,7 +116,7 @@ setOldClass("dgr_graph")
 omop.graph <-
   setClass("omop.graph",
            slots    = c(graph = "dgr_graph",
-                        src   = "list"))
+                        src   = "nodes.and.edges"))
 
 
 
