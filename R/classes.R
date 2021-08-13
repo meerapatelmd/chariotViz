@@ -42,6 +42,7 @@ nodes <-
                        )
                      ))
 
+
 #' @title edges S4 class
 #' @slot data edges dataframe
 #' @slot required_fields required fields for a edges s4 class object
@@ -116,6 +117,40 @@ omop.graph <-
   setClass("omop.graph",
            slots    = c(graph = "dgr_graph",
                         src   = "list"))
+
+
+
+validNE <-
+  function(object) {
+
+    if (all(object@required_fields %in% colnames(object@data))) {
+
+
+      TRUE
+
+
+    } else {
+
+      missing_fields <- object@required_fields[!(object@required_fields %in% colnames(object@data))]
+      glue::glue("Required fields missing from data: {glue::backtick(missing_fields)}.")
+
+
+    }
+
+
+
+  }
+
+setValidity(
+  Class = "nodes",
+  method = validNE
+)
+
+
+setValidity(
+  Class = "edges",
+  method = validNE
+)
 
 #
 #

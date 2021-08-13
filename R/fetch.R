@@ -124,6 +124,23 @@ load_from_cache <-
 
   }
 
+
+#' @title FUNCTION_TITLE
+#' @rdname delete_cache
+#' @export
+#' @importFrom R.cache clearCache
+delete_cache <-
+  function() {
+
+
+    R.cache::clearCache(dirs = "chariotViz")
+
+  }
+
+
+
+
+
 #' @title
 #' Fetch OMOP Data
 #' @description
@@ -160,7 +177,8 @@ fetch_omop <-
            schema = "omop_vocabulary",
            verbose = FALSE,
            render_sql = FALSE,
-           version_key) {
+           version_key,
+           ...) {
 
     stopifnot(!missing(version_key))
     # Converted to list for consumption by R.cache
@@ -227,6 +245,17 @@ fetch_omop <-
       dplyr::distinct(vocabulary_id) %>%
       unlist() %>%
       unname()
+
+
+    if (!missing(...)) {
+
+
+      vocabulary_ids2 <- unlist(rlang::list2(...))
+      vocabulary_ids <-
+        vocabulary_ids[vocabulary_ids %in% vocabulary_ids2]
+
+
+    }
 
     relationship_output <-
       vector(mode = "list",

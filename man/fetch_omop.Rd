@@ -12,7 +12,8 @@ fetch_omop(
   schema = "omop_vocabulary",
   verbose = FALSE,
   render_sql = FALSE,
-  version_key
+  version_key,
+  ...
 )
 }
 \arguments{
