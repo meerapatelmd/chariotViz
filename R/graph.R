@@ -107,8 +107,8 @@ construct_graph <-
 
 
 
-    ndf <- construct_ndf(nodes_and_edges)
-    edf <- construct_edf(nodes_and_edges)
+    omop_ndf <- construct_ndf(nodes_and_edges)
+    omop_edf <- construct_edf(nodes_and_edges)
 
     final_graph <-
       DiagrammeR::create_graph(
