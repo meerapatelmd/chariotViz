@@ -67,7 +67,28 @@ construct_graph <-
     final_data
   }
 
-
+#' @title FUNCTION_TITLE
+#' @description FUNCTION_DESCRIPTION
+#' @param omop_graph PARAM_DESCRIPTION
+#' @param layout PARAM_DESCRIPTION, Default: NULL
+#' @param output PARAM_DESCRIPTION, Default: NULL
+#' @param as_svg PARAM_DESCRIPTION, Default: FALSE
+#' @param title PARAM_DESCRIPTION, Default: NULL
+#' @param width PARAM_DESCRIPTION, Default: NULL
+#' @param height PARAM_DESCRIPTION, Default: NULL
+#' @return OUTPUT_DESCRIPTION
+#' @details DETAILS
+#' @examples
+#' \dontrun{
+#' if(interactive()){
+#'  #EXAMPLE1
+#'  }
+#' }
+#' @seealso
+#'  \code{\link[DiagrammeR]{render_graph}}
+#' @rdname chariotViz
+#' @export
+#' @importFrom DiagrammeR render_graph
 chariotViz <-
   function(omop_graph,
            layout = NULL,
@@ -93,20 +114,55 @@ chariotViz <-
 
 
 
-
+#' @title FUNCTION_TITLE
+#' @description FUNCTION_DESCRIPTION
+#' @param omop_graph PARAM_DESCRIPTION
+#' @param ... PARAM_DESCRIPTION
+#' @return OUTPUT_DESCRIPTION
+#' @details DETAILS
+#' @examples
+#' \dontrun{
+#' if(interactive()){
+#'  #EXAMPLE1
+#'  }
+#' }
+#' @seealso
+#'  \code{\link[dplyr]{tidyeval-compat}},\code{\link[dplyr]{filter}}
+#' @rdname filter_graph
+#' @export
+#' @importFrom dplyr enquos filter
 filter_graph <-
   function(omop_graph,
            ...) {
 
-    cols <- dplyr::enquos(...)
+    preds <-
+      dplyr::enquos(...)
 
-    nodes <-
-      omop_graph@nodes_and_edges@nodes
-    edges <-
-      omop_graph@nodes_and_edges@edges
+    apply_filter <-
+      function(data,
+               ...) {
+
+        tryCatch(
+          data %>%
+            dplyr::filter(...),
+          error = function(e) data
+        )
 
 
+      }
 
+    for (pred in preds) {
+      omop_graph@nodes_and_edges@nodes <-
+        omop_graph@nodes_and_edges@nodes %>%
+        apply_filter(!!pred)
+
+      omop_graph@nodes_and_edges@edges <-
+        omop_graph@nodes_and_edges@edges %>%
+        apply_filter(!!pred)
+
+    }
+
+    omop_graph
 
 
   }
