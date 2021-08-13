@@ -4,7 +4,7 @@
 \name{omop.relationships-class}
 \alias{omop.relationships-class}
 \alias{omop.relationships}
-\title{raw.omop.data S4 class}
+\title{omop.relationships S4 class}
 \description{
-raw.omop.data S4 class
+omop.relationships S4 class
 }

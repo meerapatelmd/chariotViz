@@ -1,4 +1,4 @@
-rxnorm_class_colors <- 
+rxnorm_class_colors <-
   list(
     `Branded Drug` = 'springgreen3',
     `Clinical Drug` = 'springgreen3',
@@ -54,7 +54,7 @@ rxnorm_concept_class_color_groups <-
     'Marketed Product' = 'Brown colors')
 
 
-domain_color_groups <- 
+domain_color_groups <-
 c(
   'Condition'        = "Cyan colors",
   'Condition Status' = "Cyan colors",
@@ -64,7 +64,7 @@ c(
   'Condition/Procedure' = "Cyan colors",
   'Cost' = "White colors",
   'Currency' = "White colors",
-  'Device' = "Purple, violet, and magenta colors", 
+  'Device' = "Purple, violet, and magenta colors",
   'Device/Procedure' = "Purple, violet, and magenta colors",
   'Drug' = "Red colors",
   'Drug/Procedure' = "Red colors",
@@ -98,7 +98,7 @@ c(
   'Visit' = "Blue colors"
 )
 
-domain_colors <- 
+domain_colors <-
 c(
   `Condition` = c('aquamarine'),
   `Condition Status` = c('aquamarine'),
@@ -143,7 +143,7 @@ c(
 )
 
 
-vocabulary_id_standard_colors <- 
+vocabulary_id_standard_colors <-
 list(
   `ATC` = c('goldenrod2'),
   `CIViC` = c('wheat2'),
@@ -192,6 +192,7 @@ list(
   `Nebraska Lexicon` = c('gold2'),
   `None` = c('green2'),
   `OMOP Extension` = c('palegreen2'),
+  `OMOP Genomic` = "slategray",
   `Observation Type` = c('tomato2'),
   `OncoKB` = c('lavenderblush2'),
   `PCORNet` = c('darkseagreen2'),
@@ -208,7 +209,7 @@ list(
 
 vocabulary_id_class_colors <- vocabulary_id_standard_colors
 
-vocabulary_id_nonstandard_colors <- 
+vocabulary_id_nonstandard_colors <-
   list(
     `ATC` = c('goldenrod4'),
     `CIViC` = c('wheat4'),

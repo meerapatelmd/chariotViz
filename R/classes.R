@@ -103,7 +103,7 @@ nodes.and.edges <-
                 overlapping_fields = "character"))
 
 
-#' @title raw.omop.data S4 class
+#' @title omop.relationships S4 class
 #' @export
 
 omop.relationships <-
@@ -111,8 +111,6 @@ omop.relationships <-
            list(data = "data.frame"))
 
 
-#' @title raw.omop.data S4 class
-#' @export
 setOldClass("dgr_graph")
 omop.graph <-
   setClass("omop.graph",

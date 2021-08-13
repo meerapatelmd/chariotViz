@@ -10,8 +10,8 @@ chariotViz(
   output = NULL,
   as_svg = FALSE,
   title = NULL,
-  width = NULL,
-  height = NULL
+  width = 1000,
+  height = 1000
 )
 }
 \arguments{
