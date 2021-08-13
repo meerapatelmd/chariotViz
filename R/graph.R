@@ -3,17 +3,6 @@
 #' @param nodes_and_edges PARAM_DESCRIPTION
 #' @param attr_theme PARAM_DESCRIPTION, Default: 'lr'
 #' @return OUTPUT_DESCRIPTION
-#' @details DETAILS
-#' @examples
-#' \dontrun{
-#' if(interactive()){
-#'  #EXAMPLE1
-#'  }
-#' }
-#' @seealso
-#'  \code{\link[rlang]{parse_expr}}
-#'  \code{\link[glue]{glue}}
-#'  \code{\link[DiagrammeR]{create_graph}}
 #' @rdname construct_graph
 #' @export
 #' @importFrom rlang parse_expr

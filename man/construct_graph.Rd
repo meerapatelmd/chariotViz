@@ -17,18 +17,3 @@ OUTPUT_DESCRIPTION
 \description{
 FUNCTION_DESCRIPTION
 }
-\details{
-DETAILS
-}
-\examples{
-\dontrun{
-if(interactive()){
- #EXAMPLE1
- }
-}
-}
-\seealso{
-\code{\link[rlang]{parse_expr}}
-\code{\link[glue]{glue}}
-\code{\link[DiagrammeR]{create_graph}}
-}
