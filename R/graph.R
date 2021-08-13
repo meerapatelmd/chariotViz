@@ -128,67 +128,93 @@ chariotViz <-
 #' }
 #' @seealso
 #'  \code{\link[dplyr]{tidyeval-compat}},\code{\link[dplyr]{filter}}
-#' @rdname filter_graph
+#' @rdname filter_nodes
 #' @export
 #' @importFrom dplyr enquos filter
-filter_graph <-
+filter_nodes <-
   function(omop_graph,
+           set_op = "intersect",
            ...) {
 
     preds <-
       dplyr::enquos(...)
 
     apply_filter <-
-      function(data,
-               ...) {
+      function(omop_graph,
+               pred) {
 
+        omop_graph@graph <-
         tryCatch(
-          data %>%
+          omop_graph@graph %>%
+          DiagrammeR::select_nodes(conditions = !!pred) %>%
             dplyr::filter(...),
-          error = function(e) data
+          error = function(e) omop_graph@graph
         )
 
+        omop_graph
 
       }
 
     for (pred in preds) {
-      nodes0 <-
-        omop_graph@src@nodes@data %>%
-        apply_filter(!!pred)
-
-      edges0 <-
-      omop_graph@src@edges@data <-
-        omop_graph@src@edges@data %>%
+      omop_graph <-
+        omop_graph %>%
         apply_filter(!!pred)
 
     }
 
-    # If the filter is applied to a node, then
-    # then filtering edges based on `from` and `to`
+    omop_graph
 
-   edges1 <-
-      dplyr::bind_rows(
-        edges0 %>%
-          dplyr::filter(from %in% nodes0$id),
-        edges0 %>%
-          dplyr::filter(to %in% nodes0$id)) %>%
-      dplyr::distinct() %>%
-     distinct()
+  }
 
 
-   nodes1 <-
-   omop_graph@src@nodes@data %>%
-     dplyr::filter(id %in% unique(c(edges1$from, edges1$to))) %>%
-     distinct()
+#' @title FUNCTION_TITLE
+#' @description FUNCTION_DESCRIPTION
+#' @param omop_graph PARAM_DESCRIPTION
+#' @param ... PARAM_DESCRIPTION
+#' @return OUTPUT_DESCRIPTION
+#' @details DETAILS
+#' @examples
+#' \dontrun{
+#' if(interactive()){
+#'  #EXAMPLE1
+#'  }
+#' }
+#' @seealso
+#'  \code{\link[dplyr]{tidyeval-compat}},\code{\link[dplyr]{filter}}
+#' @rdname filter_edges
+#' @export
+#' @importFrom dplyr enquos filter
+filter_edges <-
+  function(omop_graph,
+           set_op = "intersect",
+           ...) {
 
-   new_nodes_and_edges <-
-     new(Class = "nodes.and.edges",
-         list(nodes = nodes1,
-              edges = edges1))
+    preds <-
+      dplyr::enquos(...)
 
+    apply_filter <-
+      function(omop_graph,
+               pred) {
 
+        omop_graph@graph <-
+          tryCatch(
+            omop_graph@graph %>%
+              DiagrammeR::select_edges(conditions = !!pred) %>%
+              dplyr::filter(...),
+            error = function(e) omop_graph@graph
+          )
 
-    construct_graph(
-      nodes_and_edges = new_nodes_and_edges
-    )
+        omop_graph
+
+      }
+
+    for (pred in preds) {
+      omop_graph <-
+        omop_graph %>%
+        apply_filter(!!pred)
+
+    }
+
+    omop_graph
+
   }
