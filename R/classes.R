@@ -153,18 +153,18 @@ setValidity(
   method = validNE
 )
 
-#
-#
-#
-#
-# setMethod("print",
-#           signature(x = "nodes"),
-#           function(x,...) print(x@data,...))
-#
-# setMethod("print",
-#           signature(x = "nodes"),
-#           function(x,...) print(x@data,...))
-#
-# setMethod("print",
-#           signature(x = "nodes.and.edges"),
-#           function(x, ...) print(list(x@Nodes,x@Edges)))
+
+
+
+
+setMethod("print",
+          signature(x = "nodes"),
+          function(x,...) print(x@data,...))
+
+setMethod("print",
+          signature(x = "nodes"),
+          function(x,...) print(x@data,...))
+
+setMethod("print",
+          signature(x = "nodes.and.edges"),
+          function(x, ...) print(list(x@Nodes,x@Edges)))
