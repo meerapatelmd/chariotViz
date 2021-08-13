@@ -15,63 +15,48 @@ knitr::opts_chunk$set(
 ```
 
 ```{r setup}
-library(chariot2)
+library(chariotViz)
 library(tidyverse)
-```
 
-This package creates a properly formatted output from the OMOP 
-Vocabularies for consumption by the DiagrammeR package.  
-
-```{r,results='hide'}
-# Fetch from Postgres  
-nodes_and_edges <-
-  fetch_concept_classes()
-
-# Customize Nodes Attributes  
-nodes_and_edges <-
-  map_node_attributes(nodes_and_edges)
-
-# Customize Edge Attributes
-nodes_and_edges <-
-  map_edge_attributes(nodes_and_edges)
-
-# Construct Final Graph
-final_graph <-
-  construct_graph(nodes_and_edges)
-final_graph$graph
+atc_rel <-
+  fetch_omop("ATC", 
+             "RxNorm",
+             version_key = get_version_key())
+atc_ne <- 
+  create_nodes_and_edges(omop_relationships = atc_rel)
+atc_ne <- 
+  add_tooltip(atc_ne)
+atc_ne <- 
+  map_node_attributes(atc_ne,
+                      fontsize = 34)
+atc_ne <- 
+  map_edge_attributes(atc_ne)
+atc_graph <- 
+  construct_graph(atc_ne)
 ```
 
 
 ```{r}
 library(DiagrammeR)
-```
-
-```{r}
-final_graph$graph %>%
-  select_nodes(vocabulary_id == "ATC") %>%
-  trav_out_edge() %>%
-  select_nodes(vocabulary_id %in% c("ATC")) %>%
+atc_graph@graph %>% 
+  select_nodes(
+    conditions = vocabulary_id %in% c("ATC")) %>%
+  select_nodes(
+    conditions = vocabulary_id %in% c("RxNorm"),
+    set_op = "union") %>%
   transform_to_subgraph_ws() %>%
-  render_graph()
-```
+  render_graph(width = 1500,
+               height = 1500)
 
 
-```{r}
-final_graph$graph %>%
-  select_nodes(vocabulary_id == "ATC") %>%
-  trav_out_until(max_steps = 1) %>%
+atc_graph@graph %>% 
+  select_nodes(
+    conditions = vocabulary_id %in% c("RxNorm")) %>%
+  select_nodes(
+    conditions = vocabulary_id %in% c("RxNorm"),
+    set_op = "union") %>%
   transform_to_subgraph_ws() %>%
-  render_graph()
+  render_graph(width = 1500,
+               height = 1500)
 ```
 
-
-```{r}
-final_graph$graph %>%
-  select_nodes(vocabulary_id == "ATC") %>%
-  trav_out_edge() %>%
-  select_nodes(vocabulary_id %in% c("ATC")) %>%
-  trav_out_edge() %>%
-  #select_nodes(vocabulary_id %in% c("RxNorm")) %>%
-  transform_to_subgraph_ws() %>%
-  render_graph()
-```

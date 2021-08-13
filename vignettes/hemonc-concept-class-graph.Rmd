@@ -24,8 +24,12 @@ Vocabularies for consumption by the DiagrammeR package.
 
 ```{r,results='hide'}
 # Fetch from Postgres  
-nodes_and_edges <-
-  fetch_concept_classes()
+omop_relationships <-
+  fetch_omop("HemOnc",
+             version_key = get_version_key())
+nodes_and_edges <- 
+  create_nodes_and_edges(omop_relationships = 
+                           omop_relationships)
 ```
 
 ```{r}
@@ -45,7 +49,6 @@ nodes_and_edges <-
 # Construct Final Graph
 final_graph <-
   construct_graph(nodes_and_edges)
-final_graph$graph
 ```
 
 
@@ -54,7 +57,7 @@ library(DiagrammeR)
 ```
 
 ```{r}
-final_graph$graph %>%
+final_graph@graph %>%
   select_nodes(type == "Component") %>%
   transform_to_subgraph_ws() %>%
   render_graph(width = 250,
@@ -63,7 +66,7 @@ final_graph$graph %>%
 
 ```{r}
 component_graph <- 
-final_graph$graph %>%
+final_graph@graph %>%
   select_nodes(type == "Component") %>%
   trav_out() %>%
   transform_to_subgraph_ws() 
@@ -85,18 +88,18 @@ component_graph_legend[[1]]
 
 
 ```{r}
-final_graph$graph %>%
+final_graph@graph %>%
   select_nodes(type == "Component") %>%
   trav_in() %>%
   transform_to_subgraph_ws() %>%
   render_graph(
-             width = 1500,
-             height = 1500)
+             width = 750,
+             height = 750)
 ```
 
 ```{r}
 hemonc_graph <- 
-final_graph$graph %>%
+final_graph@graph %>%
   select_nodes(vocabulary_id == "HemOnc") %>%
   trav_out_edge() %>%
   transform_to_subgraph_ws() 
@@ -114,7 +117,7 @@ create_legend(hemonc_graph) %>%
 
 
 ```{r}
-final_graph$graph %>%
+final_graph@graph %>%
   select_nodes(vocabulary_id == "HemOnc") %>%
   trav_out_edge() %>%
   select_nodes(vocabulary_id == "HemOnc") %>%
@@ -124,7 +127,7 @@ final_graph$graph %>%
 ```
 
 ```{r}
-final_graph$graph %>%
+final_graph@graph %>%
   select_nodes(vocabulary_id == "HemOnc") %>%
   trav_out_edge(rel == "Subsumes") %>%
   transform_to_subgraph_ws() %>%

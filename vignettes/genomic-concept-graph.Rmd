@@ -1,0 +1,72 @@
+---
+title: "Genomic Concept Graph"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Genomic Concept Graph}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+```{r setup}
+library(chariotViz)
+library(tidyverse)
+library(DiagrammeR)
+```
+
+
+```{r}
+omop_rel <- 
+  fetch_omop(version_key = get_version_key())
+omop_ne <- 
+  create_nodes_and_edges(omop_relationships = omop_rel)
+omop_ne <- 
+  add_tooltip(omop_ne)
+omop_ne <- 
+  map_node_attributes(omop_ne,
+                      fontsize = 34)
+omop_ne <- 
+  map_edge_attributes(omop_ne)
+omop_graph <- 
+  construct_graph(omop_ne)
+
+
+omop_graph@graph %>% 
+  select_nodes(
+    conditions = vocabulary_id %in% c("ClinVar")) %>%
+  trav_out() %>%
+  transform_to_subgraph_ws() %>%
+  render_graph(width = 1500,
+               height = 1500)
+
+
+omop_graph@graph %>% 
+  select_nodes(
+    conditions = vocabulary_id %in% c("JAX")) %>%
+  trav_out() %>%
+  transform_to_subgraph_ws() %>%
+  render_graph(width = 1500,
+               height = 1500)
+
+omop_graph@graph %>% 
+  select_nodes(
+    conditions = concept_class_id %in% c("DNA Variant")) %>%
+  trav_out() %>%
+  transform_to_subgraph_ws() %>%
+  render_graph(width = 1500,
+               height = 1500)
+
+omop_graph@graph %>% 
+  select_nodes(
+    conditions = concept_class_id %in% c("Protein Variant")) %>%
+  trav_out() %>%
+  transform_to_subgraph_ws() %>%
+  render_graph(width = 1500, 
+               height = 1500)
+```
