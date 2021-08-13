@@ -67,7 +67,8 @@ library(DiagrammeR)
 snomed_graph@graph %>% 
   select_nodes(concept_class_id == "Qualifier Value") %>%
   transform_to_subgraph_ws() %>%
-  render_graph()
+  render_graph(width = 1000,
+               height = 1000)
 ```
 
 ```{r}
@@ -75,6 +76,7 @@ snomed_graph@graph %>%
   select_nodes(concept_class_id == "Qualifier Value") %>%
   select_nodes(vocabulary_id == "SNOMED", set_op = "intersect") %>%
   transform_to_subgraph_ws() %>%
-  render_graph()
+  render_graph(width = 1000, 
+               height = 1000)
 ```
 
