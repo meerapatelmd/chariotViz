@@ -161,6 +161,25 @@ validNodeCount <-
     }
   }
 
+
+validNodeRows <-
+  function(object) {
+
+    if (nrow(object@data) == max(object@data$id)) {
+
+      TRUE
+
+    } else {
+
+
+      glue::glue("There are {nrow(object@data)} row{?s} in the node dataframe, but the max `id`
+                 is {max(object@data$id)}.")
+
+    }
+
+
+  }
+
 setValidity(
   Class = "nodes",
   method = validNE
@@ -172,6 +191,10 @@ setValidity(
   method = validNodeCount
 )
 
+setValidity(
+  Class = "nodes",
+  method = validNodeRows
+)
 
 setValidity(
   Class = "edges",
