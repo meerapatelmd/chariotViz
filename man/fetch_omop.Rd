@@ -5,6 +5,7 @@
 \title{Fetch OMOP Data}
 \usage{
 fetch_omop(
+  ...,
   conn,
   conn_fun = "pg13::local_connect(verbose=FALSE)",
   type_from = concept_class_id,
@@ -12,8 +13,7 @@ fetch_omop(
   schema = "omop_vocabulary",
   verbose = FALSE,
   render_sql = FALSE,
-  version_key,
-  ...
+  version_key
 )
 }
 \arguments{

@@ -178,15 +178,15 @@ delete_cache <-
 #' @import cli
 #' @importFrom purrr transpose map reduce
 fetch_omop <-
-  function(conn,
+  function(...,
+           conn,
            conn_fun = "pg13::local_connect(verbose=FALSE)",
            type_from = concept_class_id,
            label_glue = "{vocabulary_id}\n{concept_class_id}\n({standard_concept})\n",
            schema = "omop_vocabulary",
            verbose = FALSE,
            render_sql = FALSE,
-           version_key,
-           ...) {
+           version_key) {
 
     stopifnot(!missing(version_key))
     # Converted to list for consumption by R.cache
@@ -252,7 +252,6 @@ fetch_omop <-
 
 
       vocabulary_ids <- unlist(rlang::list2(...))
-
 
     } else {
 
