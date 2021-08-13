@@ -143,9 +143,33 @@ validNE <-
 
   }
 
+
+validNodeCount <-
+  function(object) {
+
+    if (nrow(object@data) == nrow(object@data %>% distinct(domain_id, vocabulary_id, concept_class_id, standard_concept))) {
+
+
+      TRUE
+
+
+    } else {
+
+      glue::glue("There are {nrow(object@data %>% distinct(domain_id, vocabulary_id, concept_class_id, standard_concept))} unique node{?s} (defined by unique combinations of domain, vocabulary, concept_class, and standard_concept) while there are {nrow(object@data)} row{?s} in `nodes`.")
+
+
+    }
+  }
+
 setValidity(
   Class = "nodes",
   method = validNE
+)
+
+
+setValidity(
+  Class = "nodes",
+  method = validNodeCount
 )
 
 
