@@ -1,0 +1,88 @@
+---
+title: "Getting Started"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Getting Started}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  cache.path = file.path(R.cache::getCachePath(),
+                         "chariotViz",
+                         "vignettes"),
+  cache = TRUE
+)
+```
+
+```{r setup}
+library(chariotViz)
+```
+
+```{r}
+omop_relationships <- 
+  fetch_omop("SNOMED", 
+             version_key = get_version_key())
+omop_relationships
+```
+
+```{r}
+omop_nodes_and_edges <- 
+  create_nodes_and_edges(omop_relationships = omop_relationships)
+```
+
+
+```{r}
+omop_nodes_and_edges <- 
+  omop_nodes_and_edges %>% 
+  add_tooltip()
+```
+
+
+```{r}
+omop_nodes_and_edges <- 
+  omop_nodes_and_edges %>%
+  map_node_attributes()
+```
+
+```{r}
+omop_nodes_and_edges <- 
+  omop_nodes_and_edges %>% 
+  map_edge_attributes()
+```
+
+```{r}
+snomed_graph <- 
+  construct_graph(omop_nodes_and_edges)
+```
+
+```{r}
+library(DiagrammeR)
+```
+
+```{r}
+snomed_graph@graph %>% 
+  select_nodes(concept_class_id == "Qualifier Value") %>%
+  transform_to_subgraph_ws() %>%
+  render_graph()
+```
+
+```{r}
+snomed_graph@graph %>% 
+  select_nodes(concept_class_id == "Qualifier Value") %>%
+  select_nodes(vocabulary_id == "SNOMED", set_op = "intersect") %>%
+  transform_to_subgraph_ws() %>%
+  render_graph()
+```
+
+```{r}
+snomed_graph@graph %>% 
+  select_nodes(concept_class_id == "Qualifier Value") %>%
+  select_nodes(vocabulary_id == "SNOMED", set_op = "union") %>%
+  transform_to_subgraph_ws() %>%
+  render_graph()
+```
+

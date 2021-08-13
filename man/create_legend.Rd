@@ -18,16 +18,3 @@ FUNCTION_DESCRIPTION
 \details{
 DETAILS
 }
-\examples{
-\dontrun{
-if(interactive()){
- #EXAMPLE1
- }
-}
-}
-\seealso{
-\code{\link[purrr]{set_names}},\code{\link[purrr]{transpose}},\code{\link[purrr]{map}}
-\code{\link[glue]{glue}}
-\code{\link[huxtable]{huxtable}},\code{\link[huxtable]{background_color}},\code{\link[huxtable]{by_rows}},\code{\link[huxtable]{themes}}
-\code{\link[dplyr]{select}}
-}

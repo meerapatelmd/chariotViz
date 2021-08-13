@@ -3,19 +3,8 @@
 #' @param graph PARAM_DESCRIPTION
 #' @return OUTPUT_DESCRIPTION
 #' @details DETAILS
-#' @examples 
-#' \dontrun{
-#' if(interactive()){
-#'  #EXAMPLE1
-#'  }
-#' }
-#' @seealso 
-#'  \code{\link[purrr]{set_names}},\code{\link[purrr]{transpose}},\code{\link[purrr]{map}}
-#'  \code{\link[glue]{glue}}
-#'  \code{\link[huxtable]{huxtable}},\code{\link[huxtable]{background_color}},\code{\link[huxtable]{by_rows}},\code{\link[huxtable]{themes}}
-#'  \code{\link[dplyr]{select}}
 #' @rdname create_legend
-#' @export 
+#' @export
 #' @importFrom purrr set_names transpose map
 #' @importFrom glue glue
 #' @importFrom huxtable hux map_background_color by_rows theme_article
@@ -141,16 +130,16 @@ create_legend <-
 #' @param ... PARAM_DESCRIPTION
 #' @return OUTPUT_DESCRIPTION
 #' @details DETAILS
-#' @examples 
+#' @examples
 #' \dontrun{
 #' if(interactive()){
 #'  #EXAMPLE1
 #'  }
 #' }
-#' @seealso 
+#' @seealso
 #'  \code{\link[huxtable]{huxtable}},\code{\link[huxtable]{background_color}}
 #' @rdname hux_colorize
-#' @export 
+#' @export
 #' @importFrom huxtable hux map_background_color
 hux_colorize <-
   function(ht,
@@ -227,16 +216,16 @@ hux_colorize <-
 #' @param scientific PARAM_DESCRIPTION, Default: FALSE
 #' @return OUTPUT_DESCRIPTION
 #' @details DETAILS
-#' @examples 
+#' @examples
 #' \dontrun{
 #' if(interactive()){
 #'  #EXAMPLE1
 #'  }
 #' }
-#' @seealso 
+#' @seealso
 #'  \code{\link[huxtable]{huxtable}}
 #' @rdname hux_pretty_numbers
-#' @export 
+#' @export
 #' @importFrom huxtable hux
 hux_pretty_numbers <-
   function(ht,
@@ -265,16 +254,16 @@ hux_pretty_numbers <-
 #' @param digits PARAM_DESCRIPTION, Default: 1
 #' @return OUTPUT_DESCRIPTION
 #' @details DETAILS
-#' @examples 
+#' @examples
 #' \dontrun{
 #' if(interactive()){
 #'  #EXAMPLE1
 #'  }
 #' }
-#' @seealso 
+#' @seealso
 #'  \code{\link[huxtable]{huxtable}}
 #' @rdname hux_pretty_percents
-#' @export 
+#' @export
 #' @importFrom huxtable hux
 hux_pretty_percents <-
   function(ht,
@@ -303,14 +292,14 @@ hux_pretty_percents <-
 #' @param ignore_na PARAM_DESCRIPTION, Default: TRUE
 #' @return OUTPUT_DESCRIPTION
 #' @details DETAILS
-#' @examples 
+#' @examples
 #' \dontrun{
 #' if(interactive()){
 #'  #EXAMPLE1
 #'  }
 #' }
 #' @rdname hux_bold_values
-#' @export 
+#' @export
 hux_bold_values <-
   function(ht,
            ...,

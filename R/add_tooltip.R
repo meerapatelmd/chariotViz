@@ -17,10 +17,7 @@ add_tooltip <-
     dplyr::left_join(
     nodes_and_edges@nodes@data,
     nodes_and_edges@nodes@data %>%
-      dplyr::select(id,
-                    !dplyr::any_of(nodes_and_edges@nodes@attribute_fields),
-                    !dplyr::any_of("label"),
-                    dplyr::any_of("tooltip")) %>%
+      dplyr::select(dplyr::any_of(nodes_and_edges@nodes@tooltip_fields)) %>%
       dplyr::mutate_at(dplyr::vars(!id), as.character) %>%
       tidyr::pivot_longer(cols = !id) %>%
       tidyr::unite(col = tooltip_row,
@@ -39,30 +36,28 @@ add_tooltip <-
 
     edges_data_w_id <-
         nodes_and_edges@edges@data %>%
-          dplyr::mutate_all(as.character) %>%
-          tibble::rowid_to_column()
+          dplyr::mutate_all(as.character) # %>%
+ #         tibble::rowid_to_column()
 
     edges_data_w_tooltip <-
     dplyr::left_join(
       edges_data_w_id,
       edges_data_w_id %>%
-        dplyr::select(!dplyr::any_of(nodes_and_edges@edges@attribute_fields),
-                      !dplyr::any_of("label"),
-                      !dplyr::any_of("rel")) %>%
-        tidyr::pivot_longer(cols = !rowid) %>%
+        dplyr::select(dplyr::any_of(nodes_and_edges@edges@tooltip_fields)) %>%
+        tidyr::pivot_longer(cols = !id) %>%
         tidyr::unite(tooltip_row,
                      name,
                      value,
                      sep = ": ",
                      na.rm = FALSE) %>%
-        dplyr::group_by(rowid) %>%
+        dplyr::group_by(id) %>%
         dplyr::summarize(labeltooltip =
                            paste(tooltip_row,
                                  collapse = "\n"),
                          .groups = "drop") %>%
         dplyr::ungroup(),
-      by = "rowid") %>%
-    dplyr::select(-rowid) %>%
+      by = "id") %>%
+    dplyr::select(-id) %>%
     dplyr::distinct()
 
     if (nrow(edges_data_w_tooltip) != nrow(nodes_and_edges@edges@data)) {
@@ -72,8 +67,8 @@ add_tooltip <-
 
     }
 
-nodes_and_edges@edges@data <-
-  edges_data_w_tooltip
+  nodes_and_edges@edges@data <-
+    edges_data_w_tooltip
 
     nodes_and_edges
   }

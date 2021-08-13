@@ -9,7 +9,9 @@ nodes <-
     Class = "nodes",
     slots = c(data = "data.frame",
               required_fields = "character",
-              attribute_fields = "character"),
+              attribute_fields = "character",
+              tooltip_fields = "character",
+              node_fields = "character"),
     prototype = list(data = tibble::tibble(),
                      required_fields = c("id", "type", "label"),
                      attribute_fields =   c(
@@ -39,8 +41,16 @@ nodes <-
                          'fixedsize',
                          'labelloc',
                          'margin'
-                       )
-                     ))
+                       ),
+                     tooltip_fields =
+                       c('id',
+                         'domain_id',
+                         'vocabulary_id',
+                         'concept_class_id',
+                         'standard_concept',
+                         'total_concept_class_ct',
+                         'total_vocabulary_ct'),
+                     node_fields = c('domain_id', 'vocabulary_id', 'concept_class_id', 'standard_concept', 'total_concept_class_ct', 'total_vocabulary_ct')))
 
 
 #' @title edges S4 class
@@ -54,7 +64,9 @@ setClass(
   Class = "edges",
   slots = c(data = "data.frame",
             required_fields = "character",
-            attribute_fields = "character"),
+            attribute_fields = "character",
+            tooltip_fields = "character",
+            edge_fields = "character"),
   prototype = list(data = tibble::tibble(),
                    required_fields = c("from", "to", "label", "rel"),
                    attribute_fields =   c(
@@ -89,9 +101,38 @@ setClass(
                      'tailclip',
                      'taillabel',
                      'tailport',
-                     'decorate'
-                   ))
-)
+                     'decorate'),
+                   tooltip_fields =
+                     c('id',
+                       'from',
+                       'to',
+                       'relationship_id',
+                       'relationship_name',
+                       'is_hierarchical',
+                       'defines_ancestry',
+                       'concept_1_coverage_frac',
+                       'concept_2_coverage_frac',
+                       'domain_id_1',
+                       'vocabulary_id_1',
+                       'concept_class_id_1',
+                       'standard_concept_1',
+                       'concept_count_1',
+                       'total_concept_class_ct_1',
+                       'total_vocabulary_ct_1',
+                       'domain_id_2',
+                       'vocabulary_id_2',
+                       'concept_class_id_2',
+                       'standard_concept_2',
+                       'concept_count_2',
+                       'total_concept_class_ct_2',
+                       'total_vocabulary_ct_2'),
+                  edge_fields =
+                     c('relationship_id',
+                       'relationship_name',
+                       'is_hierarchical',
+                       'defines_ancestry',
+                       'domain_id_1', 'vocabulary_id_1', 'concept_class_id_1', 'standard_concept_1', 'concept_count_1', 'total_concept_class_ct_1', 'total_vocabulary_ct_1', 'domain_id_2', 'vocabulary_id_2', 'concept_class_id_2', 'standard_concept_2', 'concept_count_2', 'total_concept_class_ct_2', 'total_vocabulary_ct_2')
+))
 
 #' @title nodes.and.edges S4 class
 #' @export
@@ -160,6 +201,7 @@ validNodeCount <-
   }
 
 
+
 validNodeRows <-
   function(object) {
 
@@ -176,6 +218,42 @@ validNodeRows <-
     }
 
 
+  }
+
+
+validEdgeRows <-
+  function(object) {
+
+    if (nrow(object@data) == max(object@data$id)) {
+
+      TRUE
+
+    } else {
+
+
+      glue::glue("There are {nrow(object@data)} row{?s} in the edge dataframe, but the max `id`
+                 is {max(object@data$id)}.")
+
+    }
+
+
+  }
+
+validEdgeCount <-
+  function(object) {
+
+    if (nrow(object@data) == nrow(object@data %>% distinct(label_1, label_2, relationship_id))) {
+
+
+      TRUE
+
+
+    } else {
+
+      glue::glue("There are {nrow(object@data %>% distinct(label_1, label_2, relationship_id))} unique edge{?s} (defined by unique combinations of label_1, label_2, and relationship_id) while there are {nrow(object@data)} row{?s} in `edges`.")
+
+
+    }
   }
 
 setValidity(
@@ -199,9 +277,15 @@ setValidity(
   method = validNE
 )
 
+setValidity(
+  Class = "edges",
+  method = validEdgeRows
+)
 
-
-
+setValidity(
+  Class = "edges",
+  method = validEdgeCount
+)
 
 # setMethod("print",
 #           signature(x = "nodes"),
