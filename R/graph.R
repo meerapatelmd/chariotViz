@@ -118,7 +118,6 @@ construct_graph <-
       )
 
 
-    final_data <-
       new("omop.graph",
           graph = final_graph,
           src   = nodes_and_edges
