@@ -57,7 +57,6 @@ add_tooltip <-
                          .groups = "drop") %>%
         dplyr::ungroup(),
       by = "id") %>%
-    dplyr::select(-id) %>%
     dplyr::distinct()
 
     if (nrow(edges_data_w_tooltip) != nrow(nodes_and_edges@edges@data)) {

@@ -65,18 +65,68 @@ library(DiagrammeR)
 
 ```{r}
 snomed_graph@graph %>% 
+  count_nodes()
+
+snomed_graph@graph %>% 
+  count_edges()
+```
+
+
+```{r}
+snomed_graph2 <- 
+snomed_graph@graph %>% 
   select_nodes(concept_class_id == "Qualifier Value") %>%
-  transform_to_subgraph_ws() %>%
-  render_graph(width = 1000,
+  transform_to_subgraph_ws() 
+
+
+snomed_graph2 %>% 
+  count_nodes()
+
+snomed_graph2 %>% 
+  count_edges()
+
+
+snomed_graph2 %>%
+  render_graph(width = 250,
                height = 1000)
 ```
 
 ```{r}
+snomed_graph3 <- 
 snomed_graph@graph %>% 
   select_nodes(concept_class_id == "Qualifier Value") %>%
   select_nodes(vocabulary_id == "SNOMED", set_op = "intersect") %>%
-  transform_to_subgraph_ws() %>%
-  render_graph(width = 1000, 
+  transform_to_subgraph_ws() 
+
+
+snomed_graph3 %>% 
+  count_nodes()
+
+
+snomed_graph3 %>% 
+  count_edges()
+
+snomed_graph3 %>%
+  render_graph(width = 250, 
                height = 1000)
 ```
 
+```{r}
+snomed_graph4 <- 
+snomed_graph@graph %>% 
+  select_nodes(concept_class_id == "Qualifier Value") %>%
+  select_nodes(vocabulary_id == "SNOMED", set_op = "intersect") %>%
+  trav_out() %>%
+  transform_to_subgraph_ws() 
+
+
+snomed_graph4 %>% 
+  count_nodes()
+
+snomed_graph4$nodes_df
+
+snomed_graph4 %>% 
+  count_edges()
+
+snomed_graph4$edges_df
+```
