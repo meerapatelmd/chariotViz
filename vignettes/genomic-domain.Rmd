@@ -77,4 +77,12 @@ omop_graph <-
 print(omop_graph)
 ```
 
+```{r}
+chariotViz(
+  omop_graph = omop_graph,
+  force = TRUE, 
+  width = 2000,
+  height = 2000
+)
+```
 

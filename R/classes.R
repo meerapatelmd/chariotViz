@@ -348,9 +348,38 @@ setValidity(
   method = validEdgeId
 )
 
-# setMethod("print",
-#           signature(x = "nodes"),
-#           function(x,...) print(x@data,...))
+
+
+setMethod("print",
+          signature(x = "omop.relationships"),
+          function(x) print.data.frame(x@data,
+                            row.names = FALSE,
+                            max = 100))
+
+
+setMethod("print",
+          signature(x = "nodes"),
+          function(x) print.data.frame(x@data,
+                                       row.names = FALSE,
+                                       max = 100))
+
+
+setMethod("print",
+          signature(x = "edges"),
+          function(x) print.data.frame(x@data,
+                                       row.names = FALSE,
+                                       max = 100))
+
+
+setMethod("print",
+          signature(x = "nodes.and.edges"),
+          function(x) str(x)
+          )
+
+
+setMethod("print",
+          signature(x = "omop.graph"),
+          function(x) x@graph)
 
 # setMethod("print",
 #           signature(x = "edges"),
