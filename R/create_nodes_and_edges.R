@@ -84,10 +84,10 @@ create_nodes_and_edges <-
       dplyr::distinct() %>%
       dplyr::mutate(concept_1_coverage_frac = glue::glue("{concept_count_1}/{total_concept_class_ct_1}"),
                     concept_2_coverage_frac = glue::glue("{concept_count_2}/{total_concept_class_ct_2}")) %>%
-      dplyr::mutate(tailtooltip = purrr::map(concept_1_coverage_frac, function(x) scales::percent(eval(rlang::parse_expr(x))))) %>%
-      dplyr::mutate(headtooltip = purrr::map(concept_2_coverage_frac, function(x) scales::percent(eval(rlang::parse_expr(x))))) %>%
-      dplyr::mutate(tailtooltip = unlist(tailtooltip)) %>%
-      dplyr::mutate(headtooltip = unlist(headtooltip)) %>%
+      dplyr::mutate(concept_1_coverage = purrr::map(concept_1_coverage_frac, function(x) scales::percent(eval(rlang::parse_expr(x))))) %>%
+      dplyr::mutate(concept_2_coverage = purrr::map(concept_2_coverage_frac, function(x) scales::percent(eval(rlang::parse_expr(x))))) %>%
+      dplyr::mutate(concept_1_coverage = unlist(concept_1_coverage)) %>%
+      dplyr::mutate(concept_2_coverage = unlist(concept_2_coverage)) %>%
       dplyr::mutate(rel = relationship_id,
                     label = relationship_name) %>%
       tibble::rowid_to_column("id")
