@@ -87,6 +87,18 @@
 <li>
   <a href="../reference/index.html">Reference</a>
 </li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    Articles
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="../articles/getting-started.html">Getting Started</a>
+    </li>
+  </ul>
+</li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
         <li>
@@ -109,7 +121,7 @@
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>FUNCTION_TITLE</h1>
-    <small class="dont-index">Source: <a href='https://github.com/mpatel-cai/chariot2/blob/master/R/graph.R'><code>R/graph.R</code></a></small>
+    <small class="dont-index">Source: <a href='https://github.com/mpatel-cai/chariot2/blob/master/R/chariotViz.R'><code>R/chariotViz.R</code></a></small>
     <div class="hidden name"><code>chariotViz.Rd</code></div>
     </div>
 
@@ -119,6 +131,9 @@
 
     <pre class="usage"><span class='fu'>chariotViz</span><span class='op'>(</span>
   <span class='va'>omop_graph</span>,
+  node_count_cutoff <span class='op'>=</span> <span class='fl'>30</span>,
+  include_counts <span class='op'>=</span> <span class='cn'>TRUE</span>,
+  force <span class='op'>=</span> <span class='cn'>FALSE</span>,
   layout <span class='op'>=</span> <span class='cn'>NULL</span>,
   output <span class='op'>=</span> <span class='cn'>NULL</span>,
   as_svg <span class='op'>=</span> <span class='cn'>FALSE</span>,
