@@ -22,7 +22,7 @@ knitr::opts_chunk$set(
 library(chariotViz)
 ```
 
-```{r}
+```{r,cache=T}
 omop_relationships <- 
   fetch_omop("SNOMED", 
              version_key = get_version_key())
