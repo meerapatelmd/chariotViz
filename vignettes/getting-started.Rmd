@@ -133,17 +133,17 @@ snomed_graph@graph %>%
   select_nodes(concept_class_id == "Qualifier Value") %>%
   select_nodes(vocabulary_id == "SNOMED", set_op = "intersect") %>%
   select_nodes(vocabulary_id == "RxNorm", set_op = "union") %>%
-  transform_to_subgraph_ws() 
+  subgraph(src = snomed_graph@src)
 
 
-snomed_graph5 %>% 
+snomed_graph5@graph %>% 
   count_nodes()
 
 
-snomed_graph5 %>% 
+snomed_graph5@graph %>% 
   count_edges()
 
-render_graph(snomed_graph5)
+chariotViz(snomed_graph5)
 ```
 
 
@@ -156,13 +156,162 @@ snomed_graph@graph %>%
     select_nodes(concept_class_id == "Qualifier Value") %>%
     select_nodes(vocabulary_id == "SNOMED", set_op = "intersect") %>%
     get_selection()) %>% 
-  transform_to_subgraph_ws() 
+  select_edges(
+    to = 
+        snomed_graph@graph %>% 
+    select_nodes(vocabulary_id == "RxNorm", set_op = "union") %>%
+    get_selection(),
+    set_op = "intersect") %>%
+  subgraph(src = snomed_graph@src)
 
 
-snomed_graph6 %>% 
+snomed_graph6@graph %>% 
   count_nodes()
 
 
-snomed_graph6 %>% 
+snomed_graph6@graph %>% 
   count_edges()
+
+chariotViz(snomed_graph6)
+```
+
+```{r}
+snomed_graph7 <- 
+snomed_graph@graph %>% 
+  select_edges(
+    from = 
+    snomed_graph@graph %>% 
+    select_nodes(vocabulary_id == "SNOMED") %>%
+    get_selection()) %>% 
+  select_edges(
+    to = 
+        snomed_graph@graph %>% 
+    select_nodes(vocabulary_id == "RxNorm") %>%
+    get_selection(),
+    set_op = "intersect") %>%
+  subgraph(src = snomed_graph@src)
+
+
+snomed_graph7@graph %>% 
+  count_nodes()
+
+
+snomed_graph7@graph %>% 
+  count_edges()
+
+chariotViz(snomed_graph7)
+```
+
+```{r}
+snomed_graph8 <- 
+snomed_graph@graph %>% 
+  select_edges(
+    from = 
+    snomed_graph@graph %>% 
+    select_nodes(vocabulary_id == "SNOMED") %>%
+    get_selection()) %>% 
+  select_edges(
+    to = 
+        snomed_graph@graph %>% 
+    select_nodes(vocabulary_id == "SNOMED") %>%
+    get_selection(),
+    set_op = "intersect") %>%
+  subgraph(src = snomed_graph@src)
+
+
+snomed_graph8@graph %>% 
+  count_nodes()
+
+
+snomed_graph8@graph %>% 
+  count_edges()
+
+chariotViz(snomed_graph8)
+```
+
+
+```{r}
+snomed_graph8 <- 
+snomed_graph@graph %>% 
+  select_edges(
+    from = 
+    snomed_graph@graph %>% 
+    select_nodes(vocabulary_id == "SNOMED") %>%
+    select_nodes(concept_class_id == "Clinical Drug",
+                 set_op = "intersect") %>%
+    get_selection()) %>% 
+  select_edges(
+    to = 
+        snomed_graph@graph %>% 
+    select_nodes(vocabulary_id == "SNOMED") %>%
+    get_selection(),
+    set_op = "intersect") %>%
+  subgraph(src = snomed_graph@src)
+
+
+snomed_graph8@graph %>% 
+  count_nodes()
+
+
+snomed_graph8@graph %>% 
+  count_edges()
+
+chariotViz(snomed_graph8)
+```
+
+
+```{r}
+snomed_graph8 <- 
+snomed_graph@graph %>% 
+  select_edges(
+    from = 
+    snomed_graph@graph %>% 
+    select_nodes(vocabulary_id == "SNOMED") %>%
+    select_nodes(concept_class_id == "Clinical Drug",
+                 set_op = "intersect") %>%
+    get_selection()) %>% 
+  select_edges(
+    to = 
+        snomed_graph@graph %>% 
+    select_nodes(vocabulary_id != "SNOMED") %>%
+    get_selection(),
+    set_op = "intersect") %>%
+  subgraph(src = snomed_graph@src)
+
+
+snomed_graph8@graph %>% 
+  count_nodes()
+
+
+snomed_graph8@graph %>% 
+  count_edges()
+
+chariotViz(snomed_graph8)
+```
+
+
+```{r}
+snomed_graph8 <- 
+snomed_graph@graph %>% 
+  select_edges(
+    from = filter_node_id_1(snomed_graph,
+                            vocabulary_id_1 == "SNOMED",
+                             concept_class_id_1 == "Qualifier Value"),
+    to  = filter_node_id_2(snomed_graph, 
+                           !(vocabulary_id_2 %in% "SNOMED"),
+                           concept_class_id_2 != "Qualifier Value")) %>%
+  subgraph(src = snomed_graph@src)
+
+
+chariotViz(snomed_graph8)
+```
+
+```{r}
+from_counts <- view_from_counts(snomed_graph8)
+from_counts
+```
+
+```{r}
+to_counts <- view_to_counts(snomed_graph8)
+to_counts
 ```

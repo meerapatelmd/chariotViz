@@ -22,6 +22,7 @@
 #' @importFrom DiagrammeR render_graph
 chariotViz <-
   function(omop_graph,
+           node_count_cutoff = 30,
            force = FALSE,
            layout = NULL,
            output = NULL,
@@ -36,9 +37,13 @@ chariotViz <-
     node_count <-
       DiagrammeR::count_nodes(omop_graph@graph)
 
-    if (node_count > 20) {
+    edge_count <-
+      DiagrammeR::count_edges(omop_graph@graph)
 
-      readline(glue::glue("There are {node_code} nodes. To render anyways, set `force` to TRUE."))
+    if (node_count > node_count_cutoff) {
+
+      stop(glue::glue("There are {node_count} nodes and {edge_count} edges. To render anyways, set `force` to TRUE."),
+           call. = F)
 
     }
 

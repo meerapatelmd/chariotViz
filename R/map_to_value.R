@@ -5,18 +5,8 @@
 #' @param other PARAM_DESCRIPTION
 #' @return OUTPUT_DESCRIPTION
 #' @details DETAILS
-#' @examples 
-#' \dontrun{
-#' if(interactive()){
-#'  #EXAMPLE1
-#'  }
-#' }
-#' @seealso 
-#'  \code{\link[stringr]{str_replace_na}}
-#'  \code{\link[cli]{cli_alert}}
-#'  \code{\link[forcats]{fct_recode}}
 #' @rdname map_to_value
-#' @export 
+#' @export
 #' @importFrom stringr str_replace_na
 #' @importFrom cli cli_alert_warning cli_alert_success
 #' @importFrom forcats fct_recode

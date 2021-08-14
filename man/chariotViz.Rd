@@ -6,6 +6,7 @@
 \usage{
 chariotViz(
   omop_graph,
+  node_count_cutoff = 30,
   force = FALSE,
   layout = NULL,
   output = NULL,

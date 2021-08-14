@@ -11,41 +11,20 @@
 #'  }
 #' }
 #' @seealso
-#'  \code{\link[dplyr]{tidyeval-compat}},\code{\link[dplyr]{filter}}
-#' @rdname filter_nodes
+#'  \code{\link[dplyr]{filter}},\code{\link[dplyr]{select}}
+#' @rdname filter_node_id_1
 #' @export
-#' @importFrom dplyr enquos filter
-filter_nodes <-
+#' @importFrom dplyr filter select
+filter_node_id_1 <-
   function(omop_graph,
-           set_op = "intersect",
            ...) {
 
-    preds <-
-      dplyr::enquos(...)
-
-    apply_filter <-
-      function(omop_graph,
-               pred) {
-
-        omop_graph@graph <-
-          omop_graph@graph %>%
-          DiagrammeR::select_nodes(conditions = !!pred) %>%
-          DiagrammeR::trav_both() %>%
-          DiagrammeR::transform_to_subgraph_ws()
-
-        omop_graph
-
-      }
-
-    for (pred in preds) {
-      omop_graph <-
-        omop_graph %>%
-        apply_filter(!!pred)
-
-    }
-
-    omop_graph
-
+      dplyr::filter(omop_graph@graph$edges_df,
+                    ...)  %>%
+      dplyr::select(from) %>%
+      unlist() %>%
+      unname() %>%
+      unique()
   }
 
 
@@ -62,41 +41,46 @@ filter_nodes <-
 #'  }
 #' }
 #' @seealso
-#'  \code{\link[dplyr]{tidyeval-compat}},\code{\link[dplyr]{filter}}
-#' @rdname filter_edges
+#'  \code{\link[dplyr]{filter}},\code{\link[dplyr]{select}}
+#' @rdname filter_node_id_2
 #' @export
-#' @importFrom dplyr enquos filter
-filter_edges <-
+#' @importFrom dplyr filter select
+filter_node_id_2 <-
   function(omop_graph,
-           set_op = "intersect",
            ...) {
-
-    preds <-
-      dplyr::enquos(...)
-
-    apply_filter <-
-      function(omop_graph,
-               pred) {
-
-
-        omop_graph@graph <-
-          omop_graph@graph %>%
-          DiagrammeR::select_edges(conditions = !!pred) %>%
-          DiagrammeR::trav_both() %>%
-          DiagrammeR::transform_to_subgraph_ws()
+    omop_graph@graph$edges_df %>%
+      dplyr::filter(...) %>%
+      dplyr::select(from) %>%
+      unlist() %>%
+      unname() %>%
+      unique()
+  }
 
 
-        omop_graph
-
-      }
-
-    for (pred in preds) {
-      omop_graph <-
-        omop_graph %>%
-        apply_filter(!!pred)
-
-    }
-
-    omop_graph
-
+#' @title FUNCTION_TITLE
+#' @description FUNCTION_DESCRIPTION
+#' @param omop_graph PARAM_DESCRIPTION
+#' @param ... PARAM_DESCRIPTION
+#' @return OUTPUT_DESCRIPTION
+#' @details DETAILS
+#' @examples
+#' \dontrun{
+#' if(interactive()){
+#'  #EXAMPLE1
+#'  }
+#' }
+#' @seealso
+#'  \code{\link[dplyr]{filter}},\code{\link[dplyr]{select}}
+#' @rdname filter_edge_id
+#' @export
+#' @importFrom dplyr filter select
+filter_edge_id <-
+  function(omop_graph,
+           ...) {
+    omop_graph@graph$edges_df %>%
+      dplyr::filter(...) %>%
+      dplyr::select(id) %>%
+      unlist() %>%
+      unname() %>%
+      unique()
   }

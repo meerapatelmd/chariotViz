@@ -22,15 +22,3 @@ FUNCTION_DESCRIPTION
 \details{
 DETAILS
 }
-\examples{
-\dontrun{
-if(interactive()){
- #EXAMPLE1
- }
-}
-}
-\seealso{
-\code{\link[stringr]{str_replace_na}}
-\code{\link[cli]{cli_alert}}
-\code{\link[forcats]{fct_recode}}
-}

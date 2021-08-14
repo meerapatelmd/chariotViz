@@ -1,3 +1,18 @@
+
+
+color.assignment <-
+  setClass(
+    Class = "color.assignment",
+    "list"
+  )
+
+color.group.assignment <-
+  setClass(
+    Class = "color.group.assignment",
+    "list"
+  )
+
+
 #' @title nodes S4 class
 #' @slot data nodes dataframe
 #' @slot required_fields required fields for a nodes s4 class object
