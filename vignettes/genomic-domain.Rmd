@@ -1,0 +1,80 @@
+---
+title: "Genomic Domain"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Genomic Domain}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  error   = FALSE,
+  cache.path = file.path(R.cache::getCachePath(),
+                         "chariotViz",
+                         "vignettes")
+)
+```
+
+```{r}
+library(chariot)
+genomic_vocabularies <- 
+queryAthena("SELECT vocabulary_id,COUNT(*) FROM omop_vocabulary.concept WHERE LOWER(concept_class_id) LIKE '%variant%' GROUP BY vocabulary_id;")
+genomic_vocabularies
+```
+
+```{r setup}
+library(chariotViz)
+```
+
+```{r,cache=T}
+omop_relationships <- 
+  fetch_omop(!!!genomic_vocabularies$vocabulary_id,
+             version_key = get_version_key())
+
+print(omop_relationships)
+```
+
+```{r}
+omop_nodes_and_edges <- 
+  create_nodes_and_edges(omop_relationships = omop_relationships)
+
+print(omop_nodes_and_edges)
+```
+
+
+```{r}
+omop_nodes_and_edges <- 
+  omop_nodes_and_edges %>% 
+  add_tooltip()
+
+print(omop_nodes_and_edges)
+```
+
+
+```{r}
+omop_nodes_and_edges <- 
+  omop_nodes_and_edges %>%
+  map_node_attributes()
+
+print(omop_nodes_and_edges)
+```
+
+```{r}
+omop_nodes_and_edges <- 
+  omop_nodes_and_edges %>% 
+  map_edge_attributes()
+
+print(omop_nodes_and_edges)
+```
+
+```{r}
+omop_graph <- 
+  construct_graph(omop_nodes_and_edges)
+
+print(omop_graph)
+```
+
+
