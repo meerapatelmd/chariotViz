@@ -7,6 +7,7 @@
 chariotViz(
   omop_graph,
   node_count_cutoff = 30,
+  include_counts = TRUE,
   force = FALSE,
   layout = NULL,
   output = NULL,

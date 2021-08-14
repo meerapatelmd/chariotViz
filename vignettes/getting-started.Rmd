@@ -11,6 +11,7 @@ vignette: >
 knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>",
+  error   = FALSE,
   cache.path = file.path(R.cache::getCachePath(),
                          "chariotViz",
                          "vignettes")
@@ -60,14 +61,8 @@ snomed_graph <-
 
 ```{r}
 library(DiagrammeR)
-```
 
-```{r}
-snomed_graph@graph %>% 
-  count_nodes()
-
-snomed_graph@graph %>% 
-  count_edges()
+chariotViz(snomed_graph)
 ```
 
 
@@ -75,19 +70,13 @@ snomed_graph@graph %>%
 snomed_graph2 <- 
 snomed_graph@graph %>% 
   select_nodes(concept_class_id == "Qualifier Value") %>%
-  transform_to_subgraph_ws() 
+  subgraph(src = snomed_graph@src)
 
-
-snomed_graph2 %>% 
-  count_nodes()
-
-snomed_graph2 %>% 
-  count_edges()
-
-
-snomed_graph2 %>%
-  render_graph(width = 250,
-               height = 1000)
+chariotViz(
+  snomed_graph2,
+  width = 250,
+  height = 1000
+  )
 ```
 
 ```{r}
@@ -95,19 +84,10 @@ snomed_graph3 <-
 snomed_graph@graph %>% 
   select_nodes(concept_class_id == "Qualifier Value") %>%
   select_nodes(vocabulary_id == "SNOMED", set_op = "intersect") %>%
-  transform_to_subgraph_ws() 
+  subgraph(src = snomed_graph@src)
 
-
-snomed_graph3 %>% 
-  count_nodes()
-
-
-snomed_graph3 %>% 
-  count_edges()
-
-snomed_graph3 %>%
-  render_graph(width = 250, 
-               height = 1000)
+chariotViz(snomed_graph3,
+           width = 250)
 ```
 
 ```{r}
@@ -116,15 +96,11 @@ snomed_graph@graph %>%
   select_nodes(concept_class_id == "Qualifier Value") %>%
   select_nodes(vocabulary_id == "SNOMED", set_op = "intersect") %>%
   trav_out() %>%
-  transform_to_subgraph_ws() 
+  subgraph(src = snomed_graph@src)
 
 
-snomed_graph4 %>% 
-  count_nodes()
-
-
-snomed_graph4 %>% 
-  count_edges()
+chariotViz(snomed_graph4,
+           width = 250)
 ```
 
 ```{r}
@@ -135,15 +111,8 @@ snomed_graph@graph %>%
   select_nodes(vocabulary_id == "RxNorm", set_op = "union") %>%
   subgraph(src = snomed_graph@src)
 
-
-snomed_graph5@graph %>% 
-  count_nodes()
-
-
-snomed_graph5@graph %>% 
-  count_edges()
-
-chariotViz(snomed_graph5)
+chariotViz(snomed_graph5,
+           width = 250)
 ```
 
 
@@ -164,14 +133,6 @@ snomed_graph@graph %>%
     set_op = "intersect") %>%
   subgraph(src = snomed_graph@src)
 
-
-snomed_graph6@graph %>% 
-  count_nodes()
-
-
-snomed_graph6@graph %>% 
-  count_edges()
-
 chariotViz(snomed_graph6)
 ```
 
@@ -190,14 +151,6 @@ snomed_graph@graph %>%
     get_selection(),
     set_op = "intersect") %>%
   subgraph(src = snomed_graph@src)
-
-
-snomed_graph7@graph %>% 
-  count_nodes()
-
-
-snomed_graph7@graph %>% 
-  count_edges()
 
 chariotViz(snomed_graph7)
 ```
@@ -219,19 +172,12 @@ snomed_graph@graph %>%
   subgraph(src = snomed_graph@src)
 
 
-snomed_graph8@graph %>% 
-  count_nodes()
-
-
-snomed_graph8@graph %>% 
-  count_edges()
-
 chariotViz(snomed_graph8)
 ```
 
 
 ```{r}
-snomed_graph8 <- 
+snomed_graph9 <- 
 snomed_graph@graph %>% 
   select_edges(
     from = 
@@ -248,15 +194,22 @@ snomed_graph@graph %>%
     set_op = "intersect") %>%
   subgraph(src = snomed_graph@src)
 
+chariotViz(snomed_graph9)
+```
 
-snomed_graph8@graph %>% 
-  count_nodes()
 
+```{r}
+# snomed_graph9@graph$nodes_df <-
+# snomed_graph9@graph$nodes_df %>%
+#   mutate(fillcolor = map_to_value(domain_id, 
+#                                   map_assignment = domain_colors,
+#                                   other = "gray20"))
 
-snomed_graph8@graph %>% 
-  count_edges()
-
-chariotViz(snomed_graph8)
+snomed_graph10 <- 
+  remap_fillcolor_by_domain(
+    omop_graph = snomed_graph9
+  )
+chariotViz(snomed_graph10)
 ```
 
 
@@ -287,31 +240,4 @@ snomed_graph8@graph %>%
   count_edges()
 
 chariotViz(snomed_graph8)
-```
-
-
-```{r}
-snomed_graph8 <- 
-snomed_graph@graph %>% 
-  select_edges(
-    from = filter_node_id_1(snomed_graph,
-                            vocabulary_id_1 == "SNOMED",
-                             concept_class_id_1 == "Qualifier Value"),
-    to  = filter_node_id_2(snomed_graph, 
-                           !(vocabulary_id_2 %in% "SNOMED"),
-                           concept_class_id_2 != "Qualifier Value")) %>%
-  subgraph(src = snomed_graph@src)
-
-
-chariotViz(snomed_graph8)
-```
-
-```{r}
-from_counts <- view_from_counts(snomed_graph8)
-from_counts
-```
-
-```{r}
-to_counts <- view_to_counts(snomed_graph8)
-to_counts
 ```

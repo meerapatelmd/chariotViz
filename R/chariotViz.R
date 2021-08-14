@@ -23,6 +23,7 @@
 chariotViz <-
   function(omop_graph,
            node_count_cutoff = 30,
+           include_counts = TRUE,
            force = FALSE,
            layout = NULL,
            output = NULL,
@@ -32,36 +33,35 @@ chariotViz <-
            height = 1000) {
 
 
-    if (!force) {
-
     node_count <-
       DiagrammeR::count_nodes(omop_graph@graph)
 
     edge_count <-
       DiagrammeR::count_edges(omop_graph@graph)
 
-    if (node_count > node_count_cutoff) {
 
-      stop(glue::glue("There are {node_count} nodes and {edge_count} edges. To render anyways, set `force` to TRUE."),
-           call. = F)
+    if (include_counts) {
+
+      count_legend <-
+        huxtable::hux(
+          tibble::tibble(
+            `n nodes` = node_count,
+            `n edges` = edge_count)) %>%
+        huxtable::theme_article()
+
+      huxtable::print_screen(count_legend)
 
     }
 
+    if (!force & node_count > node_count_cutoff) {
 
-    DiagrammeR::render_graph(
-      graph = omop_graph@graph,
-      layout = layout,
-      output = output,
-      as_svg = as_svg,
-      title = title,
-      width = width,
-      height = height
-    )
+      message(
+        glue::glue(
+          "There are {node_count} nodes and {edge_count} edges.
+          To render anyways, set `force` to TRUE."))
 
 
     } else {
-
-
 
       DiagrammeR::render_graph(
         graph = omop_graph@graph,
@@ -73,7 +73,7 @@ chariotViz <-
         height = height
       )
 
-    }
 
+    }
 
   }
