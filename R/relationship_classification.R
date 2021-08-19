@@ -1,4 +1,3 @@
-
 #' @export
 
 omop_relationship_id_classification <-

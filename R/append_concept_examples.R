@@ -11,7 +11,7 @@
 #' @details DETAILS
 #' @rdname append_concept_examples
 #' @export
-#' @importFrom dplyr distinct mutate bind_rows select mutate_at vars group_by summarize ungroup left_join transmute arrange
+#' @import dplyr
 #' @importFrom glue glue
 #' @importFrom pg13 query
 #' @importFrom tidyr pivot_longer unite
