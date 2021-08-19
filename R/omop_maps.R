@@ -29,7 +29,7 @@ relationship_source_colors <-
 
 # Node Attributes
 rxnorm_class_colors <-
-  list(
+  c(
     `Branded Drug` = 'springgreen3',
     `Clinical Drug` = 'springgreen3',
     `Branded Pack` = 'orange2',
@@ -69,7 +69,7 @@ hemonc_class_colors <-
     `Route` = "red")
 
 rxnorm_concept_class_color_groups <-
-  list(
+  c(
   'Branded Drug' = 'Green colors',
     'Clinical Drug' = 'Green colors',
     'Branded Pack' = 'Orange colors',
@@ -98,7 +98,7 @@ rxnorm_concept_class_color_groups <-
 
 
 domain_color_groups <-
-  list(
+  c(
     'Condition'           = "Cyan colors",
     'Condition Status'    = "Cyan colors",
     'Condition/Device'    = "Cyan colors",
@@ -142,7 +142,7 @@ domain_color_groups <-
   )
 
 domain_colors <-
-  list(
+  c(
     `Condition` = 'aquamarine',
     `Condition Status` = 'aquamarine',
     `Condition/Device` = 'aquamarine',
@@ -186,7 +186,7 @@ domain_colors <-
 
 
 vocabulary_id_standard_colors <-
-  list(
+  c(
     `ATC` = 'goldenrod2',
     `CIViC` = 'wheat2',
     `CPT4` = 'blue2',
@@ -252,7 +252,7 @@ vocabulary_id_class_colors <-
   vocabulary_id_standard_colors
 
 vocabulary_id_nonstandard_colors <-
-  list(
+  c(
     `ATC` = 'goldenrod4',
     `CIViC` = 'wheat4',
     `CPT4` = 'blue4',
