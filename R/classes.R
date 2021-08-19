@@ -1,16 +1,8 @@
-
-
-color.assignment <-
-  setClass(
-    Class = "color.assignment",
-    "list"
-  )
-
-color.group.assignment <-
-  setClass(
-    Class = "color.group.assignment",
-    "list"
-  )
+#' @title omop.relationships S4 class
+#' @export
+omop.relationships <-
+  setClass("omop.relationships",
+           list(data = "data.frame"))
 
 
 #' @title nodes S4 class
@@ -65,7 +57,14 @@ nodes <-
                          'standard_concept',
                          'total_concept_class_ct',
                          'total_vocabulary_ct'),
-                     node_fields = c('domain_id', 'vocabulary_id', 'concept_class_id', 'standard_concept', 'total_concept_class_ct', 'total_vocabulary_ct')))
+                     node_fields =
+                       c('domain_id',
+                         'vocabulary_id',
+                         'concept_class_id',
+                         'standard_concept',
+                         'total_concept_class_ct',
+                         'total_vocabulary_ct'))
+    )
 
 
 #' @title edges S4 class
@@ -122,6 +121,7 @@ setClass(
                        'to',
                        'relationship_id',
                        'relationship_name',
+                       'relationship_source',
                        'is_hierarchical',
                        'defines_ancestry',
                        'concept_1_coverage',
@@ -143,9 +143,23 @@ setClass(
                   edge_fields =
                      c('relationship_id',
                        'relationship_name',
+                       'relationship_source',
                        'is_hierarchical',
                        'defines_ancestry',
-                       'domain_id_1', 'vocabulary_id_1', 'concept_class_id_1', 'standard_concept_1', 'concept_count_1', 'total_concept_class_ct_1', 'total_vocabulary_ct_1', 'domain_id_2', 'vocabulary_id_2', 'concept_class_id_2', 'standard_concept_2', 'concept_count_2', 'total_concept_class_ct_2', 'total_vocabulary_ct_2')
+                       'domain_id_1',
+                       'vocabulary_id_1',
+                       'concept_class_id_1',
+                       'standard_concept_1',
+                       'concept_count_1',
+                       'total_concept_class_ct_1',
+                       'total_vocabulary_ct_1',
+                       'domain_id_2',
+                       'vocabulary_id_2',
+                       'concept_class_id_2',
+                       'standard_concept_2',
+                       'concept_count_2',
+                       'total_concept_class_ct_2',
+                       'total_vocabulary_ct_2')
 ))
 
 #' @title nodes.and.edges S4 class
@@ -155,15 +169,14 @@ nodes.and.edges <-
   setClass("nodes.and.edges",
            list(nodes = "nodes",
                 edges = "edges",
-                overlapping_fields = "character"))
+                overlapping_fields = "character",
+                has_tooltip = "logical",
+                has_node_attrs = "logical",
+                has_edge_attrs = "logical"),
+           prototype = list(has_tooltip = FALSE,
+                            has_node_attrs = FALSE,
+                            has_edge_attrs = FALSE))
 
-
-#' @title omop.relationships S4 class
-#' @export
-
-omop.relationships <-
-  setClass("omop.relationships",
-           list(data = "data.frame"))
 
 
 setOldClass("dgr_graph")
@@ -348,43 +361,3 @@ setValidity(
   method = validEdgeId
 )
 
-
-
-setMethod("print",
-          signature(x = "omop.relationships"),
-          function(x) print.data.frame(x@data,
-                            row.names = FALSE,
-                            max = 100))
-
-
-setMethod("print",
-          signature(x = "nodes"),
-          function(x) print.data.frame(x@data,
-                                       row.names = FALSE,
-                                       max = 100))
-
-
-setMethod("print",
-          signature(x = "edges"),
-          function(x) print.data.frame(x@data,
-                                       row.names = FALSE,
-                                       max = 100))
-
-
-setMethod("print",
-          signature(x = "nodes.and.edges"),
-          function(x) str(x)
-          )
-
-
-setMethod("print",
-          signature(x = "omop.graph"),
-          function(x) x@graph)
-
-# setMethod("print",
-#           signature(x = "edges"),
-#           function(x,...) print(x@data,...))
-
-# setMethod("print",
-#           signature(x = "nodes.and.edges"),
-#           function(x, ...) print(list(x@nodes@data,x@edges@data)))

@@ -19,6 +19,7 @@ filter_node_id_1 <-
   function(omop_graph,
            ...) {
 
+    .Deprecated()
       dplyr::filter(omop_graph@graph$edges_df,
                     ...)  %>%
       dplyr::select(from) %>%
@@ -48,6 +49,7 @@ filter_node_id_1 <-
 filter_node_id_2 <-
   function(omop_graph,
            ...) {
+    .Deprecated()
     omop_graph@graph$edges_df %>%
       dplyr::filter(...) %>%
       dplyr::select(from) %>%
@@ -77,6 +79,7 @@ filter_node_id_2 <-
 filter_edge_id <-
   function(omop_graph,
            ...) {
+    .Deprecated()
     omop_graph@graph$edges_df %>%
       dplyr::filter(...) %>%
       dplyr::select(id) %>%

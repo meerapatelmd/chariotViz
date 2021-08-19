@@ -1,5 +1,3 @@
-
-
 #' @title FUNCTION_TITLE
 #' @description FUNCTION_DESCRIPTION
 #' @param nodes_and_edges PARAM_DESCRIPTION
@@ -18,45 +16,49 @@ add_tooltip <-
     nodes_and_edges@nodes@data,
     nodes_and_edges@nodes@data %>%
       dplyr::select(dplyr::any_of(nodes_and_edges@nodes@tooltip_fields)) %>%
-      dplyr::mutate_at(dplyr::vars(!id), as.character) %>%
-      tidyr::pivot_longer(cols = !id) %>%
+      dplyr::mutate(id0 = id) %>%
+      dplyr::mutate_at(dplyr::vars(!id0), as.character) %>%
+      tidyr::pivot_longer(cols = !id0) %>%
       tidyr::unite(col = tooltip_row,
                    name,
                    value,
                    sep = ": ",
                    na.rm = FALSE) %>%
-      dplyr::group_by(id) %>%
+      dplyr::group_by(id0) %>%
       dplyr::summarize(tooltip =
                          paste(tooltip_row,
                                collapse = "\n"),
                        .groups = "drop") %>%
-      dplyr::ungroup(),
+      dplyr::ungroup() %>%
+      dplyr::rename(id = id0),
     by = "id") %>%
       dplyr::distinct()
 
     edges_data_w_id <-
         nodes_and_edges@edges@data %>%
-          dplyr::mutate_at(dplyr::vars(!id), as.character) # %>%
- #         tibble::rowid_to_column()
+          dplyr::mutate(id0 = id) %>%
+          dplyr::mutate_at(dplyr::vars(!id0), as.character)
 
     edges_data_w_tooltip <-
     dplyr::left_join(
       edges_data_w_id,
       edges_data_w_id %>%
-        dplyr::select(dplyr::any_of(nodes_and_edges@edges@tooltip_fields)) %>%
-        tidyr::pivot_longer(cols = !id) %>%
+        dplyr::select(id0, dplyr::any_of(nodes_and_edges@edges@tooltip_fields)) %>%
+        tidyr::pivot_longer(cols = !id0) %>%
         tidyr::unite(tooltip_row,
                      name,
                      value,
                      sep = ": ",
                      na.rm = FALSE) %>%
-        dplyr::group_by(id) %>%
+        dplyr::group_by(id0) %>%
         dplyr::summarize(labeltooltip =
                            paste(tooltip_row,
                                  collapse = "\n"),
                          .groups = "drop") %>%
         dplyr::ungroup(),
-      by = "id") %>%
+      by = "id0") %>%
+    dplyr::select(-id) %>%
+    dplyr::rename(id = id0) %>%
     dplyr::distinct()
 
     if (nrow(edges_data_w_tooltip) != nrow(nodes_and_edges@edges@data)) {
@@ -68,6 +70,8 @@ add_tooltip <-
 
   nodes_and_edges@edges@data <-
     edges_data_w_tooltip
+
+    nodes_and_edges@has_tooltip <- TRUE
 
     nodes_and_edges
   }

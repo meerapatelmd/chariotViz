@@ -1,8 +1,8 @@
 ---
-title: "Template"
+title: "Getting Started"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{Template}
+  %\VignetteIndexEntry{Getting Started}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
@@ -69,4 +69,39 @@ omop_graph <-
 print(omop_graph)
 ```
 
+
+```{r}
+hemonc_relationships <- 
+  omop_relationships %>% 
+  filter_omop_relationships(
+    vocabulary_id_1 == "HemOnc",
+    vocabulary_id_2 == "HemOnc",
+    concept_class_id_1 != concept_class_id_2
+  )
+
+print(hemonc_relationships)
+```
+
+```{r}
+hemonc_graph <- 
+  create_nodes_and_edges(hemonc_relationships) %>% 
+  add_tooltip() %>% 
+  map_node_attributes() %>% 
+  map_edge_attributes() %>% 
+  construct_graph()
+
+print(hemonc_graph)
+```
+
+```{r}
+chariotViz(hemonc_graph)
+```
+
+```{r}
+hemonc_graph2 <- 
+  hemonc_graph %>% 
+  remap_fillcolor_by_concept_class(fillcolor_map = hemonc_class_colors)
+
+chariotViz(hemonc_graph2)
+```
 

@@ -1,3 +1,6 @@
 # chariotViz 0.0.1.9000
 
-* Added a `NEWS.md` file to track changes to the package.
+* Removed deprecated functions  
+* Add `relationship_source` derived from `relationship_name` to omop.relationships 
+class objects.  
+* Add procedural logicals to nodes.and.edges class objects.  

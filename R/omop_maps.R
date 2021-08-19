@@ -1,3 +1,33 @@
+# Edge Attributes
+defines_ancestry_styles <-
+  c(`1` = "bold",
+    `0` = "solid")
+
+
+
+# Edge Colors
+relationship_source_colors <-
+  c(`OMOP`    = "black",
+    `SNOMED`  = "cadetblue4",
+    `NA`      = "black",
+    `RxNorm`  = "violetred4",
+    `NDF-RT`  = "orange3",
+    `NLM`     = "saddlebrown",
+    `DM+D`    = "royalblue4",
+    `HemOnc`  = "mediumpurple4",
+    `LOINC`   = "yellow4",
+    `NAACCR`  = "orangered4",
+    `PPI`     = "yellowgreen",
+    `Question-Answer/Variable-Value` = "gray20",
+    `dictionary of medicines and devices` = "gray20",
+    `SNOMED Vet` = "darkviolet",
+    `NDF` = "darkgreen",
+    `CMS` = "steelblue4",
+    `Hemonc` = "saddlebrown"
+    )
+
+
+# Node Attributes
 rxnorm_class_colors <-
   list(
     `Branded Drug` = 'springgreen3',
@@ -25,6 +55,18 @@ rxnorm_class_colors <-
     `Quant Branded Box` = 'lightgoldenrod2',
     `Quant Clinical Box` = 'lightgoldenrod2',
     `Marketed Product` = 'lightgoldenrod2')
+
+hemonc_class_colors <-
+  c(`Brand Name` = "darkorange",
+    `Component` = "maroon2",
+    `Component Class` = "maroon4",
+    `Condition` = "thistle",
+    `Context`   = "lightcyan",
+    `Modality` = 'lightseagreen',
+    `Procedure` = "cyan",
+    `Regimen`   = "dodgerblue2",
+    `Regimen Class` = "dodgerblue4",
+    `Route` = "red")
 
 rxnorm_concept_class_color_groups <-
   list(
@@ -272,6 +314,40 @@ vocabulary_id_nonstandard_colors <-
     `Vocabulary` = 'cyan4')
 
 
-ns_vocabulary_color_assignment <-
-  new(Class = "color.assignment",
-      vocabulary_id_nonstandard_colors)
+
+
+
+node.map <-
+  setClass(Class = "node.map",
+           list(domain_id = "list",
+                vocabulary_id = "list",
+                concept_class_id = "list",
+                standard_concept = "list",
+                invalid_reason = "list"))
+
+#' @export
+
+node_color_map <-
+  new(Class = "node.map",
+      domain_id        = list(Base = domain_colors),
+      vocabulary_id    = list(Base = vocabulary_id_standard_colors),
+      concept_class_id = list(RxNorm = rxnorm_class_colors,
+                              HemOnc = hemonc_class_colors))
+edge.map <-
+  setClass(Class = "edge.map",
+           list(relationship_id = "list",
+                relationship_name = "list",
+                relationship_source = "list",
+                defines_ancestry = "list",
+                is_hierarchical = "list"))
+
+#' @export
+
+edge_style_map <-
+  new(Class = "edge.map",
+      defines_ancestry = list(Base = defines_ancestry_styles))
+
+#' @export
+edge_color_map <-
+  new(Class = "edge.map",
+      relationship_source = list(Base = relationship_source_colors))

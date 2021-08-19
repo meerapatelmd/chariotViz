@@ -90,11 +90,12 @@ get_version_key <-
 #'
 #' @rdname fetch_omop
 #' @export
-#' @importFrom glue glue
-#' @importFrom pg13 query
+#' @import glue
+#' @import pg13
 #' @import dplyr
 #' @import cli
-#' @importFrom purrr transpose map reduce
+#' @import tidyr
+#' @import purrr
 fetch_omop <-
   function(...,
            conn,
@@ -190,11 +191,12 @@ fetch_omop <-
     names(relationship_output) <- vocabulary_ids
 
     cli::cli_progress_bar(
-      format = "\n{activity} {vocabulary_id} | {pb_bar} {pb_current}/{pb_total} {pb_percent} ({pb_elapsed})\n",
+      format = "\n{activity} {vocabulary_id} Relationships | {pb_bar} {pb_current}/{pb_total} {pb_percent} ({pb_elapsed})\n",
       clear = FALSE,
-      total = 2*length(vocabulary_ids))
+      total = length(vocabulary_ids))
+    Sys.sleep(0.1)
 
-    activity <- "Fetching"
+    activity <- "Querying"
     for (vocabulary_id in vocabulary_ids) {
 
       sql <- read_sql_template(file = "relationship.sql")
@@ -222,7 +224,7 @@ fetch_omop <-
 
       } else {
 
-        Sys.sleep(0.25)
+        Sys.sleep(0.05)
 
       }
 
@@ -231,12 +233,19 @@ fetch_omop <-
       cli::cli_progress_update()
 
     }
+    cli::cli_progress_done()
 
     relationship_ct_output <-
       vector(mode = "list",
              length =
                length(vocabulary_ids))
     names(relationship_ct_output) <- vocabulary_ids
+
+    cli::cli_progress_bar(
+      format = "\n{activity} {vocabulary_id} Concept Class Counts | {pb_bar} {pb_current}/{pb_total} {pb_percent} ({pb_elapsed})\n",
+      clear = FALSE,
+      total = length(vocabulary_ids))
+    Sys.sleep(0.1)
 
     activity <- "Calculating"
     for (vocabulary_id in vocabulary_ids) {
@@ -267,7 +276,7 @@ fetch_omop <-
 
       } else {
 
-        Sys.sleep(0.25)
+        Sys.sleep(0.05)
 
       }
       relationship_ct_output[[vocabulary_id]] <-
@@ -275,6 +284,8 @@ fetch_omop <-
       cli::cli_progress_update()
 
     }
+
+    cli::cli_progress_done()
 
     omop_relationships <-
       list(relationships = relationship_output,
@@ -388,9 +399,14 @@ fetch_omop <-
     new("omop.relationships",
         data =
     omop_relationships4 %>%
+      tidyr::extract(col = relationship_name,
+                     into = "relationship_source",
+                     regex = "^.*?[(]{1}(.*?)[)]{1}",
+                     remove = FALSE) %>%
       dplyr::select(
         relationship_id,
         relationship_name,
+        relationship_source,
         is_hierarchical,
         defines_ancestry,
         domain_id_1,
