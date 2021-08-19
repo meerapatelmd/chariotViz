@@ -126,10 +126,14 @@ chariotViz(hemonc_graph2,
            height = 2000)
 ```
 
+# Relationships  
+
 The relationships can also be filtered based on 3 
 classes of relationships: Taxonomy, Mapping, or Lateral. These classes 
 are not defined by OHDSI and are specific to the `chariot` and `chariotViz` 
 packages.  
+
+## Taxonomy  
 
 Taxonomy relationships are relationships that represent a hierarchy (`Is a` and `Subsumes`).  
 
@@ -150,6 +154,8 @@ chariotViz(hemonc_taxonomy_graph,
            height = 500,
            width = 500)
 ```
+
+## Mapping  
 
 Mapping relationships are relationships that represent a mapping from a source to 
 target, as in the case of an ETLing into the OMOP CDM. Since we filtered for 
@@ -195,6 +201,8 @@ chariotViz(hemonc_mapping_graph,
            width = 500)
 ```
 
+## Lateral  
+
 Lateral relationships are relationships that are all other relationships. 
 Returning to the relationships within HemOnc, the lateral relationships 
 are filtered for.  
@@ -235,6 +243,8 @@ chariotViz(hemonc_lateral_graph,
            height = 2000,
            width = 2000)
 ```
+
+## Foreign  
 
 To retrieve any relationships outside of HemOnc instead, the original `omop_relationships` 
 object must be filtered once more, but this time with exclusion of HemOnc in 
@@ -300,4 +310,31 @@ foreign_hemonc_graph <-
 chariotViz(foreign_hemonc_graph)
 ```
 
+# Visualizing Concepts  
+
+Samples of concepts along with a tooltip containing the concept's attribute 
+values can be appended to the graph with the `append_concept_examples` function.  
+
+```{r}
+foreign_hemonc_graph %>% 
+  append_concept_examples(sample_size = 3) %>% 
+  chariotViz(force = TRUE,
+             width = 1500)
+```
+
+The count of the samples can be adjusted.  
+
+```{r}
+foreign_hemonc_graph %>% 
+  append_concept_examples(sample_size = 5) %>% 
+  chariotViz(force = TRUE,
+             width = 1500)
+```
+
+```{r}
+foreign_hemonc_graph %>% 
+  append_concept_examples(sample_size = 10) %>% 
+  chariotViz(force = TRUE,
+             height = 2000)
+```
 
