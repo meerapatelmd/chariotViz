@@ -148,12 +148,25 @@
 <li>Added <code>filter_for_*_relationships</code> and <code>filter_out_*_relationships</code> functions to refine omop relationships visualization</li>
 </ul>
 </div>
-<div id="bugs" class="section level2">
+<div id="bug-fixes" class="section level2">
 <h2 class="hasAnchor">
-<a href="#bugs" class="anchor"></a>Bugs</h2>
+<a href="#bug-fixes" class="anchor"></a>Bug Fixes</h2>
 <ul>
 <li>Remove printing of column names when calling <code><a href="../reference/chariotViz.html">chariotViz()</a></code>
 </li>
+</ul>
+</div>
+<div id="existing-issues" class="section level2">
+<h2 class="hasAnchor">
+<a href="#existing-issues" class="anchor"></a>Existing Issues</h2>
+<ul>
+<li><p>Write documentation for functions<br></p></li>
+<li><p>Add README<br></p></li>
+<li><p>Improve the scale of rendered graphs<br></p></li>
+<li><p>Tracing concepts in such a manner that in lieu of <code>append_example_concepts()</code> where each node is annotated with random examples, the node would be annotated with the actual related concept for the input concept. In terms of relationship filtering, ascending the Concept Relationship table with no filters applied leads to an exponential increase in related concepts. For example, trastuzumab can map to regimens in HemOnc which subsequently can map back to all the antineoplastics that regimen is associated with. For this reason, a filter must be applied. Using <code>is_hierarchical</code> filters leads to the same issue, but <code>defines_ancestry</code> does not. Also chariotViz <code>mapping</code>, <code>taxonomy</code>, and <code>lateral</code> filters need to be tested.<br></p></li>
+<li><p>When calling <code>append_example_concepts()</code>, errors can sometimes be thrown when the <code>concept_name</code> has an unusual character (likely single quote).</p></li>
+<li><p>Need the ability to adjust node and edge attributes of the example concepts.</p></li>
+<li><p>Add feature that shows deprecated concepts and their relationships</p></li>
 </ul>
 </div>
 </div>
