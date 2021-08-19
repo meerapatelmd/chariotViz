@@ -14,7 +14,8 @@ knitr::opts_chunk$set(
   error   = FALSE,
   cache.path = file.path(R.cache::getCachePath(),
                          "chariotViz",
-                         "vignettes")
+                         "vignettes"),
+  cache = TRUE
 )
 ```
 
@@ -25,48 +26,25 @@ library(chariotViz)
 ```{r,cache=T}
 omop_relationships <- 
   fetch_omop(version_key = get_version_key())
-
-print(omop_relationships)
 ```
 
 ```{r}
 omop_nodes_and_edges <- 
   create_nodes_and_edges(omop_relationships = omop_relationships)
-
-print(omop_nodes_and_edges)
 ```
 
 
 ```{r}
 omop_nodes_and_edges <- 
   omop_nodes_and_edges %>% 
-  add_tooltip()
-
-print(omop_nodes_and_edges)
-```
-
-
-```{r}
-omop_nodes_and_edges <- 
-  omop_nodes_and_edges %>%
-  map_node_attributes()
-
-print(omop_nodes_and_edges)
-```
-
-```{r}
-omop_nodes_and_edges <- 
-  omop_nodes_and_edges %>% 
+  add_tooltip() %>%
+  map_node_attributes() %>% 
   map_edge_attributes()
-
-print(omop_nodes_and_edges)
 ```
 
 ```{r}
 omop_graph <- 
   construct_graph(omop_nodes_and_edges)
-
-print(omop_graph)
 ```
 
 
@@ -78,8 +56,6 @@ hemonc_relationships <-
     vocabulary_id_2 == "HemOnc",
     concept_class_id_1 != concept_class_id_2
   )
-
-print(hemonc_relationships)
 ```
 
 ```{r}
@@ -89,8 +65,6 @@ hemonc_graph <-
   map_node_attributes() %>% 
   map_edge_attributes() %>% 
   construct_graph()
-
-print(hemonc_graph)
 ```
 
 ```{r}

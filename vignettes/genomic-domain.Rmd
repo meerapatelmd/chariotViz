@@ -14,7 +14,8 @@ knitr::opts_chunk$set(
   error   = FALSE,
   cache.path = file.path(R.cache::getCachePath(),
                          "chariotViz",
-                         "vignettes")
+                         "vignettes"),
+  cache = TRUE
 )
 ```
 
@@ -33,48 +34,25 @@ library(chariotViz)
 omop_relationships <- 
   fetch_omop(!!!genomic_vocabularies$vocabulary_id,
              version_key = get_version_key())
-
-print(omop_relationships)
 ```
 
 ```{r}
 omop_nodes_and_edges <- 
   create_nodes_and_edges(omop_relationships = omop_relationships)
-
-print(omop_nodes_and_edges)
 ```
 
 
 ```{r}
 omop_nodes_and_edges <- 
   omop_nodes_and_edges %>% 
-  add_tooltip()
-
-print(omop_nodes_and_edges)
-```
-
-
-```{r}
-omop_nodes_and_edges <- 
-  omop_nodes_and_edges %>%
-  map_node_attributes()
-
-print(omop_nodes_and_edges)
-```
-
-```{r}
-omop_nodes_and_edges <- 
-  omop_nodes_and_edges %>% 
+  add_tooltip() %>%
+  map_node_attributes() %>% 
   map_edge_attributes()
-
-print(omop_nodes_and_edges)
 ```
 
 ```{r}
 omop_graph <- 
   construct_graph(omop_nodes_and_edges)
-
-print(omop_graph)
 ```
 
 ```{r}
