@@ -4,5 +4,6 @@ pkgdown_sha: ~
 articles:
   genomic-domain: genomic-domain.html
   getting-started: getting-started.html
-last_built: 2021-08-19T04:12Z
+  rxnorm-and-rxnorm-extension: rxnorm-and-rxnorm-extension.html
+last_built: 2021-08-19T04:59Z
 

@@ -98,7 +98,10 @@
       <a href="../articles/genomic-domain.html">Genomic Domain</a>
     </li>
     <li>
-      <a href="../articles/getting-started.html">Getting Started</a>
+      <a href="../articles/getting-started.html">Getting Started: HemOnc Example</a>
+    </li>
+    <li>
+      <a href="../articles/rxnorm-and-rxnorm-extension.html">RxNorm and RxNorm Extension</a>
     </li>
   </ul>
 </li>
@@ -149,9 +152,9 @@
   color_from <span class='op'>=</span> <span class='va'>relationship_source</span>,
   color_map <span class='op'>=</span> <span class='va'>relationship_source_colors</span>,
   color_map_other <span class='op'>=</span> <span class='st'>"black"</span>,
-  arrowsize_from <span class='op'>=</span> <span class='cn'>NULL</span>,
-  arrowsize_map <span class='op'>=</span> <span class='cn'>NULL</span>,
-  arrowsize_map_other <span class='op'>=</span> <span class='cn'>NULL</span>,
+  arrowsize_from <span class='op'>=</span> <span class='va'>defines_ancestry</span>,
+  arrowsize_map <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span>`0` <span class='op'>=</span> <span class='fl'>2</span>, `1` <span class='op'>=</span> <span class='fl'>2</span><span class='op'>)</span>,
+  arrowsize_map_other <span class='op'>=</span> <span class='fl'>2</span>,
   arrowhead_from <span class='op'>=</span> <span class='va'>is_hierarchical</span>,
   arrowhead_map <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span>`1` <span class='op'>=</span> <span class='st'>"vee"</span>, `0` <span class='op'>=</span> <span class='st'>"vee"</span><span class='op'>)</span>,
   arrowhead_map_other <span class='op'>=</span> <span class='cn'>NULL</span>,
