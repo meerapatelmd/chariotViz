@@ -7,7 +7,7 @@
 remap_fillcolor_by_domain(
   omop_graph,
   fillcolor_from = domain_id,
-  fillcolor_map = domain_colors,
+  fillcolor_map = node_color_map@domain_id$Base,
   fillcolor_map_other = "gray20"
 )
 }
@@ -22,11 +22,4 @@ FUNCTION_DESCRIPTION
 }
 \details{
 DETAILS
-}
-\examples{
-\dontrun{
-if(interactive()){
- #EXAMPLE1
- }
-}
 }

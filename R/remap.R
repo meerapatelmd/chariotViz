@@ -3,12 +3,6 @@
 #' @param omop_graph PARAM_DESCRIPTION
 #' @return OUTPUT_DESCRIPTION
 #' @details DETAILS
-#' @examples
-#' \dontrun{
-#' if(interactive()){
-#'  #EXAMPLE1
-#'  }
-#' }
 #' @rdname remap_fillcolor_by_domain
 #' @importFrom dplyr mutate
 #' @export
@@ -16,7 +10,7 @@
 remap_fillcolor_by_domain <-
   function(omop_graph,
            fillcolor_from = domain_id,
-           fillcolor_map = domain_colors,
+           fillcolor_map = node_color_map@domain_id$Base,
            fillcolor_map_other = "gray20") {
 
     fillcolor_from <- dplyr::enquo(fillcolor_from)
@@ -38,12 +32,6 @@ remap_fillcolor_by_domain <-
 #' @param omop_graph PARAM_DESCRIPTION
 #' @return OUTPUT_DESCRIPTION
 #' @details DETAILS
-#' @examples
-#' \dontrun{
-#' if(interactive()){
-#'  #EXAMPLE1
-#'  }
-#' }
 #' @rdname remap_fillcolor_by_concept_class
 #' @importFrom dplyr mutate
 #' @export
@@ -51,7 +39,7 @@ remap_fillcolor_by_domain <-
 remap_fillcolor_by_concept_class <-
   function(omop_graph,
            fillcolor_from = concept_class_id,
-           fillcolor_map = domain_colors,
+           fillcolor_map = node_color_map@concept_class_id %>% purrr::set_names(NULL) %>% unlist(),
            fillcolor_map_other = "gray20") {
 
     fillcolor_from <- dplyr::enquo(fillcolor_from)

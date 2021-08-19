@@ -93,11 +93,13 @@ map_node_attributes <-
            style_map_other = NULL,
            penwidth_from = NULL,
            penwidth_map = NULL,
-           color_from = vocabulary_id,
-           color_map = vocabulary_id_standard_colors,
-           color_map_other = "gray20",
+           color_from = standard_concept,
+           color_map =   c(C = "black",
+                           S = "black",
+                           `NA` = "gray40"),
+           color_map_other = "gray40",
            fillcolor_from = vocabulary_id,
-           fillcolor_map = vocabulary_id_standard_colors,
+           fillcolor_map = node_color_map@vocabulary_id$Base,
            fillcolor_map_other = "gray20",
            image_from = NULL,
            image_map = NULL,
@@ -107,7 +109,7 @@ map_node_attributes <-
            fontcolor_map = c(C = "black",
                              S = "black",
                              `NA` = "gray40"),
-           fontcolor_map_other = NULL,
+           fontcolor_map_other = "gray40",
            peripheries_from = NULL,
            peripheries_map = NULL,
            x_from = NULL,
@@ -139,10 +141,6 @@ map_node_attributes <-
 
 
     all_args <- formals()
-
-    # shape_from <- dplyr::enquo(shape_from)
-    # return(nodes_and_edges@nodes@data %>% dplyr::dplyr::mutate(shape = !!shape_from))
-    #
 
     if (!is.null(all_args$shape_from)) {
       cli::cli_alert_info("Shape from: {all_args$shape_from}")

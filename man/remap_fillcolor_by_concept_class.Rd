@@ -7,7 +7,8 @@
 remap_fillcolor_by_concept_class(
   omop_graph,
   fillcolor_from = concept_class_id,
-  fillcolor_map = domain_colors,
+  fillcolor_map = node_color_map@concept_class_id \%>\% purrr::set_names(NULL) \%>\%
+    unlist(),
   fillcolor_map_other = "gray20"
 )
 }
@@ -22,11 +23,4 @@ FUNCTION_DESCRIPTION
 }
 \details{
 DETAILS
-}
-\examples{
-\dontrun{
-if(interactive()){
- #EXAMPLE1
- }
-}
 }
