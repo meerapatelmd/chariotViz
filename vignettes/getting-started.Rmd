@@ -100,7 +100,7 @@ chariotViz(hemonc_graph)
 ```{r}
 hemonc_graph2 <- 
   hemonc_graph %>% 
-  remap_fillcolor_by_concept_class(fillcolor_map = hemonc_class_colors)
+  remap_fillcolor_by_concept_class()
 
 chariotViz(hemonc_graph2)
 ```
