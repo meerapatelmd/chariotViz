@@ -5,8 +5,7 @@ Authors@R:
     person(given = "Meera",
            family = "Patel",
            role = c("aut", "cre"),
-           email = "mpatel@concertai.com",
-           comment = c(ORCID = "0000-0002-3401-3948"))
+           email = "patelmeeray@gmail.com")
 Description: Setup and visualize the OMOP Vocabularies as Nodes and Edges.  
 License: Apache License 2.0
 Encoding: UTF-8
@@ -25,8 +24,8 @@ Imports:
 Remotes:
   meerapatelmd/chariot,
   rich-iannone/DiagrammeR
-URL: https://github.com/mpatel-cai/chariot2
-BugReports: https://github.com/mpatel-cai/chariot2/issues
+URL: https://github.com/meerapatelmd/chariotViz
+BugReports: https://github.com/meerapatelmd/chariotViz/issues
 Suggests: 
     knitr,
     rmarkdown
