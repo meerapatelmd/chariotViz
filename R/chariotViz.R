@@ -42,14 +42,15 @@ chariotViz <-
 
     if (include_counts) {
 
-      count_legend <-
+      legend_ht <-
         huxtable::hux(
           tibble::tibble(
             `n nodes` = node_count,
             `n edges` = edge_count)) %>%
         huxtable::theme_article()
 
-      huxtable::print_screen(count_legend)
+      huxtable::print_screen(legend_ht,
+                             colnames = FALSE)
 
     }
 

@@ -12,6 +12,13 @@ omop.ancestors <-
            list(data = "data.frame"))
 
 
+#' @title omop.concept.example S4 class
+#' @export
+omop.concept.example <-
+  setClass("omop.concept.example",
+           list(data = "data.frame"))
+
+
 #' @title nodes S4 class
 #' @slot data nodes dataframe
 #' @slot required_fields required fields for a nodes s4 class object
