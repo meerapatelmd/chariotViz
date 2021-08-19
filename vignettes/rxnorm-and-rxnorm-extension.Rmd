@@ -26,9 +26,10 @@ library(tidyverse)
 
 ```{r,cache=T}
 omop_relationships <- 
-  fetch_omop("RxNorm",
-             "RxNorm Extension",
-             version_key = get_version_key())
+  fetch_omop_relationships(
+    "RxNorm",
+    "RxNorm Extension",
+    version_key = get_version_key())
 ```
 
 ```{r}

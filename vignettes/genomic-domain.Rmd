@@ -32,8 +32,9 @@ library(chariotViz)
 
 ```{r,cache=T}
 omop_relationships <- 
-  fetch_omop(!!!genomic_vocabularies$vocabulary_id,
-             version_key = get_version_key())
+  fetch_omop_relationships(
+    !!!genomic_vocabularies$vocabulary_id,
+    version_key = get_version_key())
 ```
 
 ```{r}

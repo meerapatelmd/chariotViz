@@ -23,16 +23,36 @@ knitr::opts_chunk$set(
 library(chariotViz)
 ```
 
+ChariotViz visualizes all valid Concepts at the Concept Class level by either 
+properties represented by the `CONCEPT_RELATIONSHIP` table or by traversing 
+direct relationships via the `CONCEPT_ANCESTOR` table.  
+
+OMOP Relationships are fetched from the `CONCEPT_RELATIONSHIP` table with 
+corresponding annotations from the `CONCEPT` table.  
+
 ```{r,cache=T}
 omop_relationships <- 
   fetch_omop(version_key = get_version_key())
 ```
 
+The `omop.relationships` S4 class object is a dataframe of the query results.  
+
+```{r}
+head(omop_relationships@data)
+```
+
+This dataframe is then converted to a subset of 2 dataframes of nodes and edges.  
+
 ```{r}
 omop_nodes_and_edges <- 
   create_nodes_and_edges(omop_relationships = omop_relationships)
+
+head(omop_nodes_and_edges@nodes@data)
+
+head(omop_nodes_and_edges@edges@data)
 ```
 
+Prior to visualization, a tooltip and attributes are added.  
 
 ```{r}
 omop_nodes_and_edges <- 
@@ -42,21 +62,38 @@ omop_nodes_and_edges <-
   map_edge_attributes()
 ```
 
+The graph is constructed.  
+
 ```{r}
 omop_graph <- 
   construct_graph(omop_nodes_and_edges)
 ```
 
+The above is a graph of the entire OMOP Vocabularies in 
+its present state.  
+
+```{r}
+chariotViz(omop_graph = omop_graph)
+```
+
+Due to the large number of nodes, the graph is not rendered, but can 
+be forced to do so by setting `force` to TRUE.  
+
+Specifically sets of vocabularies can be isolated by filtering the 
+`omop.relationships` class object prior to conversion to nodes and edges.  
+
+Here, we are filtering for relationships within the HemOnc vocabulary only.  
 
 ```{r}
 hemonc_relationships <- 
   omop_relationships %>% 
   filter_omop_relationships(
     vocabulary_id_1 == "HemOnc",
-    vocabulary_id_2 == "HemOnc",
-    concept_class_id_1 != concept_class_id_2
+    vocabulary_id_2 == "HemOnc"
   )
 ```
+
+The HemOnc graph is constructed after it is filtered for.  
 
 ```{r}
 hemonc_graph <- 
@@ -67,11 +104,17 @@ hemonc_graph <-
   construct_graph()
 ```
 
+With a smaller node count, chariotViz will automatically render 
+the graph.  
+
 ```{r}
 chariotViz(hemonc_graph,
            width = 2000,
            height = 2000)
 ```
+
+
+The fillcolor of the nodes can be remapped.  
 
 ```{r}
 hemonc_graph2 <- 
@@ -82,4 +125,179 @@ chariotViz(hemonc_graph2,
            width = 2000,
            height = 2000)
 ```
+
+The relationships can also be filtered based on 3 
+classes of relationships: Taxonomy, Mapping, or Lateral. These classes 
+are not defined by OHDSI and are specific to the `chariot` and `chariotViz` 
+packages.  
+
+Taxonomy relationships are relationships that represent a hierarchy (`Is a` and `Subsumes`).  
+
+```{r}
+hemonc_taxonomy_relationships <- 
+  hemonc_relationships %>% 
+  filter_for_taxonomy_relationships() 
+
+hemonc_taxonomy_graph <- 
+  create_nodes_and_edges(hemonc_taxonomy_relationships) %>% 
+  add_tooltip() %>% 
+  map_node_attributes() %>% 
+  map_edge_attributes() %>% 
+  construct_graph() %>% 
+  remap_fillcolor_by_concept_class()
+
+chariotViz(hemonc_taxonomy_graph,
+           height = 500,
+           width = 500)
+```
+
+Mapping relationships are relationships that represent a mapping from a source to 
+target, as in the case of an ETLing into the OMOP CDM. Since we filtered for 
+concepts within HemOnc, the filter returns zero relationships since the basis 
+of these relationships is mapping between different vocabularies.    
+
+```{r}
+hemonc_mapping_relationships <- 
+  hemonc_relationships %>% 
+  filter_for_mapping_relationships() 
+
+hemonc_mapping_relationships
+```
+
+To view HemOnc's mapping relationships, we can re-filter the original object for 
+HemOnc on side 1 only.  
+
+```{r}
+all_hemonc_relationships <- 
+  omop_relationships %>% 
+  filter_omop_relationships(
+    vocabulary_id_1 == "HemOnc")
+
+hemonc_mapping_relationships <- 
+  all_hemonc_relationships %>% 
+  filter_for_mapping_relationships() 
+
+hemonc_mapping_relationships
+```
+
+We can now see how HemOnc maps to other OMOP vocabularies.  
+
+```{r}
+hemonc_mapping_graph <- 
+  create_nodes_and_edges(hemonc_mapping_relationships) %>% 
+  add_tooltip() %>% 
+  map_node_attributes() %>% 
+  map_edge_attributes() %>% 
+  construct_graph() 
+
+chariotViz(hemonc_mapping_graph,
+           height = 500,
+           width = 500)
+```
+
+Lateral relationships are relationships that are all other relationships. 
+Returning to the relationships within HemOnc, the lateral relationships 
+are filtered for.  
+
+```{r}
+hemonc_lateral_relationships <- 
+  hemonc_relationships %>% 
+  filter_for_lateral_relationships()
+
+hemonc_lateral_graph <- 
+  create_nodes_and_edges(hemonc_lateral_relationships) %>% 
+  add_tooltip() %>% 
+  map_node_attributes() %>% 
+  map_edge_attributes() %>% 
+  construct_graph() 
+
+chariotViz(hemonc_lateral_graph,
+           height = 2000,
+           width = 2000)
+```
+
+With the relationships within and outside of HemOnc, the `all_hemonc_relationships` 
+returns the following graph.  
+
+```{r}
+hemonc_lateral_relationships <- 
+  all_hemonc_relationships %>% 
+  filter_for_lateral_relationships()
+
+hemonc_lateral_graph <- 
+  create_nodes_and_edges(hemonc_lateral_relationships) %>% 
+  add_tooltip() %>% 
+  map_node_attributes() %>% 
+  map_edge_attributes() %>% 
+  construct_graph() 
+
+chariotViz(hemonc_lateral_graph,
+           height = 2000,
+           width = 2000)
+```
+
+To retrieve any relationships outside of HemOnc instead, the original `omop_relationships` 
+object must be filtered once more, but this time with exclusion of HemOnc in 
+the filter.  
+
+```{r}
+foreign_hemonc_relationships <- 
+  omop_relationships %>% 
+  filter_omop_relationships(
+    vocabulary_id_1 == "HemOnc",
+    vocabulary_id_2 != "HemOnc") %>% 
+  filter_for_lateral_relationships() 
+
+foreign_hemonc_lateral_graph <- 
+  create_nodes_and_edges(foreign_hemonc_relationships) %>% 
+  add_tooltip() %>% 
+  map_node_attributes() %>% 
+  map_edge_attributes() %>% 
+  construct_graph()
+
+chariotViz(foreign_hemonc_lateral_graph)
+```
+
+Filtering for Taxonomy relationships allows visualization of how ancestry of 
+a vocabulary relates to other vocabularies. Here, it is evident that only 
+HemOnc's `Component Class` is a parent to RxNorm and RxNorm Extension Concept Classes.  
+
+```{r}
+foreign_hemonc_relationships <- 
+  omop_relationships %>% 
+  filter_omop_relationships(
+    vocabulary_id_1 == "HemOnc",
+    vocabulary_id_2 != "HemOnc") %>% 
+  filter_for_taxonomy_relationships() 
+
+foreign_hemonc_taxonomy_graph <- 
+  create_nodes_and_edges(foreign_hemonc_relationships) %>% 
+  add_tooltip() %>% 
+  map_node_attributes() %>% 
+  map_edge_attributes() %>% 
+  construct_graph()
+
+chariotViz(foreign_hemonc_taxonomy_graph)
+```
+
+To view all possible foreign relationships, the filter can be lifted.    
+
+```{r}
+foreign_hemonc_relationships <- 
+  omop_relationships %>% 
+  filter_omop_relationships(
+    vocabulary_id_1 == "HemOnc",
+    vocabulary_id_2 != "HemOnc") #%>% 
+#  filter_for_lateral_relationships() 
+
+foreign_hemonc_graph <- 
+  create_nodes_and_edges(foreign_hemonc_relationships) %>% 
+  add_tooltip() %>% 
+  map_node_attributes() %>% 
+  map_edge_attributes() %>% 
+  construct_graph()
+
+chariotViz(foreign_hemonc_graph)
+```
+
 
