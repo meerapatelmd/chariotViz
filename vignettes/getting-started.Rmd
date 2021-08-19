@@ -1,8 +1,8 @@
 ---
-title: "Getting Started"
+title: "Getting Started: HemOnc Example"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{Getting Started}
+  %\VignetteIndexEntry{Getting Started: HemOnc Example}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
