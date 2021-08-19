@@ -4,18 +4,17 @@
 #' @param ... PARAM_DESCRIPTION
 #' @return OUTPUT_DESCRIPTION
 #' @details DETAILS
-#' @examples
+#' @examples 
 #' \dontrun{
 #' if(interactive()){
 #'  #EXAMPLE1
 #'  }
 #' }
-#' @seealso
+#' @seealso 
 #'  \code{\link[dplyr]{filter}}
 #' @rdname filter_omop_relationships
-#' @export
-#' @import dplyr
-
+#' @export 
+#' @importFrom dplyr filter
 filter_omop_relationships <-
   function(omop_relationships,
            ...) {
@@ -42,6 +41,19 @@ filter_omop_relationships <-
 
 
 
+#' @title FUNCTION_TITLE
+#' @description FUNCTION_DESCRIPTION
+#' @param omop_relationships PARAM_DESCRIPTION
+#' @return OUTPUT_DESCRIPTION
+#' @details DETAILS
+#' @examples 
+#' \dontrun{
+#' if(interactive()){
+#'  #EXAMPLE1
+#'  }
+#' }
+#' @rdname filter_for_mapping_relationships
+#' @export 
 filter_for_mapping_relationships <-
   function(omop_relationships) {
 
@@ -53,6 +65,19 @@ filter_for_mapping_relationships <-
   }
 
 
+#' @title FUNCTION_TITLE
+#' @description FUNCTION_DESCRIPTION
+#' @param omop_relationships PARAM_DESCRIPTION
+#' @return OUTPUT_DESCRIPTION
+#' @details DETAILS
+#' @examples 
+#' \dontrun{
+#' if(interactive()){
+#'  #EXAMPLE1
+#'  }
+#' }
+#' @rdname filter_for_taxonomy_relationships
+#' @export 
 filter_for_taxonomy_relationships <-
   function(omop_relationships) {
 
@@ -64,6 +89,19 @@ filter_for_taxonomy_relationships <-
   }
 
 
+#' @title FUNCTION_TITLE
+#' @description FUNCTION_DESCRIPTION
+#' @param omop_relationships PARAM_DESCRIPTION
+#' @return OUTPUT_DESCRIPTION
+#' @details DETAILS
+#' @examples 
+#' \dontrun{
+#' if(interactive()){
+#'  #EXAMPLE1
+#'  }
+#' }
+#' @rdname filter_out_mapping_relationships
+#' @export 
 filter_out_mapping_relationships <-
   function(omop_relationships) {
 
@@ -75,6 +113,19 @@ filter_out_mapping_relationships <-
   }
 
 
+#' @title FUNCTION_TITLE
+#' @description FUNCTION_DESCRIPTION
+#' @param omop_relationships PARAM_DESCRIPTION
+#' @return OUTPUT_DESCRIPTION
+#' @details DETAILS
+#' @examples 
+#' \dontrun{
+#' if(interactive()){
+#'  #EXAMPLE1
+#'  }
+#' }
+#' @rdname filter_out_taxonomy_relationships
+#' @export 
 filter_out_taxonomy_relationships <-
   function(omop_relationships) {
 
@@ -85,6 +136,19 @@ filter_out_taxonomy_relationships <-
 
   }
 
+#' @title FUNCTION_TITLE
+#' @description FUNCTION_DESCRIPTION
+#' @param omop_relationships PARAM_DESCRIPTION
+#' @return OUTPUT_DESCRIPTION
+#' @details DETAILS
+#' @examples 
+#' \dontrun{
+#' if(interactive()){
+#'  #EXAMPLE1
+#'  }
+#' }
+#' @rdname filter_for_lateral_relationships
+#' @export 
 filter_for_lateral_relationships <-
   function(omop_relationships) {
 
@@ -97,6 +161,19 @@ filter_for_lateral_relationships <-
   }
 
 
+#' @title FUNCTION_TITLE
+#' @description FUNCTION_DESCRIPTION
+#' @param omop_relationships PARAM_DESCRIPTION
+#' @return OUTPUT_DESCRIPTION
+#' @details DETAILS
+#' @examples 
+#' \dontrun{
+#' if(interactive()){
+#'  #EXAMPLE1
+#'  }
+#' }
+#' @rdname filter_out_lateral_relationships
+#' @export 
 filter_out_lateral_relationships <-
   function(omop_relationships) {
 

@@ -1,6 +1,10 @@
 # chariotViz 0.0.2.9000  
 
 * Added `omop.ancestors` class objects for taxonomy visualization  
+* Begin developing features for ancestor visualization  
+* Added `filter_for_*_relationships` and `filter_out_*_relationships` functions to 
+refine omop relationships visualization  
+
 
 
 
