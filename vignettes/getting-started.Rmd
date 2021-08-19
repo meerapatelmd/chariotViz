@@ -68,7 +68,9 @@ hemonc_graph <-
 ```
 
 ```{r}
-chariotViz(hemonc_graph)
+chariotViz(hemonc_graph,
+           width = 2000,
+           height = 2000)
 ```
 
 ```{r}
@@ -76,6 +78,8 @@ hemonc_graph2 <-
   hemonc_graph %>% 
   remap_fillcolor_by_concept_class()
 
-chariotViz(hemonc_graph2)
+chariotViz(hemonc_graph2,
+           width = 2000,
+           height = 2000)
 ```
 
