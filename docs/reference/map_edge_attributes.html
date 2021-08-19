@@ -72,7 +72,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">chariotViz</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.0.0.9000</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.0.1.9000</span>
       </span>
     </div>
 
@@ -95,9 +95,15 @@
   </a>
   <ul class="dropdown-menu" role="menu">
     <li>
-      <a href="../articles/template.html">Template</a>
+      <a href="../articles/genomic-domain.html">Genomic Domain</a>
+    </li>
+    <li>
+      <a href="../articles/getting-started.html">Getting Started</a>
     </li>
   </ul>
+</li>
+<li>
+  <a href="../news/index.html">Changelog</a>
 </li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
@@ -121,7 +127,7 @@
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>FUNCTION_TITLE</h1>
-    <small class="dont-index">Source: <a href='https://github.com/mpatel-cai/chariot2/blob/master/R/diagrammer.R'><code>R/diagrammer.R</code></a></small>
+    <small class="dont-index">Source: <a href='https://github.com/mpatel-cai/chariot2/blob/master/R/map.R'><code>R/map.R</code></a></small>
     <div class="hidden name"><code>map_edge_attributes.Rd</code></div>
     </div>
 
@@ -134,56 +140,81 @@
   fontsize <span class='op'>=</span> <span class='fl'>26</span>,
   len <span class='op'>=</span> <span class='fl'>5</span>,
   label_from <span class='op'>=</span> <span class='va'>relationship_name</span>,
-  style_from <span class='op'>=</span> <span class='cn'>NULL</span>,
-  style_map <span class='op'>=</span> <span class='cn'>NULL</span>,
+  style_from <span class='op'>=</span> <span class='va'>defines_ancestry</span>,
+  style_map <span class='op'>=</span> <span class='va'>defines_ancestry_styles</span>,
+  style_map_other <span class='op'>=</span> <span class='st'>"dotted"</span>,
   penwidth_from <span class='op'>=</span> <span class='cn'>NULL</span>,
   penwidth_map <span class='op'>=</span> <span class='cn'>NULL</span>,
-  color_from <span class='op'>=</span> <span class='cn'>NULL</span>,
-  color_map <span class='op'>=</span> <span class='cn'>NULL</span>,
+  penwidth_map_other <span class='op'>=</span> <span class='cn'>NULL</span>,
+  color_from <span class='op'>=</span> <span class='va'>relationship_source</span>,
+  color_map <span class='op'>=</span> <span class='va'>relationship_source_colors</span>,
+  color_map_other <span class='op'>=</span> <span class='st'>"black"</span>,
   arrowsize_from <span class='op'>=</span> <span class='cn'>NULL</span>,
   arrowsize_map <span class='op'>=</span> <span class='cn'>NULL</span>,
+  arrowsize_map_other <span class='op'>=</span> <span class='cn'>NULL</span>,
   arrowhead_from <span class='op'>=</span> <span class='va'>is_hierarchical</span>,
-  arrowhead_map <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span>`1` <span class='op'>=</span> <span class='st'>"vee"</span>, `0` <span class='op'>=</span> <span class='st'>"none"</span><span class='op'>)</span>,
+  arrowhead_map <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span>`1` <span class='op'>=</span> <span class='st'>"vee"</span>, `0` <span class='op'>=</span> <span class='st'>"vee"</span><span class='op'>)</span>,
+  arrowhead_map_other <span class='op'>=</span> <span class='cn'>NULL</span>,
   arrowtail_from <span class='op'>=</span> <span class='cn'>NULL</span>,
   arrowtail_map <span class='op'>=</span> <span class='cn'>NULL</span>,
+  arrowtail_map_other <span class='op'>=</span> <span class='cn'>NULL</span>,
   fontname_from <span class='op'>=</span> <span class='cn'>NULL</span>,
   fontname_map <span class='op'>=</span> <span class='cn'>NULL</span>,
+  fontname_map_other <span class='op'>=</span> <span class='cn'>NULL</span>,
   fontsize_from <span class='op'>=</span> <span class='cn'>NULL</span>,
   fontsize_map <span class='op'>=</span> <span class='cn'>NULL</span>,
+  fontsize_map_other <span class='op'>=</span> <span class='cn'>NULL</span>,
   fontcolor_from <span class='op'>=</span> <span class='cn'>NULL</span>,
   fontcolor_map <span class='op'>=</span> <span class='cn'>NULL</span>,
+  fontcolor_map_other <span class='op'>=</span> <span class='cn'>NULL</span>,
   tooltip_from <span class='op'>=</span> <span class='cn'>NULL</span>,
   tooltip_map <span class='op'>=</span> <span class='cn'>NULL</span>,
+  tooltip_map_other <span class='op'>=</span> <span class='cn'>NULL</span>,
   URL_from <span class='op'>=</span> <span class='cn'>NULL</span>,
   URL_map <span class='op'>=</span> <span class='cn'>NULL</span>,
+  URL_map_other <span class='op'>=</span> <span class='cn'>NULL</span>,
   edgetooltip_from <span class='op'>=</span> <span class='cn'>NULL</span>,
   edgetooltip_map <span class='op'>=</span> <span class='cn'>NULL</span>,
+  edgetooltip_map_other <span class='op'>=</span> <span class='cn'>NULL</span>,
   edgeURL_from <span class='op'>=</span> <span class='cn'>NULL</span>,
   edgeURL_map <span class='op'>=</span> <span class='cn'>NULL</span>,
+  edgeURL_map_other <span class='op'>=</span> <span class='cn'>NULL</span>,
   dir_from <span class='op'>=</span> <span class='cn'>NULL</span>,
   dir_map <span class='op'>=</span> <span class='cn'>NULL</span>,
+  dir_map_other <span class='op'>=</span> <span class='cn'>NULL</span>,
   headtooltip_from <span class='op'>=</span> <span class='cn'>NULL</span>,
   headtooltip_map <span class='op'>=</span> <span class='cn'>NULL</span>,
+  headtooltip_map_other <span class='op'>=</span> <span class='cn'>NULL</span>,
   headURL_from <span class='op'>=</span> <span class='cn'>NULL</span>,
   headURL_map <span class='op'>=</span> <span class='cn'>NULL</span>,
+  headURL_map_other <span class='op'>=</span> <span class='cn'>NULL</span>,
   headclip_from <span class='op'>=</span> <span class='cn'>NULL</span>,
   headclip_map <span class='op'>=</span> <span class='cn'>NULL</span>,
+  headclip_map_other <span class='op'>=</span> <span class='cn'>NULL</span>,
   headlabel_from <span class='op'>=</span> <span class='cn'>NULL</span>,
   headlabel_map <span class='op'>=</span> <span class='cn'>NULL</span>,
+  headlabel_map_other <span class='op'>=</span> <span class='cn'>NULL</span>,
   headport_from <span class='op'>=</span> <span class='cn'>NULL</span>,
   headport_map <span class='op'>=</span> <span class='cn'>NULL</span>,
+  headport_map_other <span class='op'>=</span> <span class='cn'>NULL</span>,
   tailtooltip_from <span class='op'>=</span> <span class='cn'>NULL</span>,
   tailtooltip_map <span class='op'>=</span> <span class='cn'>NULL</span>,
+  tailtooltip_map_other <span class='op'>=</span> <span class='cn'>NULL</span>,
   tailURL_from <span class='op'>=</span> <span class='cn'>NULL</span>,
   tailURL_map <span class='op'>=</span> <span class='cn'>NULL</span>,
+  tailURL_map_other <span class='op'>=</span> <span class='cn'>NULL</span>,
   tailclip_from <span class='op'>=</span> <span class='cn'>NULL</span>,
   tailclip_map <span class='op'>=</span> <span class='cn'>NULL</span>,
+  tailclip_map_other <span class='op'>=</span> <span class='cn'>NULL</span>,
   taillabel_from <span class='op'>=</span> <span class='cn'>NULL</span>,
   taillabel_map <span class='op'>=</span> <span class='cn'>NULL</span>,
+  taillabel_map_other <span class='op'>=</span> <span class='cn'>NULL</span>,
   tailport_from <span class='op'>=</span> <span class='cn'>NULL</span>,
   tailport_map <span class='op'>=</span> <span class='cn'>NULL</span>,
+  tailport_map_other <span class='op'>=</span> <span class='cn'>NULL</span>,
   decorate_from <span class='op'>=</span> <span class='cn'>NULL</span>,
-  decorate_map <span class='op'>=</span> <span class='cn'>NULL</span>
+  decorate_map <span class='op'>=</span> <span class='cn'>NULL</span>,
+  decorate_map_other <span class='op'>=</span> <span class='cn'>NULL</span>
 <span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
