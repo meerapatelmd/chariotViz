@@ -38,3 +38,72 @@ filter_omop_relationships <-
     output
 
   }
+
+
+
+
+filter_for_mapping_relationships <-
+  function(omop_relationships) {
+
+    filter_omop_relationships(
+      omop_relationships = omop_relationships,
+      relationship_id %in% omop_relationship_id_classification$Mapping
+    )
+
+  }
+
+
+filter_for_taxonomy_relationships <-
+  function(omop_relationships) {
+
+    filter_omop_relationships(
+      omop_relationships = omop_relationships,
+      relationship_id %in% omop_relationship_id_classification$Taxonomy
+    )
+
+  }
+
+
+filter_out_mapping_relationships <-
+  function(omop_relationships) {
+
+    filter_omop_relationships(
+      omop_relationships = omop_relationships,
+      !(relationship_id %in% omop_relationship_id_classification$Mapping)
+    )
+
+  }
+
+
+filter_out_taxonomy_relationships <-
+  function(omop_relationships) {
+
+    filter_omop_relationships(
+      omop_relationships = omop_relationships,
+      !(relationship_id %in% omop_relationship_id_classification$Taxonomy)
+    )
+
+  }
+
+filter_for_lateral_relationships <-
+  function(omop_relationships) {
+
+    output <-
+    filter_out_mapping_relationships(omop_relationships =
+                                       omop_relationships)
+
+    filter_out_taxonomy_relationships(omop_relationships = output)
+
+  }
+
+
+filter_out_lateral_relationships <-
+  function(omop_relationships) {
+
+    output <-
+      filter_for_mapping_relationships(omop_relationships =
+                                         omop_relationships)
+
+    filter_for_taxonomy_relationships(omop_relationships = output)
+
+  }

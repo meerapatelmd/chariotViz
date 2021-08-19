@@ -1,3 +1,9 @@
+# chariotViz 0.0.2.9000  
+
+* Added `omop.ancestors` class objects for taxonomy visualization  
+
+
+
 # chariotViz 0.0.2
 
 * Removed deprecated functions  

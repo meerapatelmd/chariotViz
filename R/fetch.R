@@ -325,11 +325,16 @@ fetch_omop_ancestors <-
         purrr::reduce,
         dplyr::left_join,
         by =
-          c("ancestor_id",
-            "vocabulary_id_1",
-            "concept_class_id_1",
-            "vocabulary_id_2",
-            "concept_class_id_2")) %>%
+          c("ancestor_domain_id",
+            "ancestor_vocabulary_id",
+            "ancestor_concept_class_id",
+            "ancestor_standard_concept",
+            "descendant_domain_id",
+            "descendant_vocabulary_id",
+            "descendant_concept_class_id",
+            "descendant_standard_concept",
+            "min_levels_of_separation",
+            "max_levels_of_separation")) %>%
       purrr::map(dplyr::distinct) %>%
       dplyr::bind_rows()
 
@@ -338,13 +343,13 @@ fetch_omop_ancestors <-
       omop_ancestors1 %>%
       dplyr::left_join(
         total_vocabulary_ct,
-        by = c("vocabulary_id_1" = "vocabulary_id")) %>%
+        by = c("ancestor_vocabulary_id" = "vocabulary_id")) %>%
       dplyr::distinct() %>%
       dplyr::rename(
         total_vocabulary_ct_1 = total_vocabulary_ct) %>%
       dplyr::left_join(
         total_vocabulary_ct,
-        by = c("vocabulary_id_2" = "vocabulary_id")) %>%
+        by = c("descendant_vocabulary_id" = "vocabulary_id")) %>%
       dplyr::distinct() %>%
       dplyr::rename(total_vocabulary_ct_2 = total_vocabulary_ct) %>%
       dplyr::distinct()
@@ -365,15 +370,15 @@ fetch_omop_ancestors <-
     omop_ancestors4 <-
       omop_ancestors3 %>%
       dplyr::left_join(total_concept_class_ct,
-                       by = c("vocabulary_id_1" = "vocabulary_id",
-                              "concept_class_id_1" = "concept_class_id")) %>%
+                       by = c("ancestor_vocabulary_id" = "vocabulary_id",
+                              "ancestor_concept_class_id" = "concept_class_id")) %>%
       dplyr::distinct() %>%
-      dplyr::rename(total_concept_class_ct_1 = total_concept_class_ct) %>%
+      dplyr::rename(ancestor_total_concept_class_ct = total_concept_class_ct) %>%
       dplyr::left_join(total_concept_class_ct,
-                       by = c("vocabulary_id_2" = "vocabulary_id",
-                              "concept_class_id_2" = "concept_class_id")) %>%
+                       by = c("descendant_vocabulary_id" = "vocabulary_id",
+                              "descendant_concept_class_id" = "concept_class_id")) %>%
       dplyr::distinct() %>%
-      dplyr::rename(total_concept_class_ct_2 = total_concept_class_ct) %>%
+      dplyr::rename(descendant_total_concept_class_ct = total_concept_class_ct) %>%
       dplyr::distinct()
 
     if (nrow(omop_ancestors4) != nrow(omop_ancestors3)) {
@@ -388,30 +393,23 @@ fetch_omop_ancestors <-
     new("omop.ancestors",
         data =
           omop_ancestors4 %>%
-          tidyr::extract(col = ancestor_name,
-                         into = "ancestor_source",
-                         regex = "^.*?[(]{1}(.*?)[)]{1}",
-                         remove = FALSE) %>%
           dplyr::select(
-            relationship_id,
-            relationship_name,
-            relationship_source,
-            is_hierarchical,
-            defines_ancestry,
-            domain_id_1,
-            vocabulary_id_1,
-            concept_class_id_1,
-            standard_concept_1,
-            concept_count_1,
-            total_concept_class_ct_1,
-            total_vocabulary_ct_1,
-            domain_id_2,
-            vocabulary_id_2,
-            concept_class_id_2,
-            standard_concept_2,
-            concept_count_2,
-            total_concept_class_ct_2,
-            total_vocabulary_ct_2))
+            ancestor_domain_id,
+            ancestor_vocabulary_id,
+            ancestor_concept_class_id,
+            ancestor_standard_concept,
+            descendant_domain_id,
+            descendant_vocabulary_id,
+            descendant_concept_class_id,
+            descendant_standard_concept,
+            min_levels_of_separation,
+            max_levels_of_separation,
+            ancestor_to_descendant_count = count,
+            ancestor_total_vocabulary_ct = total_vocabulary_ct_1,
+            descendant_total_vocabulary_ct = total_vocabulary_ct_2,
+            ancestor_total_concept_class_ct,
+            descendant_total_concept_class_ct
+            ))
 
   }
 
