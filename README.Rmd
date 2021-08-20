@@ -1,0 +1,252 @@
+---
+output: github_document
+---
+
+<!-- README.md is generated from README.Rmd. Please edit that file -->
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  fig.path = "man/figures/README-",
+  out.width = "100%"
+)
+```
+
+# chariotViz
+
+Visualize the OMOP vocabularies from multiple dimensions using the DiagrammeR package.  
+
+## Installation
+
+You can install the development version from [GitHub](https://github.com/) with:
+
+``` r
+# install.packages("devtools")
+devtools::install_github("meerapatelmd/chariotViz")
+```
+
+## Prerequisites  
+
+* OMOP vocabularies loaded into a Postgres instance (see [setupAthena](http://github.com/meerapatelmd/setupAthena)).  
+* R.cache R package that caches the query resultsets.    
+
+
+# How It Works  
+
+## S4 Classes  
+
+```{r,echo=FALSE,message=F,warning=F}
+library(DiagrammeR)
+DiagrammeR("
+  sequenceDiagram;
+    Postgres-->>omop.relationships: query; 
+    omop.relationships->>nodes.and.edges: divide into;
+    nodes.and.edges->>omop.graph: transform to
+"
+)
+```
+
+The raw OMOP data is fetched from the Postgres instance.  
+
+```{r,message=FALSE,warning=FALSE}
+library(chariotViz)
+
+omop_rels <- 
+  fetch_omop_relationships(version_key = get_version_key())
+```
+
+The fetched data belongs to the `omop.relationships` S4 class.  
+
+```{r}
+class(omop_rels)
+```
+
+The `omop.relationship` class is converted to the `nodes.and.edges` S4 
+class. 
+
+```{r}
+omop_ne <- 
+  create_nodes_and_edges(omop_relationships = omop_rels)
+
+class(omop_ne)
+```
+
+From `nodes.and.edges`, an `omop.graph` S4 class object can be constructed.  
+
+```{r}
+omop_gr <- 
+  construct_graph(omop_ne)
+
+class(omop_gr)
+```
+
+The `omop.graph` can then be rendered, but due to its size, `force` must 
+be set to TRUE in order to do so.  
+
+```{r}
+chariotViz(omop_gr)
+```
+
+## Subsetting   
+
+An `omop.relationships` object can be subset using tidyverse-style filtering. 
+Here, I am subsetting for all the relationships associated with Cancer Modifier. 
+Since the node count is below the threshold set by default in the `chariotViz` function, 
+the graph renders automatically and without having to set `force` to TRUE.  
+
+```{r}
+cancer_modifier_relationships <- 
+  omop_rels %>% 
+    filter_omop_relationships(
+      vocabulary_id_1 == "Cancer Modifier")
+
+cancer_modifier_ne <- 
+  cancer_modifier_relationships %>% 
+  create_nodes_and_edges()
+
+cancer_modifier_graph <- 
+  cancer_modifier_ne %>% 
+  construct_graph()
+
+chariotViz(cancer_modifier_graph)
+```
+
+
+## Adding Pizzaz  
+
+The visualization is nice, but it needs a little oomph. A tooltip and 
+visualization attributes can be added to the `nodes.and.edges` class object 
+prior to graph construction.  
+
+```{r,echo=FALSE,message=F,warning=F}
+DiagrammeR("
+  sequenceDiagram;
+    Postgres-->>omop.relationships: query; 
+    omop.relationships->>nodes.and.edges: divide into;
+    nodes.and.edges->>nodes.and.edges: add tooltip;
+    nodes.and.edges->>omop.graph: transform to
+"
+)
+```
+
+```{r}
+cancer_modifier_relationships <- 
+  omop_rels %>% 
+    filter_omop_relationships(
+      vocabulary_id_1 == "Cancer Modifier")
+
+cancer_modifier_ne <- 
+  cancer_modifier_relationships %>% 
+  create_nodes_and_edges() %>% 
+  add_tooltip()
+
+cancer_modifier_graph <- 
+  cancer_modifier_ne %>% 
+  construct_graph()
+
+chariotViz(cancer_modifier_graph)
+```
+
+In addition to the tooltip, the way the nodes and edges 
+appear can also be customized.  
+
+```{r,echo=FALSE,message=F,warning=F}
+DiagrammeR("
+  sequenceDiagram;
+    Postgres-->>omop.relationships: query; 
+    omop.relationships->>nodes.and.edges: divide into;
+    nodes.and.edges->>nodes.and.edges: add tooltip;
+    nodes.and.edges->>nodes.and.edges: add attributes;
+    nodes.and.edges->>omop.graph: transform to
+"
+)
+```
+
+```{r}
+cancer_modifier_relationships <- 
+  omop_rels %>% 
+    filter_omop_relationships(
+      vocabulary_id_1 == "Cancer Modifier")
+
+cancer_modifier_ne <- 
+  cancer_modifier_relationships %>% 
+  create_nodes_and_edges() %>% 
+  add_tooltip() %>% 
+  map_node_attributes() %>% 
+  map_edge_attributes()
+
+cancer_modifier_graph <- 
+  cancer_modifier_ne %>% 
+  construct_graph()
+
+chariotViz(cancer_modifier_graph)
+```
+
+## Resizing  
+
+Due to the large number of other relationships for Cancer Modifier, the 
+height needs to be increased to make it more legible.  
+
+```{r}
+chariotViz(cancer_modifier_graph,
+           height = 1500,
+           width = 500)
+```
+
+
+## Reconfiguring  
+
+The direction can also be reconfigured.  
+
+```{r}
+cancer_modifier_relationships <- 
+  omop_rels %>% 
+    filter_omop_relationships(
+      vocabulary_id_1 == "Cancer Modifier")
+
+cancer_modifier_ne <- 
+  cancer_modifier_relationships %>% 
+  create_nodes_and_edges() %>% 
+  add_tooltip() %>% 
+  map_node_attributes() %>% 
+  map_edge_attributes()
+
+cancer_modifier_graph <- 
+  cancer_modifier_ne %>% 
+  construct_graph(attr_theme = "tb")
+
+chariotViz(cancer_modifier_graph,
+           width = 2500,
+           height = 500)
+```
+
+## Adding Example Concepts  
+
+```{r}
+set.seed(seed = 1)
+cancer_modifier_relationships <- 
+  omop_rels %>% 
+    filter_omop_relationships(
+      vocabulary_id_1 == "Cancer Modifier")
+
+cancer_modifier_ne <- 
+  cancer_modifier_relationships %>% 
+  create_nodes_and_edges() %>% 
+  add_tooltip() %>% 
+  map_node_attributes() %>% 
+  map_edge_attributes()
+
+cancer_modifier_graph <- 
+  cancer_modifier_ne %>% 
+  construct_graph() %>% 
+  append_concept_examples(sample_size = 3)
+
+chariotViz(cancer_modifier_graph)
+
+chariotViz(cancer_modifier_graph,
+           force = TRUE,
+           height = 2500,
+           width = 700)
+```
+

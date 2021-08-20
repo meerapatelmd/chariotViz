@@ -2,6 +2,7 @@
 
 ## New Features  
 
+* Added README  
 * Added `omop.ancestors` class objects for taxonomy visualization  
 * Begin developing features for ancestor visualization  
 * Rename `fetch_omop` function to `fetch_omop_relationships` and `fetch_omop_ancestors` 
@@ -16,7 +17,6 @@ refine omop relationships visualization
 ## Existing Issues  
 
 * Write documentation for functions  
-* Add README  
 * Improve the scale of rendered graphs  
 * Tracing concepts in such a manner that in lieu of `append_example_concepts()` where 
 each node is annotated with random examples, the node would be annotated with the actual 
