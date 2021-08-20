@@ -2,10 +2,3 @@ navbar:
   structure:
     left:  [home, reference, articles, changelog]
     right: [github]
-  components:
-    articles:
-      text: Articles
-      href: articles/index.html
-    changelog:
-      text: Changelog
-      href: news/index.html
