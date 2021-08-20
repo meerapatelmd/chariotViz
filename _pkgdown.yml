@@ -2,3 +2,13 @@ navbar:
   structure:
     left:  [home, reference, articles, changelog]
     right: [github]
+  components:
+    articles:
+      menu:
+      - text: "Getting Started: HemOnc Example"
+        href: articles/getting-started.html
+      - text: "Genomic Domain"
+        href: articles/genomic-domain.html
+      - text: "RxNorm and RxNorm Extension"
+        href: articles/rxnorm-and-rxnorm-extension.html
+
