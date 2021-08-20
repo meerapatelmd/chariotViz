@@ -120,7 +120,8 @@ construct_graph <-
 
       new("omop.graph",
           graph = final_graph,
-          src   = nodes_and_edges
+          src   = nodes_and_edges,
+          has_example_concepts = FALSE
       )
 
 

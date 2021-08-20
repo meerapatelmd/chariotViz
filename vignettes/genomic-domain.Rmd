@@ -19,12 +19,19 @@ knitr::opts_chunk$set(
 )
 ```
 
+# Genomics Domain Vocabularies  
+
+The following vocabularies related to genomics concepts are 
+identified.  
+
 ```{r}
 library(chariot)
 genomic_vocabularies <- 
 queryAthena("SELECT vocabulary_id,COUNT(*) FROM omop_vocabulary.concept WHERE LOWER(concept_class_id) LIKE '%variant%' GROUP BY vocabulary_id;")
 genomic_vocabularies
 ```
+
+An `omop.relationships` S4 class object is fetched for these vocabularies.  
 
 ```{r setup}
 library(chariotViz)
@@ -40,28 +47,410 @@ omop_relationships <-
 ```{r}
 omop_nodes_and_edges <- 
   create_nodes_and_edges(omop_relationships = omop_relationships)
-```
 
-
-```{r}
 omop_nodes_and_edges <- 
   omop_nodes_and_edges %>% 
   add_tooltip() %>%
   map_node_attributes() %>% 
   map_edge_attributes()
+
+omop_graph <- 
+  construct_graph(omop_nodes_and_edges)
+
+chariotViz(
+  omop_graph = omop_graph,
+  force = TRUE, 
+  width = 1500,
+  height = 2000
+)
 ```
+
+After remapping fillcolor by domain, it is evident that 
+some of these vocabularies cross multiple domains, specifically 
+Condition and Observation.  
 
 ```{r}
 omop_graph <- 
+  remap_fillcolor_by_domain(omop_graph = omop_graph)
+chariotViz(
+  omop_graph = omop_graph,
+  force = TRUE, 
+  width = 1500,
+  height = 2000
+)
+```
+
+A filter is applied for Measurement domains only.  
+
+```{r}
+omop_relationships <- 
+omop_relationships %>% 
+  filter_omop_relationships(
+    domain_id_1 == "Measurement",
+    domain_id_2 == "Measurement"
+  )
+omop_nodes_and_edges <- 
+  create_nodes_and_edges(omop_relationships = omop_relationships)
+
+omop_nodes_and_edges <- 
+  omop_nodes_and_edges %>% 
+  add_tooltip() %>%
+  map_node_attributes() %>% 
+  map_edge_attributes()
+
+omop_graph <- 
   construct_graph(omop_nodes_and_edges)
+
+chariotViz(
+  omop_graph = omop_graph,
+  force = TRUE, 
+  width = 1500,
+  height = 2000
+)
+```
+
+The relationships are subset based on whether they are lateral, taxonomical, 
+or mapping.  
+
+## Mapping Relationships  
+
+```{r}
+omop_relationships_mapping <- 
+omop_relationships %>% 
+  filter_for_mapping_relationships() %>% 
+  # Filtered out because it is a bad data capture using the regex for all variant concept classes
+  filter_omop_relationships(concept_class_id_1 != "Lab Test")
+
+omop_nodes_and_edges_mapping <- 
+  create_nodes_and_edges(omop_relationships_mapping)
+
+omop_nodes_and_edges_mapping <- 
+  omop_nodes_and_edges_mapping %>% 
+  add_tooltip() %>%
+  map_node_attributes() %>% 
+  map_edge_attributes()
+
+omop_graph <- 
+  construct_graph(omop_nodes_and_edges_mapping)
+
+chariotViz(
+  omop_graph = omop_graph,
+  height = 1000
+)
+```
+
+The `Maps to` relationship is isolated to see how Variants represented in 
+normal vocabularies are normalized to the OMOP Extension.  
+
+```{r}
+omop_relationships_mapping <- 
+omop_relationships_mapping %>% 
+  filter_for_mapping_relationships() %>% 
+  # Filtered out because it is a bad data capture using the regex for all variant concept classes
+  filter_omop_relationships(relationship_id == "Maps to")
+
+omop_nodes_and_edges_mapping <- 
+  create_nodes_and_edges(omop_relationships_mapping)
+
+omop_nodes_and_edges_mapping <- 
+  omop_nodes_and_edges_mapping %>% 
+  add_tooltip() %>%
+  map_node_attributes() %>% 
+  map_edge_attributes()
+
+omop_graph <- 
+  construct_graph(omop_nodes_and_edges_mapping)
+
+chariotViz(
+  omop_graph = omop_graph,
+  height = 1000
+)
+```
+
+Since only 1 relationship exists, the label 
+can be removed.  
+
+```{r}
+omop_nodes_and_edges_mapping <- 
+  omop_nodes_and_edges_mapping %>% 
+  mutate_edges(label = " ")
+
+omop_graph <- 
+  construct_graph(omop_nodes_and_edges_mapping)
+
+chariotViz(
+  omop_graph = omop_graph,
+  height = 1000
+)
+```
+
+
+Example concepts are added for each node.  
+
+```{r}
+omop_graph <- 
+  omop_graph %>% 
+  append_concept_examples(sample_size = 3)
 ```
 
 ```{r}
 chariotViz(
   omop_graph = omop_graph,
-  force = TRUE, 
-  width = 2000,
-  height = 2000
+  force = TRUE
 )
 ```
 
+
+## Taxonomical Relationships  
+
+```{r}
+omop_relationships_taxonomy <- 
+omop_relationships %>% 
+  filter_for_taxonomy_relationships() %>% 
+  # Filtered out because it is a bad data capture using the regex for all variant concept classes
+  filter_omop_relationships(concept_class_id_1 != "Lab Test")
+
+omop_nodes_and_edges_taxonomy <- 
+  create_nodes_and_edges(omop_relationships_taxonomy)
+
+omop_nodes_and_edges_taxonomy <- 
+  omop_nodes_and_edges_taxonomy %>% 
+  add_tooltip() %>%
+  map_node_attributes() %>% 
+  map_edge_attributes()
+
+omop_graph <- 
+  construct_graph(omop_nodes_and_edges_taxonomy) 
+
+chariotViz(
+  omop_graph = omop_graph,
+  height = 400,
+  width = 400
+)
+```
+
+```{r}
+omop_graph <- 
+  append_concept_examples(omop_graph)
+```
+
+```{r}
+chariotViz(
+  omop_graph = omop_graph,
+  height = 600,
+  width = 1000
+)
+```
+
+## Lateral Relationships  
+```{r}
+omop_relationships_lateral <- 
+omop_relationships %>% 
+  filter_for_lateral_relationships() %>% 
+  # Filtered out because it is a bad data capture using the regex for all variant concept classes
+  filter_omop_relationships(concept_class_id_1 != "Precoordinated pair",
+                            vocabulary_id_1 != "NCIt")
+
+omop_nodes_and_edges_lateral <- 
+  create_nodes_and_edges(omop_relationships_lateral)
+
+omop_nodes_and_edges_lateral <- 
+  omop_nodes_and_edges_lateral %>% 
+  add_tooltip() %>%
+  map_node_attributes() %>% 
+  map_edge_attributes() 
+
+omop_graph <- 
+  construct_graph(omop_nodes_and_edges_lateral,
+                  attr_theme = "lr") %>% 
+  remap_fillcolor_by_concept_class(fillcolor_map = c(`Transcript Variant` = "cadetblue",
+                                                     `Protein Variant` = "indianred",
+                                                     `Genomic Variant` = "mediumpurple"))
+
+chariotViz(
+  omop_graph = omop_graph,
+  height = 500,
+  width = 500
+)
+```
+
+```{r}
+omop_graph <- 
+  append_concept_examples(omop_graph)
+```
+
+```{r}
+chariotViz(
+  omop_graph = omop_graph,
+  height = 300,
+  width = 1000
+)
+```
+
+
+# HGNC  
+
+```{r}
+omop_relationships_hgnc <- 
+  fetch_omop_relationships("HGNC",
+                           version_key = get_version_key()) %>% 
+  filter_omop_relationships(
+                            vocabulary_id_1 == "HGNC")
+
+omop_nodes_and_edges_hgnc <- 
+  create_nodes_and_edges(omop_relationships_hgnc)
+
+omop_nodes_and_edges_hgnc <- 
+  omop_nodes_and_edges_hgnc %>% 
+  add_tooltip() %>%
+  map_node_attributes() %>% 
+  map_edge_attributes() 
+
+omop_graph <- 
+  construct_graph(omop_nodes_and_edges_hgnc,
+                  attr_theme = "lr")
+chariotViz(
+  omop_graph = omop_graph,
+  height = 500,
+  width = 500
+)
+```
+
+
+# OMOP Extension    
+
+```{r}
+omop_relationships_oe <- 
+  fetch_omop_relationships("OMOP Extension",
+                           version_key = get_version_key()) %>% 
+  filter_omop_relationships(
+                            vocabulary_id_1 == "OMOP Extension",
+                            concept_class_id_1 %in% c("Protein Variant",
+                                                      "Genomic Variant",
+                                                      "Transcript Variant"))
+
+omop_nodes_and_edges_oe <- 
+  create_nodes_and_edges(omop_relationships_oe)
+
+omop_nodes_and_edges_oe <- 
+  omop_nodes_and_edges_oe %>% 
+  add_tooltip() %>%
+  map_node_attributes() %>% 
+  map_edge_attributes() 
+
+omop_graph <- 
+  construct_graph(omop_nodes_and_edges_oe,
+                  attr_theme = "lr")
+
+chariotViz(
+  omop_graph = omop_graph,
+  height = 1500,
+  width = 1500
+)
+```
+
+```{r}
+chariotViz(
+  omop_graph = omop_graph %>% 
+                remap_fillcolor_by_domain(),
+  height = 1000,
+  width = 1500
+)
+```
+
+```{r}
+omop_relationships_oe <- 
+  fetch_omop_relationships("OMOP Extension",
+                           version_key = get_version_key()) %>% 
+  filter_omop_relationships(
+                            vocabulary_id_1 == "OMOP Extension",
+                            concept_class_id_1 %in% c("Protein Variant",
+                                                      "Genomic Variant",
+                                                      "Transcript Variant"),
+                            domain_id_1 == "Measurement",
+                            domain_id_1 != domain_id_2)
+
+omop_nodes_and_edges_oe <- 
+  create_nodes_and_edges(omop_relationships_oe)
+
+omop_nodes_and_edges_oe <- 
+  omop_nodes_and_edges_oe %>% 
+  add_tooltip() %>%
+  map_node_attributes() %>% 
+  map_edge_attributes() 
+
+omop_graph <- 
+  construct_graph(omop_nodes_and_edges_oe,
+                  attr_theme = "lr")
+
+chariotViz(
+  omop_graph = omop_graph,
+  height = 500,
+  width = 500
+)
+```
+
+```{r}
+omop_relationships_oe <- 
+  fetch_omop_relationships("OMOP Extension",
+                           version_key = get_version_key()) %>% 
+  filter_omop_relationships(
+                            vocabulary_id_1 == "OMOP Extension",
+                            concept_class_id_1 %in% c(#"Protein Variant",
+                                                      #"Genomic Variant",
+                                                      "Transcript Variant"),
+                            domain_id_1 == "Measurement",
+                            domain_id_1 == domain_id_2)
+
+omop_nodes_and_edges_oe <- 
+  create_nodes_and_edges(omop_relationships_oe)
+
+omop_nodes_and_edges_oe <- 
+  omop_nodes_and_edges_oe %>% 
+  add_tooltip() %>%
+  map_node_attributes() %>% 
+  map_edge_attributes() 
+
+omop_graph <- 
+  construct_graph(omop_nodes_and_edges_oe,
+                  attr_theme = "lr")
+
+chariotViz(
+  omop_graph = omop_graph,
+  height = 1500,
+  width = 1500
+)
+```
+
+```{r}
+omop_relationships_oe <- 
+  fetch_omop_relationships("OMOP Extension",
+                           version_key = get_version_key()) %>% 
+  filter_out_mapping_relationships() %>%
+  filter_omop_relationships(
+                            vocabulary_id_1 == "OMOP Extension",
+                            concept_class_id_1 %in% c(#"Protein Variant",
+                                                      #"Genomic Variant",
+                                                      "Transcript Variant"),
+                            domain_id_1 == "Measurement",
+                            domain_id_1 == domain_id_2)
+
+omop_nodes_and_edges_oe <- 
+  create_nodes_and_edges(omop_relationships_oe)
+
+omop_nodes_and_edges_oe <- 
+  omop_nodes_and_edges_oe %>% 
+  add_tooltip() %>%
+  map_node_attributes() %>% 
+  map_edge_attributes() 
+
+omop_graph <- 
+  construct_graph(omop_nodes_and_edges_oe,
+                  attr_theme = "lr")
+
+chariotViz(
+  omop_graph = omop_graph,
+  height = 500,
+  width = 500
+)
+```

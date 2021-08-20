@@ -3,12 +3,16 @@
 ## New Features  
 
 * Added README  
+* Added `mutate_nodes()` and `mutate_edges()` to apply to dataframes in `nodes.and.edges` 
+objects.  
+* Added conditions to `omop.graph` class object when `append_concept_examples()` is 
+called to make sure that the append can only occur one time to it.  
 * Added `omop.ancestors` class objects for taxonomy visualization  
 * Begin developing features for ancestor visualization  
 * Rename `fetch_omop` function to `fetch_omop_relationships` and `fetch_omop_ancestors` 
 to accomodate new ancestors feature  
 * Added `filter_for_*_relationships` and `filter_out_*_relationships` functions to 
-refine omop relationships visualization  
+refine visualization capabilities  
 
 ## Bug Fixes    
 

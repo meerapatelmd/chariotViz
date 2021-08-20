@@ -56,6 +56,12 @@ rxnorm_class_colors <-
     `Quant Clinical Box` = 'lightgoldenrod2',
     `Marketed Product` = 'lightgoldenrod2')
 
+
+omop_ext_class_colors <-
+  c(`Transcript Variant` = "cadetblue",
+    `Protein Variant` = "indianred",
+    `Genomic Variant` = "mediumpurple")
+
 hemonc_class_colors <-
   c(`Brand Name` = "darkorange",
     `Component` = "maroon2",
@@ -332,7 +338,8 @@ node_color_map <-
       domain_id        = list(Base = domain_colors),
       vocabulary_id    = list(Base = vocabulary_id_standard_colors),
       concept_class_id = list(RxNorm = rxnorm_class_colors,
-                              HemOnc = hemonc_class_colors))
+                              HemOnc = hemonc_class_colors,
+                              `OMOP Extension` = omop_ext_class_colors))
 edge.map <-
   setClass(Class = "edge.map",
            list(relationship_id = "list",

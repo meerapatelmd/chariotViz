@@ -16,6 +16,11 @@ create_nodes_and_edges <-
            type_from = concept_class_id,
            label_glue = "{vocabulary_id}\n{concept_class_id}\n({standard_concept})\n") {
 
+    if (nrow(omop_relationships@data) == 0) {
+
+      cli::cli_abort("There are 0 relationships in the omop.relationship!")
+
+    }
 
     ccr_df <- omop_relationships@data
 

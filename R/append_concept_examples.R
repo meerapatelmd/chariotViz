@@ -1,5 +1,12 @@
-#' @title FUNCTION_TITLE
-#' @description FUNCTION_DESCRIPTION
+#' @title
+#' Append omop.graph with Concepts
+#'
+#' @description
+#' Example concepts are added to see
+#' individuals belonging to a given class. This operation
+#' can only be performed once and if it has already been appended
+#' before, an error will be returned.
+#'
 #' @param omop_graph PARAM_DESCRIPTION
 #' @param sample_size PARAM_DESCRIPTION, Default: 5
 #' @param schema PARAM_DESCRIPTION, Default: 'omop_vocabulary'
@@ -12,6 +19,7 @@
 #' @rdname append_concept_examples
 #' @export
 #' @import dplyr
+#' @importFrom cli cli_abort
 #' @importFrom glue glue
 #' @importFrom pg13 query
 #' @importFrom tidyr pivot_longer unite
@@ -25,6 +33,13 @@ append_concept_examples <-
            conn_fun = "pg13::local_connect(verbose=FALSE)",
            verbose = FALSE,
            render_sql = FALSE) {
+
+
+    if (omop_graph@has_example_concepts) {
+
+      cli::cli_abort("omop.graph object already has example concepts.")
+
+    }
 
     # Deriving domain, vocabulary, concept_class, and standard_concept from
     # nodes
@@ -313,6 +328,7 @@ append_concept_examples <-
         edges
       )
 
+    omop_graph@has_example_concepts <- TRUE
 
     omop_graph
 

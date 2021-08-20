@@ -2,7 +2,7 @@
 % Please edit documentation in R/append_concept_examples.R
 \name{append_concept_examples}
 \alias{append_concept_examples}
-\title{FUNCTION_TITLE}
+\title{Append omop.graph with Concepts}
 \usage{
 append_concept_examples(
   omop_graph,
@@ -33,7 +33,10 @@ append_concept_examples(
 OUTPUT_DESCRIPTION
 }
 \description{
-FUNCTION_DESCRIPTION
+Example concepts are added to see
+individuals belonging to a given class. This operation
+can only be performed once and if it has already been appended
+before, an error will be returned.
 }
 \details{
 DETAILS
