@@ -4,6 +4,7 @@ navbar:
     right: [github]
   components:
     articles:
+      text: Articles
       menu:
       - text: "Getting Started: HemOnc Example"
         href: articles/getting-started.html
