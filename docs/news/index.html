@@ -139,6 +139,8 @@
 <h2 class="hasAnchor">
 <a href="#new-features" class="anchor"></a>New Features</h2>
 <ul>
+<li>Added README<br>
+</li>
 <li>Added <code>omop.ancestors</code> class objects for taxonomy visualization<br>
 </li>
 <li>Begin developing features for ancestor visualization<br>
@@ -161,7 +163,6 @@
 <a href="#existing-issues" class="anchor"></a>Existing Issues</h2>
 <ul>
 <li><p>Write documentation for functions<br></p></li>
-<li><p>Add README<br></p></li>
 <li><p>Improve the scale of rendered graphs<br></p></li>
 <li><p>Tracing concepts in such a manner that in lieu of <code>append_example_concepts()</code> where each node is annotated with random examples, the node would be annotated with the actual related concept for the input concept. In terms of relationship filtering, ascending the Concept Relationship table with no filters applied leads to an exponential increase in related concepts. For example, trastuzumab can map to regimens in HemOnc which subsequently can map back to all the antineoplastics that regimen is associated with. For this reason, a filter must be applied. Using <code>is_hierarchical</code> filters leads to the same issue, but <code>defines_ancestry</code> does not. Also chariotViz <code>mapping</code>, <code>taxonomy</code>, and <code>lateral</code> filters need to be tested.<br></p></li>
 <li><p>When calling <code>append_example_concepts()</code>, errors can sometimes be thrown when the <code>concept_name</code> has an unusual character (likely single quote).</p></li>
