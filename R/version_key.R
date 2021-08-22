@@ -186,7 +186,7 @@ get_vocabulary_version_key <-
 #' @param ... PARAM_DESCRIPTION
 #' @return OUTPUT_DESCRIPTION
 #' @rdname rmd_print_version
-#' @keywords internal
+#' @export
 #' @importFrom rlang list2
 #' @importFrom stringr str_replace_all
 #' @importFrom easyBakeOven print_list
@@ -279,7 +279,7 @@ rmd_print_version <-
 #' @return OUTPUT_DESCRIPTION
 #' @details DETAILS
 #' @rdname console_print_version
-#' @keywords internal
+#' @export
 #' @importFrom rlang list2
 #' @importFrom stringr str_replace_all
 #' @importFrom tibble tibble

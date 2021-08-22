@@ -20,4 +20,3 @@ FUNCTION_DESCRIPTION
 \details{
 DETAILS
 }
-\keyword{internal}

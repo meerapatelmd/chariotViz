@@ -17,4 +17,3 @@ OUTPUT_DESCRIPTION
 \description{
 FUNCTION_DESCRIPTION
 }
-\keyword{internal}

@@ -18,10 +18,25 @@ knitr::opts_chunk$set(
 )
 ```
 
-```{r setup}
+**Last Updated On**: `r as.character(Sys.time())`  
+
+# OMOP Vocabulary Version  
+
+```{r,echo=F,eval=TRUE,results='hide',message=F,warning=F}
+library(chariotViz)
+version_key <- 
+  get_version_key()
+rmd_print_version(version_key, 
+                  "HemOnc")
+```
+
+
+
+```{r setup,eval=F}
 library(chariotViz)
 library(tidyverse)
 ```
+
 
 ```{r,cache=T}
 hemonc_ancestors <- 
