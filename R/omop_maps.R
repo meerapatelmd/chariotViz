@@ -339,7 +339,12 @@ node_color_map <-
       vocabulary_id    = list(Base = vocabulary_id_standard_colors),
       concept_class_id = list(RxNorm = rxnorm_class_colors,
                               HemOnc = hemonc_class_colors,
-                              `OMOP Extension` = omop_ext_class_colors))
+                              `OMOP Extension` = omop_ext_class_colors),
+      invalid_reason   = list(`NA` = "orangered",
+                              `U`  = "orangered4",
+                              `D`  = "midnightblue"))
+
+
 edge.map <-
   setClass(Class = "edge.map",
            list(relationship_id = "list",

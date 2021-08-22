@@ -49,6 +49,22 @@ load_from_cache <-
 
   }
 
+#' List a Cache File
+#' @keywords internal
+#' @importFrom R.cache findCache
+
+find_cache_file <-
+  function(sql,
+           version_key) {
+
+    R.cache::findCache(
+      key = c(sql, version_key),
+      dirs = "chariotViz")
+
+
+
+  }
+
 
 #' @title FUNCTION_TITLE
 #' @rdname delete_cache

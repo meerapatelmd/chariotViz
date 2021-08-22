@@ -118,11 +118,24 @@ construct_graph <-
       )
 
 
+    if (class(nodes_and_edges) == "nodes.and.edges") {
+
       new("omop.graph",
           graph = final_graph,
           src   = nodes_and_edges,
           has_example_concepts = FALSE
       )
+
+    } else {
+
+      new("complete.omop.graph",
+          graph = final_graph,
+          src   = nodes_and_edges,
+          has_example_concepts = FALSE
+      )
+
+
+    }
 
 
   }

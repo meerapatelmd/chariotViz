@@ -1,0 +1,115 @@
+---
+title: "Complete RxNorm"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Complete RxNorm}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  error   = FALSE,
+  cache.path = file.path(R.cache::getCachePath(),
+                         "chariotViz",
+                         "vignettes"),
+  cache = TRUE
+)
+```
+
+```{r setup}
+library(chariotViz)
+library(tidyverse)
+```
+
+```{r,cache=T}
+complete_rxnorm_relationships <- 
+  fetch_complete_omop_relationships(
+    "RxNorm",
+    version_key = get_version_key())
+```
+
+# Updated RxNorm Concepts  
+
+
+```{r}
+updated_rxnorm_relationships <- 
+  complete_rxnorm_relationships %>% 
+  filter_complete_omop_relationships(invalid_reason_1 == "U",
+                                     vocabulary_id_2 == "RxNorm",
+                                     is.na(invalid_reason_2),
+                                     concept_class_id_1 == concept_class_id_2)
+```
+
+
+```{r}
+updated_rxnorm_ne <- 
+  create_complete_nodes_and_edges(complete_omop_relationships = updated_rxnorm_relationships)
+```
+
+```{r}
+updated_rxnorm_ne <- 
+  updated_rxnorm_ne %>% 
+  add_tooltip() %>%
+  map_node_attributes() %>% 
+  map_edge_attributes()
+```
+
+
+```{r}
+updated_graph <- 
+  construct_graph(updated_rxnorm_ne)
+```
+
+
+```{r}
+chariotViz(updated_graph)
+```
+
+```{r}
+chariotViz(updated_graph %>% 
+             remap_fillcolor_by_invalid_reason())
+```
+
+
+# Deleted RxNorm Concepts  
+
+```{r}
+deleted_rxnorm_relationships <- 
+  complete_rxnorm_relationships %>% 
+  filter_complete_omop_relationships(invalid_reason_1 == "D",
+                                     vocabulary_id_2 == "RxNorm",
+                                     is.na(invalid_reason_2),
+                                     concept_class_id_1 == concept_class_id_2)
+```
+
+```{r}
+deleted_rxnorm_ne <- 
+  create_complete_nodes_and_edges(complete_omop_relationships = deleted_rxnorm_relationships)
+```
+
+```{r}
+deleted_rxnorm_ne <- 
+  deleted_rxnorm_ne %>% 
+  add_tooltip() %>%
+  map_node_attributes() %>% 
+  map_edge_attributes()
+```
+
+
+```{r}
+deleted_graph <- 
+  construct_graph(deleted_rxnorm_ne)
+```
+
+
+```{r}
+chariotViz(deleted_graph)
+```
+
+```{r}
+chariotViz(deleted_graph %>% 
+             remap_fillcolor_by_invalid_reason())
+```
