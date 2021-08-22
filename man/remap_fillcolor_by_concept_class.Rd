@@ -2,6 +2,7 @@
 % Please edit documentation in R/remap.R
 \name{remap_fillcolor_by_concept_class}
 \alias{remap_fillcolor_by_concept_class}
+\alias{remap_fillcolor_by_invalid_reason}
 \title{FUNCTION_TITLE}
 \usage{
 remap_fillcolor_by_concept_class(
@@ -11,16 +12,31 @@ remap_fillcolor_by_concept_class(
     unlist(),
   fillcolor_map_other = "gray20"
 )
+
+remap_fillcolor_by_invalid_reason(
+  complete_omop_graph,
+  fillcolor_from = invalid_reason,
+  fillcolor_map = unlist(node_color_map@invalid_reason),
+  fillcolor_map_other = "gray20"
+)
 }
 \arguments{
 \item{omop_graph}{PARAM_DESCRIPTION}
+
+\item{complete_omop_graph}{PARAM_DESCRIPTION}
 }
 \value{
+OUTPUT_DESCRIPTION
+
 OUTPUT_DESCRIPTION
 }
 \description{
 FUNCTION_DESCRIPTION
+
+FUNCTION_DESCRIPTION
 }
 \details{
+DETAILS
+
 DETAILS
 }

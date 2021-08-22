@@ -12,4 +12,7 @@ navbar:
         href: articles/genomic-domain.html
       - text: "RxNorm and RxNorm Extension"
         href: articles/rxnorm-and-rxnorm-extension.html
+      - text: "Invalid to Valid RxNorm Concept Mappings"
+      - href: articles/complete-rxnorm.html
+
 

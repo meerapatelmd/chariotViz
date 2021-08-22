@@ -151,6 +151,68 @@ complete.nodes <-
                          'complete_vocabulary_ct'))
   )
 
+#' @title ancestor.nodes S4 class
+#' @slot data nodes dataframe
+#' @slot required_fields required fields for a nodes s4 class object
+#' @slot attribute_fields fields denoting node attributes
+#' @export
+
+ancestor.nodes <-
+  setClass(
+    Class = "ancestor.nodes",
+    slots = c(data = "data.frame",
+              required_fields = "character",
+              attribute_fields = "character",
+              tooltip_fields = "character",
+              node_fields = "character"),
+    prototype = list(data = tibble::tibble(),
+                     required_fields = c("id", "type", "label"),
+                     attribute_fields =   c(
+                       'shape',
+                       'style',
+                       'penwidth',
+                       'color',
+                       'fillcolor',
+                       'image',
+                       'fontname',
+                       'fontsize',
+                       'fontcolor',
+                       'peripheries',
+                       'height',
+                       'width',
+                       'x',
+                       'y',
+                       'group',
+                       'tooltip',
+                       'xlabel',
+                       'URL',
+                       'sides',
+                       'orientation',
+                       'skew',
+                       'distortion',
+                       'gradientangle',
+                       'fixedsize',
+                       'labelloc',
+                       'margin'
+                     ),
+                     tooltip_fields =
+                       c('id',
+                         'domain_id',
+                         'vocabulary_id',
+                         'concept_class_id',
+                         'standard_concept',
+                         'to_descendant_count',
+                         'total_concept_class_ct',
+                         'total_vocabulary_ct'),
+                     node_fields =
+                       c('domain_id',
+                         'vocabulary_id',
+                         'concept_class_id',
+                         'standard_concept',
+                         'to_descendant_count',
+                         'total_concept_class_ct',
+                         'total_vocabulary_ct'))
+  )
 
 
 #' @title edges S4 class
@@ -248,6 +310,97 @@ setClass(
                        'total_vocabulary_ct_2')
 ))
 
+#' @title ancestor.edges S4 class
+#' @slot data edges dataframe
+#' @slot required_fields required fields for a edges s4 class object
+#' @slot attribute_fields fields denoting edge attributes
+#' @export
+
+ancestor.edges <-
+  setClass(
+    Class = "ancestor.edges",
+    slots = c(data = "data.frame",
+              required_fields = "character",
+              attribute_fields = "character",
+              tooltip_fields = "character",
+              edge_fields = "character"),
+    prototype = list(data = tibble::tibble(),
+                     required_fields = c("from", "to", "label", "rel"),
+                     attribute_fields =   c(
+                       'style',
+                       'penwidth',
+                       'color',
+                       'arrowsize',
+                       'arrowhead',
+                       'arrowtail',
+                       'fontname',
+                       'fontsize',
+                       'fontcolor',
+                       'len',
+                       'tooltip',
+                       'URL',
+                       'labelfontname',
+                       'labelfontsize',
+                       'labelfontcolor',
+                       'labeltooltip',
+                       'labelURL',
+                       'edgetooltip',
+                       'edgeURL',
+                       'dir',
+                       'headtooltip',
+                       'headURL',
+                       'headclip',
+                       'headlabel',
+                       'headport',
+                       'tailtooltip',
+                       'tailURL',
+                       'tailclip',
+                       'taillabel',
+                       'tailport',
+                       'decorate'),
+                     tooltip_fields =
+                       c('id',
+                         'from',
+                         'to',
+                         'min_levels_of_separation',
+                         'max_levels_of_separation',
+                         'ancestor_to_descendant_count',
+                         'concept_1_coverage',
+                         'concept_2_coverage',
+                         'ancestor_domain_id',
+                         'ancestor_vocabulary_id',
+                         'ancestor_concept_class_id',
+                         'ancestor_standard_concept',
+                         #'concept_count_1',
+                         'ancestor_total_concept_class_ct',
+                         'ancestor_total_vocabulary_ct',
+                         'descendant_domain_id',
+                         'descendant_vocabulary_id',
+                         'descendant_concept_class_id',
+                         'descendant_standard_concept',
+                         #'concept_count_2',
+                         'descendant_total_concept_class_ct',
+                         'descendant_total_vocabulary_ct'),
+                     edge_fields =
+                       c(
+                         'min_levels_of_separation',
+                         'max_levels_of_separation',
+                         'ancestor_to_descendant_count',
+                         'ancestor_domain_id',
+                         'ancestor_vocabulary_id',
+                         'ancestor_concept_class_id',
+                         'ancestor_standard_concept',
+                         #'concept_count_1',
+                         'ancestor_total_concept_class_ct',
+                         'ancestor_total_vocabulary_ct',
+                         'descendant_domain_id',
+                         'descendant_vocabulary_id',
+                         'descendant_concept_class_id',
+                         'descendant_standard_concept',
+                         #'concept_count_2',
+                         'descendant_total_concept_class_ct',
+                         'descendant_total_vocabulary_ct')
+    ))
 
 
 #' @title edges S4 class
@@ -382,6 +535,22 @@ complete.nodes.and.edges <-
                             has_edge_attrs = FALSE))
 
 
+#' @title ancestor.nodes.and.edges S4 class
+#' @export
+
+ancestor.nodes.and.edges <-
+  setClass("ancestor.nodes.and.edges",
+           list(nodes = "ancestor.nodes",
+                edges = "ancestor.edges",
+                overlapping_fields = "character",
+                has_tooltip = "logical",
+                has_node_attrs = "logical",
+                has_edge_attrs = "logical"),
+           prototype = list(has_tooltip = FALSE,
+                            has_node_attrs = FALSE,
+                            has_edge_attrs = FALSE))
+
+
 setOldClass("dgr_graph")
 omop.graph <-
   setClass("omop.graph",
@@ -399,6 +568,13 @@ complete.omop.graph <-
                         has_example_concepts = "logical"),
            prototype = list(has_example_concepts = FALSE))
 
+setOldClass("dgr_graph")
+ancestor.omop.graph <-
+  setClass("ancestor.omop.graph",
+           slots    = c(graph = "dgr_graph",
+                        src   = "ancestor.nodes.and.edges",
+                        has_example_concepts = "logical"),
+           prototype = list(has_example_concepts = FALSE))
 
 
 validNE <-
@@ -529,6 +705,68 @@ setValidity(
 )
 
 
+setValidity(
+  Class = "complete.nodes",
+  method = validNE
+)
+
+
+setValidity(
+  Class = "complete.nodes",
+  method = validNodeCount
+)
+
+setValidity(
+  Class = "complete.nodes",
+  method = validNodeRows
+)
+
+setValidity(
+  Class = "complete.edges",
+  method = validNE
+)
+
+setValidity(
+  Class = "complete.edges",
+  method = validEdgeRows
+)
+
+setValidity(
+  Class = "complete.edges",
+  method = validEdgeCount
+)
+
+setValidity(
+  Class = "ancestor.nodes",
+  method = validNE
+)
+
+
+setValidity(
+  Class = "ancestor.nodes",
+  method = validNodeCount
+)
+
+setValidity(
+  Class = "ancestor.nodes",
+  method = validNodeRows
+)
+
+setValidity(
+  Class = "ancestor.edges",
+  method = validNE
+)
+
+setValidity(
+  Class = "ancestor.edges",
+  method = validEdgeRows
+)
+
+setValidity(
+  Class = "ancestor.edges",
+  method = validEdgeCount
+)
+
 validNodeId <-
   function(object) {
 
@@ -575,3 +813,25 @@ setValidity(
   method = validEdgeId
 )
 
+setValidity(
+  Class = "complete.nodes.and.edges",
+  method = validNodeId
+)
+
+
+setValidity(
+  Class = "complete.nodes.and.edges",
+  method = validEdgeId
+)
+
+
+setValidity(
+  Class = "ancestor.nodes.and.edges",
+  method = validNodeId
+)
+
+
+setValidity(
+  Class = "ancestor.nodes.and.edges",
+  method = validEdgeId
+)

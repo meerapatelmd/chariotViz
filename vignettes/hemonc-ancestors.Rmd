@@ -1,0 +1,32 @@
+---
+title: "HemOnc Ancestors"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{HemOnc Ancestors}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  error   = FALSE,
+  cache.path = file.path(R.cache::getCachePath(),
+                         "chariotViz",
+                         "vignettes")
+)
+```
+
+```{r setup}
+library(chariotViz)
+library(tidyverse)
+```
+
+```{r,cache=T}
+hemonc_ancestors <- 
+  fetch_omop_ancestors(
+    "HemOnc",
+    version_key = get_version_key())
+```
+

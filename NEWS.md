@@ -1,18 +1,34 @@
-# chariotViz 0.0.2.9000  
+# chariotViz 0.0.2.9000   
+
+## New Documentation  
+
+* Added README  
 
 ## New Features  
 
-* Added README  
+### OMOP Relationship Class  
+
 * Added `mutate_nodes()` and `mutate_edges()` to apply to dataframes in `nodes.and.edges` 
 objects.  
-* Added conditions to `omop.graph` class object when `append_concept_examples()` is 
-called to make sure that the append can only occur one time to it.  
-* Added `omop.ancestors` class objects for taxonomy visualization  
-* Begin developing features for ancestor visualization  
-* Rename `fetch_omop` function to `fetch_omop_relationships` and `fetch_omop_ancestors` 
-to accomodate new ancestors feature  
+* Added slot that logs when `append_concept_examples()` is called on an `omop.graph` class object. This 
+ensures that `append_concept_examples()` is not called on more than once, resulting in duplicate entries 
+in the dataframes used to render the graph.  
 * Added `filter_for_*_relationships` and `filter_out_*_relationships` functions to 
 refine visualization capabilities  
+
+## OMOP Ancestor Class 
+
+* Introduced `omop.ancestors` class for taxonomy visualization  
+* Begin developing features for ancestor visualization   
+* Rename `fetch_omop` function to `fetch_omop_relationships` and `fetch_omop_ancestors` 
+to accommodate new ancestors feature  
+
+
+## OMOP Complete Relationship Class  
+
+* Introduced `complete.omop.relationships` class for visualization that includes invalid concepts.  
+
+
 
 ## Bug Fixes    
 
