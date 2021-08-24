@@ -353,8 +353,9 @@ edge.map <-
                 relationship_name = "list",
                 relationship_source = "list",
                 defines_ancestry = "list",
-                is_hierarchical = "list"),
-    method = list(show = print_edge_map))
+                is_hierarchical = "list")
+    #method = list(show = print_edge_map)
+    )
 
 
 test_edge.map <- edge.map()

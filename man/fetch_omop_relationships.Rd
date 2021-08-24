@@ -8,8 +8,6 @@ fetch_omop_relationships(
   ...,
   conn,
   conn_fun = "pg13::local_connect(verbose=FALSE)",
-  type_from = concept_class_id,
-  label_glue = "{vocabulary_id}\\n{concept_class_id}\\n({standard_concept})\\n",
   schema = "omop_vocabulary",
   verbose = FALSE,
   render_sql = FALSE,
@@ -21,8 +19,6 @@ fetch_omop_relationships(
 
 \item{conn_fun}{PARAM_DESCRIPTION, Default: 'pg13::local_connect(verbose=FALSE)'}
 
-\item{type_from}{PARAM_DESCRIPTION, Default: concept_class_id}
-
 \item{schema}{PARAM_DESCRIPTION, Default: 'omop_vocabulary'}
 
 \item{verbose}{PARAM_DESCRIPTION, Default: FALSE}
@@ -31,6 +27,8 @@ fetch_omop_relationships(
 
 \item{version_key}{A list object that serves
 as the hash for caching. Set to NULL to cache under a generic hash.}
+
+\item{type_from}{PARAM_DESCRIPTION, Default: concept_class_id}
 }
 \value{
 OUTPUT_DESCRIPTION
