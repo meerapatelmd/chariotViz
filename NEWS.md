@@ -3,6 +3,8 @@
 ## New Documentation  
 
 * Added README  
+* Converted some S4 classes to Reference Classes to customize `show` method 
+in console.  
 
 ## New Features  
 
