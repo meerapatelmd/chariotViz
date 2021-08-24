@@ -33,38 +33,60 @@ nodes.and.edges <-
                    has_edge_attrs = "logical"),
               methods = list(show = print_nodes_and_edges))
 
-#' @title complete.nodes.and.edges S4 class
+#' @title complete.nodes.and.edges Reference Class
 #' @export
+
+# complete.nodes.and.edges <-
+#   setClass("complete.nodes.and.edges",
+#            list(nodes = "complete.nodes",
+#                 edges = "complete.edges",
+#                 overlapping_fields = "character",
+#                 has_tooltip = "logical",
+#                 has_node_attrs = "logical",
+#                 has_edge_attrs = "logical"),
+#            prototype = list(has_tooltip = FALSE,
+#                             has_node_attrs = FALSE,
+#                             has_edge_attrs = FALSE))
+
 
 complete.nodes.and.edges <-
-  setClass("complete.nodes.and.edges",
-           list(nodes = "complete.nodes",
-                edges = "complete.edges",
-                overlapping_fields = "character",
-                has_tooltip = "logical",
-                has_node_attrs = "logical",
-                has_edge_attrs = "logical"),
-           prototype = list(has_tooltip = FALSE,
-                            has_node_attrs = FALSE,
-                            has_edge_attrs = FALSE))
+  setRefClass("complete.nodes.and.edges",
+              fields =
+                list(nodes = "complete.nodes",
+                     edges = "complete.edges",
+                     overlapping_fields = "character",
+                     has_tooltip = "logical",
+                     has_node_attrs = "logical",
+                     has_edge_attrs = "logical"),
+              methods = list(show = print_nodes_and_edges))
 
 
-#' @title ancestor.nodes.and.edges S4 class
+
+#' @title ancestor.nodes.and.edges Reference Class
 #' @export
 
+# ancestor.nodes.and.edges <-
+#   setClass("ancestor.nodes.and.edges",
+#            list(nodes = "ancestor.nodes",
+#                 edges = "ancestor.edges",
+#                 overlapping_fields = "character",
+#                 has_tooltip = "logical",
+#                 has_node_attrs = "logical",
+#                 has_edge_attrs = "logical"),
+#            prototype = list(has_tooltip = FALSE,
+#                             has_node_attrs = FALSE,
+#                             has_edge_attrs = FALSE))
+
 ancestor.nodes.and.edges <-
-  setClass("ancestor.nodes.and.edges",
-           list(nodes = "ancestor.nodes",
-                edges = "ancestor.edges",
-                overlapping_fields = "character",
-                has_tooltip = "logical",
-                has_node_attrs = "logical",
-                has_edge_attrs = "logical"),
-           prototype = list(has_tooltip = FALSE,
-                            has_node_attrs = FALSE,
-                            has_edge_attrs = FALSE))
-
-
+  setRefClass("ancestor.nodes.and.edges",
+              fields =
+                list(nodes = "ancestor.nodes",
+                     edges = "ancestor.edges",
+                     overlapping_fields = "character",
+                     has_tooltip = "logical",
+                     has_node_attrs = "logical",
+                     has_edge_attrs = "logical"),
+              methods = list(show = print_nodes_and_edges))
 
 validNodeId <-
   function(object) {

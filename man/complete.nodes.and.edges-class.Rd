@@ -4,7 +4,8 @@
 \name{complete.nodes.and.edges-class}
 \alias{complete.nodes.and.edges-class}
 \alias{complete.nodes.and.edges}
-\title{complete.nodes.and.edges S4 class}
+\title{complete.nodes.and.edges Reference Class}
 \description{
-complete.nodes.and.edges S4 class
+complete.nodes.and.edges Reference Class
 }
+

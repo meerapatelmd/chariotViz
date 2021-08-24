@@ -4,7 +4,8 @@
 \name{ancestor.nodes.and.edges-class}
 \alias{ancestor.nodes.and.edges-class}
 \alias{ancestor.nodes.and.edges}
-\title{ancestor.nodes.and.edges S4 class}
+\title{ancestor.nodes.and.edges Reference Class}
 \description{
-ancestor.nodes.and.edges S4 class
+ancestor.nodes.and.edges Reference Class
 }
+
