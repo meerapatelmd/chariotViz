@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Changelog • chariotViz</title>
+<title>List a Cache File — find_cache_file • chariotViz</title>
 
 
 <!-- jquery -->
@@ -39,7 +39,8 @@
 
 
 
-<meta property="og:title" content="Changelog" />
+<meta property="og:title" content="List a Cache File — find_cache_file" />
+<meta property="og:description" content="List a Cache File" />
 
 
 
@@ -58,7 +59,7 @@
   </head>
 
   <body data-spy="scroll" data-target="#toc">
-    <div class="container template-news">
+    <div class="container template-reference-topic">
       <header>
       <div class="navbar navbar-default navbar-fixed-top" role="navigation">
   <div class="container">
@@ -102,6 +103,10 @@
     <li>
       <a href="../articles/rxnorm-and-rxnorm-extension.html">RxNorm and RxNorm Extension</a>
     </li>
+    <li class="dropdown-header">Invalid to Valid RxNorm Concept Mappings</li>
+    <li>
+      <a href="../articles/complete-rxnorm.html"></a>
+    </li>
   </ul>
 </li>
 <li>
@@ -128,72 +133,25 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-      <h1 data-toc-skip>Changelog <small></small></h1>
-      <small>Source: <a href='https://github.com/meerapatelmd/chariotViz/blob/master/NEWS.md'><code>NEWS.md</code></a></small>
+    <h1>List a Cache File</h1>
+    <small class="dont-index">Source: <a href='https://github.com/meerapatelmd/chariotViz/blob/master/R/cache.R'><code>R/cache.R</code></a></small>
+    <div class="hidden name"><code>find_cache_file.Rd</code></div>
     </div>
 
-    <div id="chariotviz-0029000" class="section level1">
-<h1 class="page-header" data-toc-text="0.0.2.9000">
-<a href="#chariotviz-0029000" class="anchor"></a>chariotViz 0.0.2.9000</h1>
-<div id="new-features" class="section level2">
-<h2 class="hasAnchor">
-<a href="#new-features" class="anchor"></a>New Features</h2>
-<ul>
-<li>Added README<br>
-</li>
-<li>Added <code><a href="../reference/mutate_nodes.html">mutate_nodes()</a></code> and <code><a href="../reference/mutate_edges.html">mutate_edges()</a></code> to apply to dataframes in <code>nodes.and.edges</code> objects.<br>
-</li>
-<li>Added conditions to <code>omop.graph</code> class object when <code><a href="../reference/append_concept_examples.html">append_concept_examples()</a></code> is called to make sure that the append can only occur one time to it.<br>
-</li>
-<li>Added <code>omop.ancestors</code> class objects for taxonomy visualization<br>
-</li>
-<li>Begin developing features for ancestor visualization<br>
-</li>
-<li>Rename <code>fetch_omop</code> function to <code>fetch_omop_relationships</code> and <code>fetch_omop_ancestors</code> to accomodate new ancestors feature<br>
-</li>
-<li>Added <code>filter_for_*_relationships</code> and <code>filter_out_*_relationships</code> functions to refine visualization capabilities</li>
-</ul>
-</div>
-<div id="bug-fixes" class="section level2">
-<h2 class="hasAnchor">
-<a href="#bug-fixes" class="anchor"></a>Bug Fixes</h2>
-<ul>
-<li>Remove printing of column names when calling <code><a href="../reference/chariotViz.html">chariotViz()</a></code>
-</li>
-</ul>
-</div>
-<div id="existing-issues" class="section level2">
-<h2 class="hasAnchor">
-<a href="#existing-issues" class="anchor"></a>Existing Issues</h2>
-<ul>
-<li><p>Write documentation for functions<br></p></li>
-<li><p>Improve the scale of rendered graphs<br></p></li>
-<li><p>Tracing concepts in such a manner that in lieu of <code>append_example_concepts()</code> where each node is annotated with random examples, the node would be annotated with the actual related concept for the input concept. In terms of relationship filtering, ascending the Concept Relationship table with no filters applied leads to an exponential increase in related concepts. For example, trastuzumab can map to regimens in HemOnc which subsequently can map back to all the antineoplastics that regimen is associated with. For this reason, a filter must be applied. Using <code>is_hierarchical</code> filters leads to the same issue, but <code>defines_ancestry</code> does not. Also chariotViz <code>mapping</code>, <code>taxonomy</code>, and <code>lateral</code> filters need to be tested.<br></p></li>
-<li><p>When calling <code>append_example_concepts()</code>, errors can sometimes be thrown when the <code>concept_name</code> has an unusual character (likely single quote).</p></li>
-<li><p>Need the ability to adjust node and edge attributes of the example concepts.</p></li>
-<li><p>Add feature that shows deprecated concepts and their relationships</p></li>
-</ul>
-</div>
-</div>
-    <div id="chariotviz-002" class="section level1">
-<h1 class="page-header" data-toc-text="0.0.2">
-<a href="#chariotviz-002" class="anchor"></a>chariotViz 0.0.2</h1>
-<ul>
-<li>Removed deprecated functions<br>
-</li>
-<li>Add <code>relationship_source</code> derived from <code>relationship_name</code> to omop.relationships class objects.<br>
-</li>
-<li>Add procedural logicals to nodes.and.edges class objects.</li>
-</ul>
-</div>
-  </div>
+    <div class="ref-description">
+    <p>List a Cache File</p>
+    </div>
 
+    <pre class="usage"><span class='fu'>find_cache_file</span><span class='op'>(</span><span class='va'>sql</span>, <span class='va'>version_key</span><span class='op'>)</span></pre>
+
+
+
+  </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
       <h2 data-toc-skip>Contents</h2>
     </nav>
   </div>
-
 </div>
 
 

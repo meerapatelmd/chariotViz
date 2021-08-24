@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>FUNCTION_TITLE — print_omop_relationships • chariotViz</title>
+<title>FUNCTION_TITLE — setup_chariotViz • chariotViz</title>
 
 
 <!-- jquery -->
@@ -39,7 +39,7 @@
 
 
 
-<meta property="og:title" content="FUNCTION_TITLE — print_omop_relationships" />
+<meta property="og:title" content="FUNCTION_TITLE — setup_chariotViz" />
 <meta property="og:description" content="FUNCTION_DESCRIPTION" />
 
 
@@ -103,6 +103,10 @@
     <li>
       <a href="../articles/rxnorm-and-rxnorm-extension.html">RxNorm and RxNorm Extension</a>
     </li>
+    <li class="dropdown-header">Invalid to Valid RxNorm Concept Mappings</li>
+    <li>
+      <a href="../articles/complete-rxnorm.html"></a>
+    </li>
   </ul>
 </li>
 <li>
@@ -130,21 +134,48 @@
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>FUNCTION_TITLE</h1>
-    <small class="dont-index">Source: <a href='https://github.com/meerapatelmd/chariotViz/blob/master/R/methods.R'><code>R/methods.R</code></a></small>
-    <div class="hidden name"><code>print_omop_relationships.Rd</code></div>
+    <small class="dont-index">Source: <a href='https://github.com/meerapatelmd/chariotViz/blob/master/R/setup.R'><code>R/setup.R</code></a></small>
+    <div class="hidden name"><code>setup_chariotViz.Rd</code></div>
     </div>
 
     <div class="ref-description">
     <p>FUNCTION_DESCRIPTION</p>
     </div>
 
-    <pre class="usage"><span class='fu'>print_omop_relationships</span><span class='op'>(</span><span class='va'>x</span>, max.rows <span class='op'>=</span> <span class='fl'>3</span><span class='op'>)</span></pre>
+    <pre class="usage"><span class='fu'>setup_chariotViz</span><span class='op'>(</span>
+  <span class='va'>conn</span>,
+  conn_fun <span class='op'>=</span> <span class='st'>"pg13::local_connect(verbose=FALSE)"</span>,
+  schema <span class='op'>=</span> <span class='st'>"omop_vocabulary"</span>,
+  verbose <span class='op'>=</span> <span class='cn'>FALSE</span>,
+  render_sql <span class='op'>=</span> <span class='cn'>FALSE</span>,
+  <span class='va'>version_key</span>
+<span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>x</th>
+      <th>conn</th>
+      <td><p>PARAM_DESCRIPTION</p></td>
+    </tr>
+    <tr>
+      <th>conn_fun</th>
+      <td><p>PARAM_DESCRIPTION, Default: 'pg13::local_connect(verbose=FALSE)'</p></td>
+    </tr>
+    <tr>
+      <th>schema</th>
+      <td><p>PARAM_DESCRIPTION, Default: 'omop_vocabulary'</p></td>
+    </tr>
+    <tr>
+      <th>verbose</th>
+      <td><p>PARAM_DESCRIPTION, Default: FALSE</p></td>
+    </tr>
+    <tr>
+      <th>render_sql</th>
+      <td><p>PARAM_DESCRIPTION, Default: FALSE</p></td>
+    </tr>
+    <tr>
+      <th>version_key</th>
       <td><p>PARAM_DESCRIPTION</p></td>
     </tr>
     </table>

@@ -2,8 +2,10 @@ pandoc: 2.11.4
 pkgdown: 1.6.1
 pkgdown_sha: ~
 articles:
+  complete-rxnorm: complete-rxnorm.html
   genomic-domain: genomic-domain.html
   getting-started: getting-started.html
+  hemonc-ancestors: hemonc-ancestors.html
   rxnorm-and-rxnorm-extension: rxnorm-and-rxnorm-extension.html
-last_built: 2021-08-20T03:07Z
+last_built: 2021-08-24T21:46Z
 

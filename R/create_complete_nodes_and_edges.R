@@ -16,7 +16,7 @@ create_complete_nodes_and_edges <-
            type_from = invalid_reason,
            label_glue = "{ifelse(is.na(invalid_reason), 'V', invalid_reason)}\n{vocabulary_id}\n{concept_class_id}\n({standard_concept})\n") {
 
-    if (nrow(complete_omop_relationships@data) == 0) {
+    if (nrow(complete_omop_relationships$data) == 0) {
 
       cli::cli_abort("There are 0 relationships in the complete.omop.relationship!")
 
