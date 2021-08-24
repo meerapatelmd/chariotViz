@@ -11,11 +11,18 @@
 add_tooltip <-
   function(nodes_and_edges) {
 
-    nodes_and_edges@nodes@data <-
+    if (nodes_and_edges$has_tooltip == TRUE) {
+
+      cli::cli_abort("Tooltip field already exists.")
+
+
+    }
+
+    nodes_and_edges$nodes@data <-
     dplyr::left_join(
-    nodes_and_edges@nodes@data,
-    nodes_and_edges@nodes@data %>%
-      dplyr::select(dplyr::any_of(nodes_and_edges@nodes@tooltip_fields)) %>%
+    nodes_and_edges$nodes@data,
+    nodes_and_edges$nodes@data %>%
+      dplyr::select(dplyr::any_of(nodes_and_edges$nodes@tooltip_fields)) %>%
       dplyr::mutate(id0 = id) %>%
       dplyr::mutate_at(dplyr::vars(!id0), as.character) %>%
       tidyr::pivot_longer(cols = !id0) %>%
@@ -35,7 +42,7 @@ add_tooltip <-
       dplyr::distinct()
 
     edges_data_w_id <-
-        nodes_and_edges@edges@data %>%
+        nodes_and_edges$edges@data %>%
           dplyr::mutate(id0 = id) %>%
           dplyr::mutate_at(dplyr::vars(!id0), as.character)
 
@@ -43,7 +50,7 @@ add_tooltip <-
     dplyr::left_join(
       edges_data_w_id,
       edges_data_w_id %>%
-        dplyr::select(id0, dplyr::any_of(nodes_and_edges@edges@tooltip_fields)) %>%
+        dplyr::select(id0, dplyr::any_of(nodes_and_edges$edges@tooltip_fields)) %>%
         tidyr::pivot_longer(cols = !id0) %>%
         tidyr::unite(tooltip_row,
                      name,
@@ -61,17 +68,17 @@ add_tooltip <-
     dplyr::rename(id = id0) %>%
     dplyr::distinct()
 
-    if (nrow(edges_data_w_tooltip) != nrow(nodes_and_edges@edges@data)) {
+    if (nrow(edges_data_w_tooltip) != nrow(nodes_and_edges$edges@data)) {
 
 
-      cli::cli_abort("Edges with tooltip has {nrow(edges_data_w_tooltip)} while input has {nrow(nodes_and_edges@edges@data)}.")
+      cli::cli_abort("Edges with tooltip has {nrow(edges_data_w_tooltip)} while input has {nrow(nodes_and_edges$edges@data)}.")
 
     }
 
-  nodes_and_edges@edges@data <-
+  nodes_and_edges$edges@data <-
     edges_data_w_tooltip
 
-    nodes_and_edges@has_tooltip <- TRUE
+    nodes_and_edges$has_tooltip <- TRUE
 
     nodes_and_edges
   }

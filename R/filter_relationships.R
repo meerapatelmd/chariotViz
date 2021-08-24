@@ -29,8 +29,8 @@ filter_omop_relationships <-
       omop_relationships
 
 
-    output@data <-
-      output@data %>%
+    output$data <-
+      output$data %>%
       dplyr::filter(...)
 
 
@@ -69,8 +69,8 @@ filter_complete_omop_relationships <-
       complete_omop_relationships
 
 
-    output@data <-
-      output@data %>%
+    output$data <-
+      output$data %>%
       dplyr::filter(...)
 
 

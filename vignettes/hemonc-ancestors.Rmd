@@ -18,23 +18,23 @@ knitr::opts_chunk$set(
 )
 ```
 
-**Last Updated On**: `r as.character(Sys.time())`  
+**Last Update On**: `r as.character(Sys.time())`  
 
-# OMOP Vocabulary Version  
 
 ```{r,echo=F,eval=TRUE,results='hide',message=F,warning=F}
 library(chariotViz)
 version_key <- 
   get_version_key()
+```
+
+```{r,echo=F,eval=TRUE,message=F,warning=F}
 rmd_print_version(version_key, 
                   "HemOnc")
 ```
 
 
-
 ```{r setup,eval=F}
 library(chariotViz)
-library(tidyverse)
 ```
 
 
@@ -43,5 +43,147 @@ hemonc_ancestors <-
   fetch_omop_ancestors(
     "HemOnc",
     version_key = get_version_key())
+```
+
+```{r}
+hemonc_ne <- 
+  create_ancestor_nodes_and_edges(hemonc_ancestors) %>% 
+  add_tooltip() 
+```
+
+```{r}
+hemonc_anc_graph <- 
+  construct_graph(nodes_and_edges = hemonc_ne)
+
+```
+
+```{r}
+chariotViz(hemonc_anc_graph)
+```
+
+```{r}
+hemonc_to_hemonc_ancs <- 
+  hemonc_ancestors %>% 
+  filter_omop_ancestors(
+    descendant_vocabulary_id == "HemOnc"
+  )
+
+hemonc_to_hemonc_anc_ne <- 
+  create_ancestor_nodes_and_edges(hemonc_to_hemonc_ancs) %>% 
+  add_tooltip() %>% 
+  map_node_attributes() %>% 
+  map_ancestor_edge_attributes()
+
+hemonc_anc_graph <- 
+  construct_graph(hemonc_to_hemonc_anc_ne)
+
+chariotViz(hemonc_anc_graph)
+```
+
+```{r}
+hemonc_to_hemonc_ancs <- 
+  hemonc_ancestors %>% 
+  filter_omop_ancestors(
+    descendant_vocabulary_id == "HemOnc"
+  )
+
+hemonc_to_hemonc_anc_ne <- 
+  create_ancestor_nodes_and_edges(hemonc_to_hemonc_ancs) %>% 
+  add_tooltip() %>% 
+  map_node_attributes(fillcolor_from = domain_id, 
+                               fillcolor_map = node_color_map@domain_id$Base,
+                               fillcolor_map_other = "gray40") %>% 
+  map_ancestor_edge_attributes()
+
+hemonc_anc_graph <- 
+  construct_graph(hemonc_to_hemonc_anc_ne)
+
+chariotViz(hemonc_anc_graph)
+```
+
+
+```{r}
+hemonc_to_hemonc_min <- 
+  hemonc_ancestors %>% 
+  filter_omop_ancestors(
+    descendant_vocabulary_id == "HemOnc",
+    min_levels_of_separation == 1
+  )
+
+hemonc_to_hemonc_min_ne <- 
+  create_ancestor_nodes_and_edges(hemonc_to_hemonc_min) %>% 
+  add_tooltip() %>% 
+  map_node_attributes() %>% 
+  map_edge_attributes()
+
+hemonc_min_graph <- 
+  construct_graph(hemonc_to_hemonc_min_ne)
+
+chariotViz(hemonc_min_graph)
+```
+
+```{r}
+hemonc_to_hemonc_min <- 
+  hemonc_ancestors %>% 
+  filter_omop_ancestors(
+    descendant_vocabulary_id == "HemOnc",
+    min_levels_of_separation == 2
+  )
+
+hemonc_to_hemonc_min_ne <- 
+  create_ancestor_nodes_and_edges(hemonc_to_hemonc_min) %>% 
+  add_tooltip() %>% 
+  map_node_attributes() %>% 
+  map_edge_attributes()
+
+hemonc_min_graph <- 
+  construct_graph(hemonc_to_hemonc_min_ne)
+
+chariotViz(hemonc_min_graph)
+```
+
+```{r}
+hemonc_to_hemonc_min <- 
+  hemonc_ancestors %>% 
+  filter_omop_ancestors(
+    descendant_vocabulary_id == "HemOnc",
+    min_levels_of_separation == 3
+  )
+
+hemonc_to_hemonc_min_ne <- 
+  create_ancestor_nodes_and_edges(hemonc_to_hemonc_min) %>% 
+  add_tooltip() %>% 
+  map_node_attributes() %>% 
+  map_ancestor_edge_attributes()
+
+hemonc_min_graph <- 
+  construct_graph(hemonc_to_hemonc_min_ne)
+
+chariotViz(hemonc_min_graph)
+```
+
+
+```{r}
+hemonc_to_hemonc_comp <- 
+  hemonc_ancestors %>% 
+  filter_omop_ancestors(
+    descendant_vocabulary_id == "RxNorm",
+    descendant_concept_class_id == "Ingredient"
+  )
+
+hemonc_to_hemonc_comp_ne <- 
+  create_ancestor_nodes_and_edges(hemonc_to_hemonc_comp) %>% 
+  add_tooltip() %>% 
+  map_node_attributes() %>% 
+  map_ancestor_edge_attributes(len = 10)
+
+hemonc_comp_graph <- 
+  construct_graph(hemonc_to_hemonc_comp_ne)
+
+chariotViz(hemonc_comp_graph)
+```
+
+```{r}
+graph_edge_metrics(hemonc_comp_graph)
 ```
 

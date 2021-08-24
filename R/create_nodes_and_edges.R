@@ -16,13 +16,13 @@ create_nodes_and_edges <-
            type_from = concept_class_id,
            label_glue = "{vocabulary_id}\n{concept_class_id}\n({standard_concept})\n") {
 
-    if (nrow(omop_relationships@data) == 0) {
+    if (nrow(omop_relationships$data) == 0) {
 
       cli::cli_abort("There are 0 relationships in the omop.relationship!")
 
     }
 
-    ccr_df <- omop_relationships@data
+    ccr_df <- omop_relationships$data
 
     type_from <- dplyr::enquo(type_from)
 
@@ -128,9 +128,12 @@ create_nodes_and_edges <-
     overlapping_fields <-
       overlapping_fields[!(overlapping_fields %in% c("id", "label"))]
 
-    new("nodes.and.edges",
+    nodes.and.edges(
         nodes = omopNode,
         edges = omopEdge,
-        overlapping_fields = overlapping_fields)
+        overlapping_fields = overlapping_fields,
+        has_tooltip = FALSE,
+        has_node_attrs = FALSE,
+        has_edge_attrs = FALSE)
 
   }

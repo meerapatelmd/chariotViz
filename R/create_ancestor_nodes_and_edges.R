@@ -37,7 +37,7 @@ create_ancestor_nodes_and_edges <-
           dplyr::rename_all(stringr::str_remove_all, "descendant_")) %>%
       dplyr::mutate(type = !!type_from) %>%
       dplyr::mutate(label = glue::glue(label_glue)) %>%
-      dplyr::select(-to_descendant_count) %>%
+      dplyr::select(-concept_count) %>%
       dplyr::distinct() %>%
       tibble::rowid_to_column("id")
 
@@ -76,14 +76,18 @@ create_ancestor_nodes_and_edges <-
                                           ~paste0("descendant_", .)),
                        by = c("descendant_label", "descendant_domain_id", "descendant_vocabulary_id", "descendant_concept_class_id", "descendant_standard_concept", "descendant_total_vocabulary_ct", "descendant_total_concept_class_ct")) %>%
       dplyr::distinct() %>%
-      dplyr::mutate(concept_1_coverage_frac = glue::glue("{concept_count_1}/{complete_concept_class_ct_1}"),
-                    concept_2_coverage_frac = glue::glue("{concept_count_2}/{complete_concept_class_ct_2}")) %>%
-      dplyr::mutate(concept_1_coverage = purrr::map(concept_1_coverage_frac, function(x) scales::percent(eval(rlang::parse_expr(x))))) %>%
-      dplyr::mutate(concept_2_coverage = purrr::map(concept_2_coverage_frac, function(x) scales::percent(eval(rlang::parse_expr(x))))) %>%
-      dplyr::mutate(concept_1_coverage = unlist(concept_1_coverage)) %>%
-      dplyr::mutate(concept_2_coverage = unlist(concept_2_coverage)) %>%
-      dplyr::mutate(rel = relationship_id,
-                    label = relationship_name) %>%
+      dplyr::mutate(ancestor_concept_coverage_frac = glue::glue("{ancestor_concept_count}/{ancestor_total_concept_class_ct}"),
+                    descendant_concept_coverage_frac = glue::glue("{descendant_concept_count}/{descendant_total_concept_class_ct}")) %>%
+      dplyr::mutate(ancestor_concept_coverage = purrr::map(ancestor_concept_coverage_frac, function(x) scales::percent(eval(rlang::parse_expr(x))))) %>%
+      dplyr::mutate(descendant_concept_coverage = purrr::map(descendant_concept_coverage_frac, function(x) scales::percent(eval(rlang::parse_expr(x))))) %>%
+      dplyr::mutate(ancestor_concept_coverage = unlist(ancestor_concept_coverage)) %>%
+      dplyr::mutate(descendant_concept_coverage = unlist(descendant_concept_coverage)) %>%
+      # Extra step with ancestors
+      dplyr::mutate(rel =
+                      dplyr::case_when(min_levels_of_separation == max_levels_of_separation ~ as.character(min_levels_of_separation),
+                                       TRUE ~ sprintf("%s:%s", min_levels_of_separation, max_levels_of_separation))) %>%
+      dplyr::mutate(label = rel) %>%
+      dplyr::distinct() %>%
       tibble::rowid_to_column("id")
 
 
@@ -98,18 +102,20 @@ create_ancestor_nodes_and_edges <-
     }
 
     omopNode <-
-      new("complete.nodes",
+      new("ancestor.nodes",
           data = omop_node)
 
     omopEdge <-
-      new("complete.edges",
-          data = omop_edge2)
+      new("ancestor.edges",
+          data = omop_edge2 %>%
+                  dplyr::arrange(as.integer(min_levels_of_separation),
+                                 as.integer(max_levels_of_separation)))
 
     edge_cols <-
       colnames(omopEdge@data) %>%
-      grep(pattern = "_1$|_2$",
+      grep(pattern = "^ancestor_|^descendant_",
            value   = TRUE) %>%
-      stringr::str_remove_all(pattern = "_1$|_2$") %>%
+      stringr::str_remove_all(pattern = "^ancestor_|^descendant_") %>%
       unique()
 
     overlapping_fields <-
@@ -117,7 +123,7 @@ create_ancestor_nodes_and_edges <-
     overlapping_fields <-
       overlapping_fields[!(overlapping_fields %in% c("id", "label"))]
 
-    new("complete.nodes.and.edges",
+    new("ancestor.nodes.and.edges",
         nodes = omopNode,
         edges = omopEdge,
         overlapping_fields = overlapping_fields)

@@ -38,7 +38,21 @@ map_to_value <-
 
     } else {
 
-      cli::cli_alert_success("All {length(unique_x)} unique value{?s} mapped.")
+      cli::cli_alert_success("All {length(unique_x)} unique value{?s} mapped:\n")
+
+      ht <-
+        tibble::tibble(Attribute = levels,
+                       Value     = names(levels)) %>%
+        dplyr::filter(Attribute %in% unique_x) %>%
+        huxtable::hux()
+
+      huxtable::print_screen(
+        ht %>%
+          huxtable::theme_article(),
+        colnames = FALSE)
+
+
+
     }
 
     suppressWarnings(

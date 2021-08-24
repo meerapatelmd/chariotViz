@@ -19,6 +19,21 @@ knitr::opts_chunk$set(
 )
 ```
 
+**Last Update On**: `r as.character(Sys.time())`  
+
+```{r,echo=F,eval=TRUE,results='hide',message=F,warning=F}
+library(chariotViz)
+version_key <- 
+  get_version_key()
+```
+
+```{r,echo=F,eval=TRUE,message=F,warning=F}
+rmd_print_version(version_key, 
+                  "RxNorm",
+                  "RxNorm Extension")
+```
+
+
 ```{r setup}
 library(chariotViz)
 library(tidyverse)

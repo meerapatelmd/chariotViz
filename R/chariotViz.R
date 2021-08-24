@@ -34,10 +34,10 @@ chariotViz <-
 
 
     node_count <-
-      DiagrammeR::count_nodes(omop_graph@graph)
+      DiagrammeR::count_nodes(omop_graph$graph)
 
     edge_count <-
-      DiagrammeR::count_edges(omop_graph@graph)
+      DiagrammeR::count_edges(omop_graph$graph)
 
 
     if (include_counts) {
@@ -65,7 +65,7 @@ chariotViz <-
     } else {
 
       DiagrammeR::render_graph(
-        graph = omop_graph@graph,
+        graph = omop_graph$graph,
         layout = layout,
         output = output,
         as_svg = as_svg,
@@ -76,5 +76,44 @@ chariotViz <-
 
 
     }
+
+  }
+
+
+
+
+
+graph_edge_metrics <-
+  function(omop_graph) {
+
+    edges_df <- omop_graph@graph$edges_df
+
+    target_cols <-
+    unique(c(omop_graph@src@edges@required_fields,
+             omop_graph@src@edges@edge_fields))
+
+    output <-
+      vector(mode = "list",
+             length = length(target_cols))
+
+    names(output) <-
+      target_cols
+
+    for (target_col in target_cols) {
+
+      output[[target_col]] <-
+        edges_df %>%
+        dplyr::group_by_at(dplyr::vars(dplyr::all_of(target_col))) %>%
+        dplyr::summarise(count = n()) %>%
+        dplyr::ungroup() %>%
+        dplyr::arrange(desc(count))
+
+
+
+    }
+
+
+    list(size = nrow(edges_df),
+         distribution = output)
 
   }

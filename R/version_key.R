@@ -185,20 +185,19 @@ get_vocabulary_version_key <-
 #' @param version_key PARAM_DESCRIPTION
 #' @param ... PARAM_DESCRIPTION
 #' @return OUTPUT_DESCRIPTION
-#' @rdname rmd_print_version
+#' @details DETAILS
+#' @rdname format_version_key
 #' @export
 #' @importFrom rlang list2
 #' @importFrom stringr str_replace_all
-#' @importFrom easyBakeOven print_list
 
-rmd_print_version <-
+format_version_key <-
   function(version_key,
            ...) {
-
     version_key <-
-    version_key[names(version_key) %in%
-                   c("sa_datetime",
-                     "sa_release_version")]
+      version_key[names(version_key) %in%
+                    c("sa_datetime",
+                      "sa_release_version")]
 
     output <- list()
     if ("sa_datetime" %in% names(version_key)) {
@@ -251,7 +250,7 @@ rmd_print_version <-
 
 
         vocabulary_version <-
-        version_key[[vocabulary_field]]
+          version_key[[vocabulary_field]]
 
         output2[[i]] <-
           ifelse(is.null(vocabulary_version), NA, vocabulary_version)
@@ -266,6 +265,28 @@ rmd_print_version <-
           output2)
 
     }
+
+    output
+  }
+
+#' @title FUNCTION_TITLE
+#' @description FUNCTION_DESCRIPTION
+#' @param version_key PARAM_DESCRIPTION
+#' @param ... PARAM_DESCRIPTION
+#' @return OUTPUT_DESCRIPTION
+#' @rdname rmd_print_version
+#' @export
+#' @importFrom rlang list2
+#' @importFrom stringr str_replace_all
+#' @importFrom easyBakeOven print_list
+
+rmd_print_version <-
+  function(version_key,
+           ...) {
+
+    output <-
+      format_version_key(version_key = version_key,
+                         ...)
 
     easyBakeOven::print_list(output)
 

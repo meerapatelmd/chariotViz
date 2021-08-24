@@ -22,8 +22,7 @@ relationship_source_colors <-
     `dictionary of medicines and devices` = "gray20",
     `SNOMED Vet` = "darkviolet",
     `NDF` = "darkgreen",
-    `CMS` = "steelblue4",
-    `Hemonc` = "saddlebrown"
+    `CMS` = "steelblue4"
     )
 
 
@@ -345,16 +344,22 @@ node_color_map <-
                               `D`  = "midnightblue"))
 
 
+
+
 edge.map <-
-  setClass(Class = "edge.map",
-           list(relationship_id = "list",
+  setRefClass(
+    Class = "edge.map",
+    fields = list(relationship_id = "list",
                 relationship_name = "list",
                 relationship_source = "list",
                 defines_ancestry = "list",
-                is_hierarchical = "list"))
+                is_hierarchical = "list"),
+    method = list(show = print_edge_map))
+
+
+test_edge.map <- edge.map()
 
 #' @export
-
 edge_style_map <-
   new(Class = "edge.map",
       defines_ancestry = list(Base = defines_ancestry_styles))

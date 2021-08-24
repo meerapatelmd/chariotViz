@@ -33,6 +33,10 @@ to accommodate new ancestors feature
 ## Bug Fixes    
 
 * Remove printing of column names when calling `chariotViz()`  
+* Converted `omop.relationships`, `complete.omop.relationships`, `omop.ancestors`, 
+and all types of `nodes.and.edges` to Reference Classes to default `show` method.  
+
+
 
 ## Existing Issues  
 

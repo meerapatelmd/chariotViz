@@ -19,12 +19,32 @@ knitr::opts_chunk$set(
 )
 ```
 
-# Genomics Domain Vocabularies  
+
+```{r,eval=TRUE,echo=FALSE,message=FALSE,warning=FALSE,results='hide'}
+library(chariot)
+genomic_vocabularies <- 
+queryAthena("SELECT vocabulary_id,COUNT(*) FROM omop_vocabulary.concept WHERE LOWER(concept_class_id) LIKE '%variant%' GROUP BY vocabulary_id;")
+genomic_vocabularies
+```
+
+**Last Update On**: `r as.character(Sys.time())`  
+
+```{r,echo=F,eval=TRUE,results='hide',message=F,warning=F}
+library(chariotViz)
+version_key <- 
+  get_version_key()
+```
+
+```{r,echo=F,eval=TRUE,message=F,warning=F}
+rmd_print_version(version_key, 
+                  !!!genomic_vocabularies$vocabulary_id)
+```
+
 
 The following vocabularies related to genomics concepts are 
 identified.  
 
-```{r}
+```{r,echo=TRUE,eval=FALSE}
 library(chariot)
 genomic_vocabularies <- 
 queryAthena("SELECT vocabulary_id,COUNT(*) FROM omop_vocabulary.concept WHERE LOWER(concept_class_id) LIKE '%variant%' GROUP BY vocabulary_id;")

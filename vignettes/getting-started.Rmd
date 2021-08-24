@@ -19,6 +19,20 @@ knitr::opts_chunk$set(
 )
 ```
 
+**Last Update On**: `r as.character(Sys.time())`  
+
+```{r,echo=F,eval=TRUE,results='hide',message=F,warning=F}
+library(chariotViz)
+version_key <- 
+  get_version_key()
+```
+
+```{r,echo=F,eval=TRUE,message=F,warning=F}
+rmd_print_version(version_key, 
+                  "HemOnc")
+```
+
+
 ```{r setup}
 library(chariotViz)
 ```
@@ -32,13 +46,8 @@ corresponding annotations from the `CONCEPT` table.
 
 ```{r,cache=T}
 omop_relationships <- 
-  fetch_omop(version_key = get_version_key())
-```
-
-The `omop.relationships` S4 class object is a dataframe of the query results.  
-
-```{r}
-head(omop_relationships@data)
+  fetch_omop_relationships(version_key = get_version_key())
+omop_relationships
 ```
 
 This dataframe is then converted to a subset of 2 dataframes of nodes and edges.  
@@ -47,9 +56,7 @@ This dataframe is then converted to a subset of 2 dataframes of nodes and edges.
 omop_nodes_and_edges <- 
   create_nodes_and_edges(omop_relationships = omop_relationships)
 
-head(omop_nodes_and_edges@nodes@data)
-
-head(omop_nodes_and_edges@edges@data)
+omop_nodes_and_edges
 ```
 
 Prior to visualization, a tooltip and attributes are added.  
@@ -60,6 +67,7 @@ omop_nodes_and_edges <-
   add_tooltip() %>%
   map_node_attributes() %>% 
   map_edge_attributes()
+omop_nodes_and_edges
 ```
 
 The graph is constructed.  
@@ -67,6 +75,7 @@ The graph is constructed.
 ```{r}
 omop_graph <- 
   construct_graph(omop_nodes_and_edges)
+omop_graph
 ```
 
 The above is a graph of the entire OMOP Vocabularies in 
@@ -79,7 +88,7 @@ chariotViz(omop_graph = omop_graph)
 Due to the large number of nodes, the graph is not rendered, but can 
 be forced to do so by setting `force` to TRUE.  
 
-Specifically sets of vocabularies can be isolated by filtering the 
+Specific sets of vocabularies can be isolated by filtering the 
 `omop.relationships` class object prior to conversion to nodes and edges.  
 
 Here, we are filtering for relationships within the HemOnc vocabulary only.  
