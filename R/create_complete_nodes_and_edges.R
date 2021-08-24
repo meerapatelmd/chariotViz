@@ -23,7 +23,7 @@ create_complete_nodes_and_edges <-
     }
 
     omop_relationships <- complete_omop_relationships
-    ccr_df <- omop_relationships@data
+    ccr_df <- omop_relationships$data
 
     type_from <- dplyr::enquo(type_from)
 
