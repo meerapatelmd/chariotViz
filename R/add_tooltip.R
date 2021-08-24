@@ -11,7 +11,7 @@
 add_tooltip <-
   function(nodes_and_edges) {
 
-    if (nodes_and_edges$has_tooltip %in% TRUE) {
+    if (length(nodes_and_edges$has_tooltip)==1 & nodes_and_edges$has_tooltip %in% TRUE) {
 
       cli::cli_abort("Tooltip field already exists.")
 
