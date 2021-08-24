@@ -134,6 +134,9 @@ create_complete_nodes_and_edges <-
     new("complete.nodes.and.edges",
         nodes = omopNode,
         edges = omopEdge,
-        overlapping_fields = overlapping_fields)
+        overlapping_fields = overlapping_fields,
+        has_tooltip = FALSE,
+        has_node_attrs = FALSE,
+        has_edge_attrs = FALSE)
 
   }

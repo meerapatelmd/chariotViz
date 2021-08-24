@@ -126,6 +126,9 @@ create_ancestor_nodes_and_edges <-
     new("ancestor.nodes.and.edges",
         nodes = omopNode,
         edges = omopEdge,
-        overlapping_fields = overlapping_fields)
+        overlapping_fields = overlapping_fields,
+        has_tooltip = FALSE,
+        has_node_attrs = FALSE,
+        has_edge_attrs = FALSE)
 
   }
