@@ -24,7 +24,8 @@ Imports:
     rlang
 Remotes:
   meerapatelmd/chariot,
-  rich-iannone/DiagrammeR
+  rich-iannone/DiagrammeR,
+  r-lib/cli
 URL: https://github.com/meerapatelmd/chariotViz
 BugReports: https://github.com/meerapatelmd/chariotViz/issues
 Suggests: 
