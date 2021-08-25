@@ -109,9 +109,7 @@ include_legend <-
     }
 
     list(node = node_legend_ht,
-         edge = edge_legend_ht %>%
-           dplyr::select(-from,
-                         -to)) %>%
+         edge = edge_legend_ht) %>%
       purrr::map(dplyr::select,
                  -contains("label"),
                  -contains("fontsize"),
@@ -121,7 +119,9 @@ include_legend <-
                  -ends_with("_1"),
                  -ends_with("_2")) %>%
       purrr::map(dplyr::select,
-                 !dplyr::any_of(c("rel",
+                 !dplyr::any_of(c("from",
+                                  "to",
+                                  "rel",
                                   "relationship_source",
                                   "tooltip",
                                   "labeltooltip"))) %>%
