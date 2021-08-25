@@ -24,6 +24,7 @@ chariotViz <-
   function(omop_graph,
            node_count_cutoff = 30,
            include_counts = TRUE,
+           include_legend = TRUE,
            force = FALSE,
            layout = NULL,
            output = NULL,
@@ -64,6 +65,7 @@ chariotViz <-
 
     } else {
 
+      omop_graph <-
       DiagrammeR::render_graph(
         graph = omop_graph$graph,
         layout = layout,
@@ -73,6 +75,14 @@ chariotViz <-
         width = width,
         height = height
       )
+
+      omop_graph
+
+      if (include_legend) {
+
+      include_legend(omop_graph = omop_graph)
+
+      }
 
 
     }
