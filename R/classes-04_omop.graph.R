@@ -9,17 +9,17 @@ omop.graph <-
 
 setOldClass("dgr_graph")
 complete.omop.graph <-
-  setClass("complete.omop.graph",
-           slots    = c(graph = "dgr_graph",
+  setRefClass("complete.omop.graph",
+           fields    = c(graph = "dgr_graph",
                         src   = "complete.nodes.and.edges",
                         has_example_concepts = "logical"),
-           prototype = list(has_example_concepts = FALSE))
+           methods    = list(show = print_graph))
 
 setOldClass("dgr_graph")
 ancestor.omop.graph <-
-  setClass("ancestor.omop.graph",
-           slots    = c(graph = "dgr_graph",
+  setRefClass("ancestor.omop.graph",
+           fields    = c(graph = "dgr_graph",
                         src   = "ancestor.nodes.and.edges",
                         has_example_concepts = "logical"),
-           prototype = list(has_example_concepts = FALSE))
+           methods    = list(show = print_graph))
 
