@@ -58,7 +58,8 @@ has an unusual character (likely single quote).
 
 * Need the ability to adjust node and edge attributes of the example concepts. 
 
-* Add feature that shows deprecated concepts and their relationships  
+* The counts used to calculate percent coverage on both sides of the relationship get 
+filtered out at some point and should be returned in the legend and tooltip.  
 
 
 # chariotViz 0.0.2
