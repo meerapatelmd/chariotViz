@@ -3,13 +3,13 @@
 #' @param graph PARAM_DESCRIPTION
 #' @return OUTPUT_DESCRIPTION
 #' @details DETAILS
-#' @rdname include_legend
+#' @rdname construct_legend
 #' @export
 #' @importFrom purrr set_names transpose map
 #' @importFrom glue glue
 #' @importFrom huxtable hux map_background_color by_rows theme_article
 #' @importFrom dplyr select
-include_legend <-
+construct_legend <-
   function(omop_graph) {
 
     graph <- omop_graph$graph
@@ -120,6 +120,7 @@ include_legend <-
                  -ends_with("_2")) %>%
       purrr::map(dplyr::select,
                  !dplyr::any_of(c("from",
+                                  "type",
                                   "to",
                                   "rel",
                                   "relationship_source",
