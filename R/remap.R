@@ -14,8 +14,8 @@ remap_fillcolor_by_domain <-
            fillcolor_map_other = "gray20") {
 
     fillcolor_from <- dplyr::enquo(fillcolor_from)
-    omop_graph@graph$nodes_df <-
-      omop_graph@graph$nodes_df %>%
+    omop_graph$graph$nodes_df <-
+      omop_graph$graph$nodes_df %>%
         dplyr::mutate(fillcolor = map_to_value(!!fillcolor_from,
                                         map_assignment = fillcolor_map,
                                         other = fillcolor_map_other))
@@ -43,8 +43,8 @@ remap_fillcolor_by_concept_class <-
            fillcolor_map_other = "gray20") {
 
     fillcolor_from <- dplyr::enquo(fillcolor_from)
-    omop_graph@graph$nodes_df <-
-      omop_graph@graph$nodes_df %>%
+    omop_graph$graph$nodes_df <-
+      omop_graph$graph$nodes_df %>%
       dplyr::mutate(fillcolor = map_to_value(!!fillcolor_from,
                                              map_assignment = fillcolor_map,
                                              other = fillcolor_map_other))
@@ -82,8 +82,8 @@ remap_fillcolor_by_invalid_reason <-
     }
 
     fillcolor_from <- dplyr::enquo(fillcolor_from)
-    complete_omop_graph@graph$nodes_df <-
-      complete_omop_graph@graph$nodes_df %>%
+    complete_omop_graph$graph$nodes_df <-
+      complete_omop_graph$graph$nodes_df %>%
       dplyr::mutate(invalid_reason = as.character(invalid_reason)) %>%
       dplyr::mutate(fillcolor = map_to_value(!!fillcolor_from,
                                              map_assignment = fillcolor_map,
