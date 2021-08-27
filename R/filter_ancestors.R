@@ -26,7 +26,7 @@ filter_omop_ancestors <-
     }
 
     output <-
-      omop_ancestors
+      omop_ancestors$copy()
 
 
     output@data <-

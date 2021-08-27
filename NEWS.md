@@ -37,6 +37,7 @@ to accommodate new ancestors feature
 * Remove printing of column names when calling `chariotViz()`  
 * Converted `omop.relationships`, `complete.omop.relationships`, `omop.ancestors`, 
 and all types of `nodes.and.edges` to Reference Classes to default `show` method.  
+* Replaced object assignment of Reference Classes to `copy` method  
 
 
 
@@ -60,6 +61,9 @@ has an unusual character (likely single quote).
 
 * The counts used to calculate percent coverage on both sides of the relationship get 
 filtered out at some point and should be returned in the legend and tooltip.  
+
+* Improve counts for `complete.omop.relationships`. Counts should include how many are `D`, `U`, 
+or `NULL`.  
 
 
 # chariotViz 0.0.2

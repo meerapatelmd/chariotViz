@@ -26,7 +26,7 @@ filter_omop_relationships <-
     }
 
     output <-
-      omop_relationships
+      omop_relationships$copy()
 
 
     output$data <-
@@ -66,7 +66,7 @@ filter_complete_omop_relationships <-
     }
 
     output <-
-      complete_omop_relationships
+      complete_omop_relationships$copy()
 
 
     output$data <-
