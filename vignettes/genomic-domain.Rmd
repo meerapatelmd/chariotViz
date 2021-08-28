@@ -14,8 +14,7 @@ knitr::opts_chunk$set(
   error   = FALSE,
   cache.path = file.path(R.cache::getCachePath(),
                          "chariotViz",
-                         "vignettes"),
-  cache = TRUE
+                         "vignettes")
 )
 ```
 
@@ -177,23 +176,6 @@ omop_nodes_and_edges_mapping <-
   add_tooltip() %>%
   map_node_attributes() %>% 
   map_edge_attributes()
-
-omop_graph <- 
-  construct_graph(omop_nodes_and_edges_mapping)
-
-chariotViz(
-  omop_graph = omop_graph,
-  height = 1000
-)
-```
-
-Since only 1 relationship exists, the label 
-can be removed.  
-
-```{r}
-omop_nodes_and_edges_mapping <- 
-  omop_nodes_and_edges_mapping %>% 
-  mutate_edges(label = " ")
 
 omop_graph <- 
   construct_graph(omop_nodes_and_edges_mapping)

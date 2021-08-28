@@ -34,8 +34,11 @@ append_concept_examples <-
            verbose = FALSE,
            render_sql = FALSE) {
 
+    omop_graph2 <-
+      omop_graph$copy()
 
-    if (omop_graph@has_example_concepts) {
+
+    if (omop_graph2$has_example_concepts) {
 
       cli::cli_abort("omop.graph object already has example concepts.")
 
@@ -44,7 +47,7 @@ append_concept_examples <-
     # Deriving domain, vocabulary, concept_class, and standard_concept from
     # nodes
     node_groups <-
-    omop_graph@graph$nodes_df %>%
+    omop_graph2$graph$nodes_df %>%
       dplyr::distinct(id,
                     domain_id,
                     vocabulary_id,
@@ -313,23 +316,23 @@ append_concept_examples <-
                        as.integer)
 
 
-    omop_graph@graph$nodes_df <-
+    omop_graph2$graph$nodes_df <-
       dplyr::bind_rows(
-        omop_graph@graph$nodes_df,
+        omop_graph2$graph$nodes_df,
         nodes) %>%
       dplyr::arrange(domain_id,
                      vocabulary_id,
                      concept_class_id,
                      standard_concept)
 
-    omop_graph@graph$edges_df <-
+    omop_graph2$graph$edges_df <-
       dplyr::bind_rows(
-        omop_graph@graph$edges_df,
+        omop_graph2$graph$edges_df,
         edges
       )
 
-    omop_graph@has_example_concepts <- TRUE
+    omop_graph2$has_example_concepts <- TRUE
 
-    omop_graph
+    omop_graph2
 
   }
