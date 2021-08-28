@@ -22,7 +22,7 @@ map_node_attributes(
   color_map = c(C = "black", S = "black", `NA` = "white"),
   color_map_other = "white",
   fillcolor_from = vocabulary_id,
-  fillcolor_map = node_color_map@vocabulary_id$Base,
+  fillcolor_map = node_color_map$vocabulary_id$Base,
   fillcolor_map_other = "gray20",
   image_from = NULL,
   image_map = NULL,

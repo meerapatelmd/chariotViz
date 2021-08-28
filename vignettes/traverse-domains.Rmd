@@ -1,0 +1,125 @@
+---
+title: "Bridge Domains"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Bridge Domains}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  error   = FALSE,
+  cache.path = file.path(R.cache::getCachePath(),
+                         "chariotViz",
+                         "vignettes")
+)
+```
+
+**Last Update On**: `r as.character(Sys.time())`  
+
+```{r,echo=F,eval=TRUE,results='hide',message=F,warning=F}
+library(chariotViz)
+version_key <- 
+  get_version_key()
+```
+
+```{r,echo=F,eval=TRUE,message=F,warning=F}
+rmd_print_version(version_key, 
+                  "RxNorm")
+```
+
+
+```{r setup}
+library(chariotViz)
+library(tidyverse)
+```
+
+```{r,cache=T}
+omop_relationships <- 
+  fetch_omop_relationships(
+    version_key = get_version_key())
+```
+
+```{r}
+omop_relationships_a <- 
+omop_relationships %>% 
+  filter_omop_relationships(domain_id_1 != domain_id_2)
+
+
+omop_ne_a <- 
+  create_nodes_and_edges(omop_relationships_a) %>% 
+  add_tooltip() %>% 
+  map_node_attributes() %>% 
+  map_edge_attributes()
+
+omop_graph <- 
+  construct_graph(omop_ne_a)
+
+chariotViz(omop_graph = omop_graph)
+```
+
+
+```{r}
+omop_relationships_ucum <- 
+  omop_relationships_a %>% 
+  filter_omop_relationships(vocabulary_id_1 == 'UCUM'|vocabulary_id_2 == 'UCUM')
+omop_ne_ucum <- 
+  create_nodes_and_edges(omop_relationships_ucum) %>% 
+  add_tooltip() %>% 
+  map_node_attributes() %>% 
+  map_edge_attributes()
+
+omop_graph <- 
+  construct_graph(omop_ne_ucum) %>% 
+  remap_fillcolor_by_domain()
+
+chariotViz(omop_graph = omop_graph)
+
+construct_node_legend(omop_graph)
+construct_edge_legend(omop_graph)
+```
+
+```{r}
+omop_relationships_icdo3 <- 
+  omop_relationships_a %>% 
+  filter_omop_relationships(vocabulary_id_1 == 'ICDO3')
+omop_ne_icdo3 <- 
+  create_nodes_and_edges(omop_relationships_icdo3) %>% 
+  add_tooltip() %>% 
+  map_node_attributes() %>% 
+  map_edge_attributes()
+
+omop_graph <- 
+  construct_graph(omop_ne_icdo3) %>% 
+  remap_fillcolor_by_domain()
+
+chariotViz(omop_graph = omop_graph)
+
+construct_node_legend(omop_graph)
+construct_edge_legend(omop_graph)
+```
+
+
+```{r}
+omop_relationships_naaccr <- 
+  omop_relationships_a %>% 
+  filter_omop_relationships(vocabulary_id_1 == 'NAACCR')
+omop_ne_naaccr <- 
+  create_nodes_and_edges(omop_relationships_naaccr) %>% 
+  add_tooltip() %>% 
+  map_node_attributes() %>% 
+  map_edge_attributes()
+
+omop_graph <- 
+  construct_graph(omop_ne_naaccr) %>% 
+  remap_fillcolor_by_domain() 
+
+chariotViz(omop_graph = omop_graph)
+
+construct_node_legend(omop_graph)
+construct_edge_legend(omop_graph)
+```
+

@@ -320,17 +320,54 @@ vocabulary_id_nonstandard_colors <-
 
 
 
+print_node_map <-
+  function() {
+
+    node.map_fields <-
+      c('domain_id',
+        'vocabulary_id',
+        'concept_class_id',
+        'standard_concept',
+        'invalid_reason')
+
+    output <- vector()
+    for (node.map_field in node.map_fields) {
+
+
+      if (length(.self[[node.map_field]])>0) {
+
+        cli::cli_h1(cli::style_bold(node.map_field))
+
+        for (i in 1:length(.self[[node.map_field]])) {
+
+          cli::cat_rule(names(.self[[node.map_field]])[i])
+
+          cli::cat_line(
+            glue::glue(
+              "\t{names(.self[[node.map_field]][[i]])} --> {.self[[node.map_field]][[i]]}"))
+
+
+        }
+
+      }
+
+
+    }
+
+  }
 
 
 node.map <-
-  setClass(Class = "node.map",
-           list(domain_id = "list",
-                vocabulary_id = "list",
-                concept_class_id = "list",
-                standard_concept = "list",
-                invalid_reason = "list"))
+  setRefClass(
+    Class = "node.map",
+    fields =
+      list(domain_id = "list",
+           vocabulary_id = "list",
+           concept_class_id = "list",
+           standard_concept = "list",
+           invalid_reason = "list"),
+    methods = list(show = print_node_map))
 
-#' @export
 
 node_color_map <-
   new(Class = "node.map",
@@ -339,10 +376,46 @@ node_color_map <-
       concept_class_id = list(RxNorm = rxnorm_class_colors,
                               HemOnc = hemonc_class_colors,
                               `OMOP Extension` = omop_ext_class_colors),
-      invalid_reason   = list(`NA` = "orangered",
+      invalid_reason   = list(Base = list(`NA` = "orangered",
                               `U`  = "orangered4",
-                              `D`  = "midnightblue"))
+                              `D`  = "midnightblue")))
 
+
+print_edge_map <-
+  function() {
+
+    edge.map_fields <-
+      c('relationship_id',
+        'relationship_name',
+        'relationship_source',
+        'defines_ancestry',
+        'is_hierarchical')
+
+    output <- vector()
+    for (edge.map_field in edge.map_fields) {
+
+
+      if (length(.self[[edge.map_field]])>0) {
+
+        cli::cli_h1(cli::style_bold(edge.map_field))
+
+        for (i in 1:length(.self[[edge.map_field]])) {
+
+          cli::cat_rule(names(.self[[edge.map_field]])[i])
+
+          cli::cat_line(
+            glue::glue(
+          "\t{names(.self[[edge.map_field]][[i]])} --> {.self[[edge.map_field]][[i]]}"))
+
+
+        }
+
+      }
+
+
+    }
+
+  }
 
 
 
@@ -353,12 +426,9 @@ edge.map <-
                 relationship_name = "list",
                 relationship_source = "list",
                 defines_ancestry = "list",
-                is_hierarchical = "list")
-    #method = list(show = print_edge_map)
+                is_hierarchical = "list") ,
+    methods = list(show = print_edge_map)
     )
-
-
-test_edge.map <- edge.map()
 
 #' @export
 edge_style_map <-

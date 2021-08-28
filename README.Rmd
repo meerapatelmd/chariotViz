@@ -117,7 +117,8 @@ chariotViz(cancer_modifier_graph)
 
 The visualization is nice, but it needs a little oomph. A tooltip and 
 visualization attributes can be added to the `nodes.and.edges` class object 
-prior to graph construction.  
+prior to graph construction. (Note that the tooltip is not rendering in this 
+README, but view articles to see examples.)    
 
 ```{r,echo=FALSE,message=F,warning=F}
 DiagrammeR("

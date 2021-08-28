@@ -6,7 +6,10 @@
 * Converted some S4 classes to Reference Classes to customize `show` method 
 in console.  
 
-## New Features  
+## New Features   
+
+* Added custom `show` for `node.map` and `edge.map` Reference Classes.  
+
 
 ### OMOP Relationship Reference Class  
 

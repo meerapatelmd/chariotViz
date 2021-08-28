@@ -65,6 +65,7 @@ constructed.
 ``` r
 omop_gr <- 
   construct_graph(omop_ne)
+#> Warning: Unknown or uninitialised column: `id`.
 
 class(omop_gr)
 #> [1] "omop.graph"
@@ -107,6 +108,7 @@ cancer_modifier_ne <-
 cancer_modifier_graph <- 
   cancer_modifier_ne %>% 
   construct_graph()
+#> Warning: Unknown or uninitialised column: `id`.
 
 chariotViz(cancer_modifier_graph)
 #>                              ─────────────────────
@@ -122,7 +124,8 @@ chariotViz(cancer_modifier_graph)
 
 The visualization is nice, but it needs a little oomph. A tooltip and
 visualization attributes can be added to the `nodes.and.edges` class
-object prior to graph construction.
+object prior to graph construction. (Note that the tooltip is not
+rendering in this README, but view articles to see examples.)
 
 <img src="man/figures/README-unnamed-chunk-9-1.png" width="100%" />
 
@@ -140,6 +143,7 @@ cancer_modifier_ne <-
 cancer_modifier_graph <- 
   cancer_modifier_ne %>% 
   construct_graph()
+#> Warning: Unknown or uninitialised column: `id`.
 
 chariotViz(cancer_modifier_graph)
 #>                              ─────────────────────
@@ -168,26 +172,73 @@ cancer_modifier_ne <-
   add_tooltip() %>% 
   map_node_attributes() %>% 
   map_edge_attributes()
+#> ══ 
+#> Node Attributes ════════════════════════════════════════
 #> ℹ Shape from: standard_concept
-#> ✓ All 2 unique values mapped.
+#> ✓ All 2 unique values mapped:
+#>                             ───────────────────────
+#>                               Attribute   Value    
+#>                             ───────────────────────
+#>                               S           circle   
+#>                               NA          circle   
+#>                             ───────────────────────
 #> ℹ Style from: standard_concept
-#> ✓ All 2 unique values mapped.
+#> ✓ All 2 unique values mapped:
+#>                             ───────────────────────
+#>                               Attribute   Value    
+#>                             ───────────────────────
+#>                               S           filled   
+#>                               NA          filled   
+#>                             ───────────────────────
 #> ℹ Color from: standard_concept
-#> ✓ All 2 unique values mapped.
+#> ✓ All 2 unique values mapped:
+#>                             ───────────────────────
+#>                               Attribute   Value    
+#>                             ───────────────────────
+#>                               S           black    
+#>                               NA          white    
+#>                             ───────────────────────
 #> ℹ Fillcolor from: vocabulary_id
 #> ! 3 values not mapped: CIM10, KCD7, and Read. Mapping to `other` value 'gray20'.
 #> ℹ Fontcolor from: standard_concept
-#> ✓ All 2 unique values mapped.
+#> ✓ All 2 unique values mapped:
+#>                             ───────────────────────
+#>                               Attribute   Value    
+#>                             ───────────────────────
+#>                               S           black    
+#>                               NA          gray40   
+#>                             ───────────────────────
 #> ℹ 3 constant attributes added: fontsize, width, and height.
-#> ✓ All 1 unique value mapped.
-#> ✓ All 1 unique value mapped.
-#> ✓ All 1 unique value mapped.
-#> ✓ All 1 unique value mapped.
+#> ✓ All 1 unique value mapped:
+#>                             ───────────────────────
+#>                               Attribute   Value    
+#>                             ───────────────────────
+#>                               0           solid    
+#>                             ───────────────────────
+#> ✓ All 1 unique value mapped:
+#>                             ───────────────────────
+#>                               Attribute   Value    
+#>                             ───────────────────────
+#>                               OMOP        black    
+#>                             ───────────────────────
+#> ✓ All 1 unique value mapped:
+#>                             ───────────────────────
+#>                               Attribute   Value    
+#>                             ───────────────────────
+#>                               0           2        
+#>                             ───────────────────────
+#> ✓ All 1 unique value mapped:
+#>                             ───────────────────────
+#>                               Attribute   Value    
+#>                             ───────────────────────
+#>                               0           vee      
+#>                             ───────────────────────
 #> ℹ 2 constant attributes added: fontsize and len.
 
 cancer_modifier_graph <- 
   cancer_modifier_ne %>% 
   construct_graph()
+#> Warning: Unknown or uninitialised column: `id`.
 
 chariotViz(cancer_modifier_graph)
 #>                              ─────────────────────
@@ -233,26 +284,73 @@ cancer_modifier_ne <-
   add_tooltip() %>% 
   map_node_attributes() %>% 
   map_edge_attributes()
+#> ══ 
+#> Node Attributes ════════════════════════════════════════
 #> ℹ Shape from: standard_concept
-#> ✓ All 2 unique values mapped.
+#> ✓ All 2 unique values mapped:
+#>                             ───────────────────────
+#>                               Attribute   Value    
+#>                             ───────────────────────
+#>                               S           circle   
+#>                               NA          circle   
+#>                             ───────────────────────
 #> ℹ Style from: standard_concept
-#> ✓ All 2 unique values mapped.
+#> ✓ All 2 unique values mapped:
+#>                             ───────────────────────
+#>                               Attribute   Value    
+#>                             ───────────────────────
+#>                               S           filled   
+#>                               NA          filled   
+#>                             ───────────────────────
 #> ℹ Color from: standard_concept
-#> ✓ All 2 unique values mapped.
+#> ✓ All 2 unique values mapped:
+#>                             ───────────────────────
+#>                               Attribute   Value    
+#>                             ───────────────────────
+#>                               S           black    
+#>                               NA          white    
+#>                             ───────────────────────
 #> ℹ Fillcolor from: vocabulary_id
 #> ! 3 values not mapped: CIM10, KCD7, and Read. Mapping to `other` value 'gray20'.
 #> ℹ Fontcolor from: standard_concept
-#> ✓ All 2 unique values mapped.
+#> ✓ All 2 unique values mapped:
+#>                             ───────────────────────
+#>                               Attribute   Value    
+#>                             ───────────────────────
+#>                               S           black    
+#>                               NA          gray40   
+#>                             ───────────────────────
 #> ℹ 3 constant attributes added: fontsize, width, and height.
-#> ✓ All 1 unique value mapped.
-#> ✓ All 1 unique value mapped.
-#> ✓ All 1 unique value mapped.
-#> ✓ All 1 unique value mapped.
+#> ✓ All 1 unique value mapped:
+#>                             ───────────────────────
+#>                               Attribute   Value    
+#>                             ───────────────────────
+#>                               0           solid    
+#>                             ───────────────────────
+#> ✓ All 1 unique value mapped:
+#>                             ───────────────────────
+#>                               Attribute   Value    
+#>                             ───────────────────────
+#>                               OMOP        black    
+#>                             ───────────────────────
+#> ✓ All 1 unique value mapped:
+#>                             ───────────────────────
+#>                               Attribute   Value    
+#>                             ───────────────────────
+#>                               0           2        
+#>                             ───────────────────────
+#> ✓ All 1 unique value mapped:
+#>                             ───────────────────────
+#>                               Attribute   Value    
+#>                             ───────────────────────
+#>                               0           vee      
+#>                             ───────────────────────
 #> ℹ 2 constant attributes added: fontsize and len.
 
 cancer_modifier_graph <- 
   cancer_modifier_ne %>% 
   construct_graph(attr_theme = "tb")
+#> Warning: Unknown or uninitialised column: `id`.
 
 chariotViz(cancer_modifier_graph,
            width = 2500,
@@ -281,27 +379,78 @@ cancer_modifier_ne <-
   add_tooltip() %>% 
   map_node_attributes() %>% 
   map_edge_attributes()
+#> ══ 
+#> Node Attributes ════════════════════════════════════════
 #> ℹ Shape from: standard_concept
-#> ✓ All 2 unique values mapped.
+#> ✓ All 2 unique values mapped:
+#>                             ───────────────────────
+#>                               Attribute   Value    
+#>                             ───────────────────────
+#>                               S           circle   
+#>                               NA          circle   
+#>                             ───────────────────────
 #> ℹ Style from: standard_concept
-#> ✓ All 2 unique values mapped.
+#> ✓ All 2 unique values mapped:
+#>                             ───────────────────────
+#>                               Attribute   Value    
+#>                             ───────────────────────
+#>                               S           filled   
+#>                               NA          filled   
+#>                             ───────────────────────
 #> ℹ Color from: standard_concept
-#> ✓ All 2 unique values mapped.
+#> ✓ All 2 unique values mapped:
+#>                             ───────────────────────
+#>                               Attribute   Value    
+#>                             ───────────────────────
+#>                               S           black    
+#>                               NA          white    
+#>                             ───────────────────────
 #> ℹ Fillcolor from: vocabulary_id
 #> ! 3 values not mapped: CIM10, KCD7, and Read. Mapping to `other` value 'gray20'.
 #> ℹ Fontcolor from: standard_concept
-#> ✓ All 2 unique values mapped.
+#> ✓ All 2 unique values mapped:
+#>                             ───────────────────────
+#>                               Attribute   Value    
+#>                             ───────────────────────
+#>                               S           black    
+#>                               NA          gray40   
+#>                             ───────────────────────
 #> ℹ 3 constant attributes added: fontsize, width, and height.
-#> ✓ All 1 unique value mapped.
-#> ✓ All 1 unique value mapped.
-#> ✓ All 1 unique value mapped.
-#> ✓ All 1 unique value mapped.
+#> ✓ All 1 unique value mapped:
+#>                             ───────────────────────
+#>                               Attribute   Value    
+#>                             ───────────────────────
+#>                               0           solid    
+#>                             ───────────────────────
+#> ✓ All 1 unique value mapped:
+#>                             ───────────────────────
+#>                               Attribute   Value    
+#>                             ───────────────────────
+#>                               OMOP        black    
+#>                             ───────────────────────
+#> ✓ All 1 unique value mapped:
+#>                             ───────────────────────
+#>                               Attribute   Value    
+#>                             ───────────────────────
+#>                               0           2        
+#>                             ───────────────────────
+#> ✓ All 1 unique value mapped:
+#>                             ───────────────────────
+#>                               Attribute   Value    
+#>                             ───────────────────────
+#>                               0           vee      
+#>                             ───────────────────────
 #> ℹ 2 constant attributes added: fontsize and len.
 
 cancer_modifier_graph <- 
   cancer_modifier_ne %>% 
   construct_graph() %>% 
   append_concept_examples(sample_size = 3)
+#> Warning: Unknown or uninitialised column: `id`.
+
+#> Warning: Unknown or uninitialised column: `id`.
+
+#> Warning: Unknown or uninitialised column: `id`.
 
 chariotViz(cancer_modifier_graph)
 #>                              ─────────────────────

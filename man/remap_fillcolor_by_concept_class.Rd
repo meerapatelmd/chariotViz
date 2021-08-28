@@ -8,7 +8,7 @@
 remap_fillcolor_by_concept_class(
   omop_graph,
   fillcolor_from = concept_class_id,
-  fillcolor_map = node_color_map@concept_class_id \%>\% purrr::set_names(NULL) \%>\%
+  fillcolor_map = node_color_map$concept_class_id \%>\% purrr::set_names(NULL) \%>\%
     unlist(),
   fillcolor_map_other = "gray20"
 )
@@ -16,7 +16,7 @@ remap_fillcolor_by_concept_class(
 remap_fillcolor_by_invalid_reason(
   complete_omop_graph,
   fillcolor_from = invalid_reason,
-  fillcolor_map = unlist(node_color_map@invalid_reason),
+  fillcolor_map = unlist(node_color_map$invalid_reason),
   fillcolor_map_other = "gray20"
 )
 }
