@@ -16,7 +16,8 @@
 #'  \code{\link[huxtable]{huxtable}}
 #' @rdname hux_pretty_numbers
 #' @export
-#' @importFrom huxtable hux
+#' @importFrom huxtable hux number_format fmt_pretty
+#' @importFrom dplyr enquos
 hux_pretty_numbers <-
   function(ht,
            ...,
@@ -27,12 +28,13 @@ hux_pretty_numbers <-
       ht <- huxtable::hux(ht)
     }
 
-    number_cols <- enquos(...)
+    number_cols <- dplyr::enquos(...)
     number_cols <-
       ht %>%
       select(!!!number_cols) %>%
       colnames()
-    number_format(ht)[2:nrow(ht), number_cols] <- fmt_pretty(big.mark = big.mark,
-                                                             scientific = scientific)
+    huxtable::number_format(ht)[2:nrow(ht), number_cols] <-
+      huxtable::fmt_pretty(big.mark = big.mark,
+                           scientific = scientific)
     ht
   }

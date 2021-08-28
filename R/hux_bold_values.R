@@ -14,24 +14,27 @@
 #' }
 #' @rdname hux_bold_values
 #' @export
+#' @importFrom dplyr enquos select
+#' @importFrom huxtable map_bold by_values
+
 hux_bold_values <-
   function(ht,
            ...,
            values,
            ignore_na = TRUE) {
 
-    target_cols <- enquos(...)
+    target_cols <- dplyr::enquos(...)
     target_cols <-
       ht %>%
-      select(!!!target_cols) %>%
+      dplyr::select(!!!target_cols) %>%
       colnames()
 
     for (target_col in target_cols) {
       ht <-
-        map_bold(ht = ht,
+        huxtable::map_bold(ht = ht,
                  row = everywhere,
                  col = target_col,
-                 fn  = by_values(values, ignore_na = ignore_na))
+                 fn  = huxtable::by_values(values, ignore_na = ignore_na))
 
     }
 

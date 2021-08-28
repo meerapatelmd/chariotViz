@@ -15,7 +15,9 @@
 #'  \code{\link[huxtable]{huxtable}}
 #' @rdname hux_pretty_percents
 #' @export
-#' @importFrom huxtable hux
+#' @importFrom huxtable hux number_format fmt_percent
+#' @importFrom dplyr enquos select
+
 hux_pretty_percents <-
   function(ht,
            ...,
@@ -25,11 +27,11 @@ hux_pretty_percents <-
       ht <- huxtable::hux(ht)
     }
 
-    number_cols <- enquos(...)
+    number_cols <- dplyr::enquos(...)
     number_cols <-
       ht %>%
-      select(!!!number_cols) %>%
+      dplyr::select(!!!number_cols) %>%
       colnames()
-    number_format(ht)[2:nrow(ht), number_cols] <- fmt_percent(digits = digits)
+    huxtable::number_format(ht)[2:nrow(ht), number_cols] <- huxtable::fmt_percent(digits = digits)
     ht
   }
