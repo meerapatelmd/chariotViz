@@ -6,11 +6,14 @@
 #' @details DETAILS
 #' @rdname create_complete_nodes_and_edges
 #' @export
-#' @import dplyr
+#' @importFrom cli cli_abort cli_warn
+#' @importFrom dplyr enquo bind_rows select rename_all mutate distinct bind_cols ends_with rename_at vars left_join rename
 #' @importFrom stringr str_remove_all
-#' @importFrom tibble rowid_to_column
 #' @importFrom glue glue
-#' @importFrom cli cli_warn
+#' @importFrom tibble rowid_to_column
+#' @importFrom purrr map
+#' @importFrom scales percent
+#' @importFrom rlang parse_expr
 create_complete_nodes_and_edges <-
   function(complete_omop_relationships,
            type_from = invalid_reason,

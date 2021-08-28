@@ -22,6 +22,12 @@
 #' @keywords internal
 #' @importFrom glue glue
 #' @importFrom pg13 query
+#' @importFrom purrr set_names
+#' @importFrom rlang list2
+#' @importFrom stringr str_replace_all
+#' @importFrom easyBakeOven print_list
+#' @importFrom tibble tibble
+#' @importFrom huxtable hux set_na_string theme_compact set_all_borders set_all_border_colors print_screen
 #' @export
 get_version_key <-
   function(conn,
@@ -84,6 +90,12 @@ get_version_key <-
 #' @keywords internal
 #' @importFrom glue glue
 #' @importFrom pg13 query
+#' @importFrom purrr set_names
+#' @importFrom rlang list2
+#' @importFrom stringr str_replace_all
+#' @importFrom easyBakeOven print_list
+#' @importFrom tibble tibble
+#' @importFrom huxtable hux set_na_string theme_compact set_all_borders set_all_border_colors print_screen
 #' @export
 get_logged_version_key <-
   function(conn,
@@ -144,6 +156,11 @@ get_logged_version_key <-
 #' @importFrom glue glue
 #' @importFrom pg13 query
 #' @importFrom purrr set_names
+#' @importFrom rlang list2
+#' @importFrom stringr str_replace_all
+#' @importFrom easyBakeOven print_list
+#' @importFrom tibble tibble
+#' @importFrom huxtable hux set_na_string theme_compact set_all_borders set_all_border_colors print_screen
 #' @export
 get_vocabulary_version_key <-
   function(conn,
@@ -188,9 +205,14 @@ get_vocabulary_version_key <-
 #' @details DETAILS
 #' @rdname format_version_key
 #' @export
+#' @importFrom glue glue
+#' @importFrom pg13 query
+#' @importFrom purrr set_names
 #' @importFrom rlang list2
 #' @importFrom stringr str_replace_all
-
+#' @importFrom easyBakeOven print_list
+#' @importFrom tibble tibble
+#' @importFrom huxtable hux set_na_string theme_compact set_all_borders set_all_border_colors print_screen
 format_version_key <-
   function(version_key,
            ...) {
@@ -276,9 +298,14 @@ format_version_key <-
 #' @return OUTPUT_DESCRIPTION
 #' @rdname rmd_print_version
 #' @export
+#' @importFrom glue glue
+#' @importFrom pg13 query
+#' @importFrom purrr set_names
 #' @importFrom rlang list2
 #' @importFrom stringr str_replace_all
 #' @importFrom easyBakeOven print_list
+#' @importFrom tibble tibble
+#' @importFrom huxtable hux set_na_string theme_compact set_all_borders set_all_border_colors print_screen
 
 rmd_print_version <-
   function(version_key,
@@ -301,10 +328,14 @@ rmd_print_version <-
 #' @details DETAILS
 #' @rdname console_print_version
 #' @export
+#' @importFrom glue glue
+#' @importFrom pg13 query
+#' @importFrom purrr set_names
 #' @importFrom rlang list2
 #' @importFrom stringr str_replace_all
+#' @importFrom easyBakeOven print_list
 #' @importFrom tibble tibble
-#' @import huxtable
+#' @importFrom huxtable hux set_na_string theme_compact set_all_borders set_all_border_colors print_screen
 
 console_print_version <-
   function(version_key,

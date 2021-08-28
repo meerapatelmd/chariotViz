@@ -9,8 +9,9 @@
 #' @export
 #' @importFrom glue glue
 #' @importFrom pg13 query
-#' @import dplyr
+#' @importFrom dplyr left_join distinct mutate select enquo
 #' @importFrom purrr map transpose
+#' @importFrom ggplot2 ggplot geom_tile scale_fill_viridis_c theme element_text
 fetch_heatmap <-
   function(vocabulary_id_1,
            schema = "omop_vocabulary",
@@ -129,8 +130,11 @@ fetch_heatmap <-
 #'  \code{\link[ggplot2]{ggplot}},\code{\link[ggplot2]{geom_raster}},\code{\link[ggplot2]{scale_colour_viridis_d}},\code{\link[ggplot2]{theme}},\code{\link[ggplot2]{margin}}
 #' @rdname plot_heatmap
 #' @export
-#' @importFrom dplyr enquo
-#' @import ggplot2
+#' @importFrom glue glue
+#' @importFrom pg13 query
+#' @importFrom dplyr left_join distinct mutate select enquo
+#' @importFrom purrr map transpose
+#' @importFrom ggplot2 ggplot geom_tile scale_fill_viridis_c theme element_text
 plot_heatmap <-
   function(data,
            x = label_2,

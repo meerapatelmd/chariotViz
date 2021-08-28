@@ -71,7 +71,7 @@
 #'  \code{\link[tibble]{as_tibble}}
 #' @rdname map_node_attributes
 #' @export
-#' @import cli
+#' @importFrom cli cat_rule cli_alert_info
 #' @importFrom dplyr enquo mutate
 #' @importFrom purrr keep
 #' @importFrom tibble as_tibble
@@ -435,7 +435,10 @@ map_node_attributes <-
 #'  \code{\link[dplyr]{tidyeval-compat}},\code{\link[dplyr]{mutate}},\code{\link[dplyr]{distinct}}
 #' @rdname map_edge_attributes
 #' @export
-#' @importFrom dplyr enquo mutate distinct
+#' @importFrom cli cat_rule cli_alert_info
+#' @importFrom dplyr enquo mutate
+#' @importFrom purrr keep
+#' @importFrom tibble as_tibble
 map_edge_attributes <-
   function(nodes_and_edges,
            fontsize = 26,

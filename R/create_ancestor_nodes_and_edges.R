@@ -6,11 +6,15 @@
 #' @details DETAILS
 #' @rdname create_ancestor_nodes_and_edges
 #' @export
-#' @import dplyr
+#' @importFrom cli cli_abort cli_warn
+#' @importFrom dplyr enquo bind_rows select rename_all starts_with mutate distinct bind_cols rename_at vars left_join rename case_when arrange
 #' @importFrom stringr str_remove_all
-#' @importFrom tibble rowid_to_column
 #' @importFrom glue glue
-#' @importFrom cli cli_warn
+#' @importFrom tibble rowid_to_column
+#' @importFrom purrr map
+#' @importFrom scales percent
+#' @importFrom rlang parse_expr
+
 create_ancestor_nodes_and_edges <-
   function(omop_ancestors,
            type_from = concept_class_id,

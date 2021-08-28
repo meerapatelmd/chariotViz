@@ -4,8 +4,8 @@
 #' @return OUTPUT_DESCRIPTION
 #' @details DETAILS
 #' @rdname print_relationships
-#' @import cli
-#' @import glue
+#' @importFrom cli cat_rule cat_line style_italic cat_bullet
+#' @importFrom glue glue
 
 print_omop <-
   function(max.rows = 3) {
@@ -30,8 +30,8 @@ print_omop <-
 #' @return OUTPUT_DESCRIPTION
 #' @details DETAILS
 #' @rdname print_nodes_and_edges
-#' @import cli
-#' @import glue
+#' @importFrom cli cat_rule cat_line style_italic cat_bullet
+#' @importFrom glue glue
 
 print_nodes_and_edges <-
   function(max.rows = 3) {
@@ -70,7 +70,9 @@ print_nodes_and_edges <-
     cat("\n")
   }
 
-
+#' @title Print Graph Object
+#' @importFrom cli cat_rule cat_line style_italic cat_bullet
+#' @importFrom glue glue
 
 print_graph <-
   function() {

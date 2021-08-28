@@ -17,12 +17,13 @@
 #'
 #' @rdname fetch_omop_ancestors
 #' @export
-#' @import glue
-#' @import pg13
-#' @import dplyr
-#' @import cli
-#' @import tidyr
-#' @import purrr
+#' @importFrom glue glue
+#' @importFrom cli cli_progress_step cli_progress_bar cli_progress_update cli_progress_done cli_warn
+#' @importFrom pg13 query
+#' @importFrom rlang list2
+#' @importFrom dplyr arrange distinct select any_of left_join bind_rows rename mutate mutate_at vars
+#' @importFrom purrr transpose map reduce
+#' @importFrom tidyr extract pivot_wider
 fetch_omop_ancestors <-
   function(...,
            conn,
@@ -383,12 +384,13 @@ fetch_omop_ancestors <-
 #'
 #' @rdname fetch_omop_relationships
 #' @export
-#' @import glue
-#' @import pg13
-#' @import dplyr
-#' @import cli
-#' @import tidyr
-#' @import purrr
+#' @importFrom glue glue
+#' @importFrom cli cli_progress_step cli_progress_bar cli_progress_update cli_progress_done cli_warn
+#' @importFrom pg13 query
+#' @importFrom rlang list2
+#' @importFrom dplyr arrange distinct select any_of left_join bind_rows rename mutate mutate_at vars
+#' @importFrom purrr transpose map reduce
+#' @importFrom tidyr extract pivot_wider
 fetch_omop_relationships <-
   function(...,
            conn,
@@ -759,12 +761,13 @@ fetch_omop_relationships <-
 #'
 #' @rdname fetch_complete_omop_relationships
 #' @export
-#' @import glue
-#' @import pg13
-#' @import dplyr
-#' @import cli
-#' @import tidyr
-#' @import purrr
+#' @importFrom glue glue
+#' @importFrom cli cli_progress_step cli_progress_bar cli_progress_update cli_progress_done cli_warn
+#' @importFrom pg13 query
+#' @importFrom rlang list2
+#' @importFrom dplyr arrange distinct select any_of left_join bind_rows rename mutate mutate_at vars
+#' @importFrom purrr transpose map reduce
+#' @importFrom tidyr extract pivot_wider
 fetch_complete_omop_relationships <-
   function(...,
            conn,
@@ -1221,12 +1224,13 @@ fetch_complete_omop_relationships <-
 #'
 #' @rdname fetch_omop
 #' @export
-#' @import glue
-#' @import pg13
-#' @import dplyr
-#' @import cli
-#' @import tidyr
-#' @import purrr
+#' @importFrom glue glue
+#' @importFrom cli cli_progress_step cli_progress_bar cli_progress_update cli_progress_done cli_warn
+#' @importFrom pg13 query
+#' @importFrom rlang list2
+#' @importFrom dplyr arrange distinct select any_of left_join bind_rows rename mutate mutate_at vars
+#' @importFrom purrr transpose map reduce
+#' @importFrom tidyr extract pivot_wider
 fetch_omop <-
   function(...,
            conn,
