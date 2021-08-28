@@ -8,7 +8,7 @@ in console.
 
 ## New Features  
 
-### OMOP Relationship Class  
+### OMOP Relationship Reference Class  
 
 * Added `mutate_nodes()` and `mutate_edges()` to apply to dataframes in `nodes.and.edges` 
 objects.  
@@ -18,7 +18,7 @@ in the dataframes used to render the graph.
 * Added `filter_for_*_relationships` and `filter_out_*_relationships` functions to 
 refine visualization capabilities  
 
-## OMOP Ancestor Class 
+## OMOP Ancestor Reference Class 
 
 * Introduced `omop.ancestors` class for taxonomy visualization  
 * Begin developing features for ancestor visualization   
@@ -26,7 +26,7 @@ refine visualization capabilities
 to accommodate new ancestors feature  
 
 
-## OMOP Complete Relationship Class  
+## OMOP Complete Relationship Reference Class  
 
 * Introduced `complete.omop.relationships` class for visualization that includes invalid concepts.  
 

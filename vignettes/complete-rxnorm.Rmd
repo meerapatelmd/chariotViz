@@ -14,8 +14,7 @@ knitr::opts_chunk$set(
   error   = FALSE,
   cache.path = file.path(R.cache::getCachePath(),
                          "chariotViz",
-                         "vignettes"),
-  cache = TRUE
+                         "vignettes")
 )
 ```
 
@@ -46,7 +45,6 @@ complete_rxnorm_relationships <-
 ```
 
 # Updated RxNorm Concepts  
-
 
 ```{r}
 updated_rxnorm_relationships <- 
@@ -85,6 +83,16 @@ chariotViz(updated_graph)
 ```{r}
 chariotViz(updated_graph %>% 
              remap_fillcolor_by_invalid_reason())
+```
+
+```{r}
+construct_node_legend(updated_graph %>% 
+                   remap_fillcolor_by_invalid_reason())
+```
+
+```{r}
+construct_edge_legend(updated_graph %>% 
+                   remap_fillcolor_by_invalid_reason())
 ```
 
 
@@ -126,4 +134,16 @@ chariotViz(deleted_graph)
 ```{r}
 chariotViz(deleted_graph %>% 
              remap_fillcolor_by_invalid_reason())
+```
+
+```{r}
+construct_node_legend(
+  deleted_graph %>%
+    remap_fillcolor_by_invalid_reason())
+```
+
+```{r}
+construct_edge_legend(
+  deleted_graph %>% 
+    remap_fillcolor_by_invalid_reason())
 ```

@@ -11,7 +11,9 @@ nodes <-
               required_fields = "character",
               attribute_fields = "character",
               tooltip_fields = "character",
-              node_fields = "character"),
+              node_fields = "character",
+              integer_fields = "character",
+              legend_fields = "character"),
     prototype = list(data = tibble::tibble(),
                      required_fields = c("id", "type", "label"),
                      attribute_fields =   c(
@@ -56,7 +58,26 @@ nodes <-
                          'concept_class_id',
                          'standard_concept',
                          'total_concept_class_ct',
-                         'total_vocabulary_ct'))
+                         'total_vocabulary_ct'),
+                     integer_fields =
+                       c("total_concept_class_ct",
+                         "total_vocabulary_ct"),
+                     legend_fields =
+                       c("id",
+                         "domain_id",
+                         "vocabulary_id",
+                         "concept_class_id",
+                         "standard_concept",
+                         "total_concept_class_ct",
+                         "total_vocabulary_ct",
+                         'shape',
+                         'style',
+                         'penwidth',
+                         'color',
+                         'fillcolor',
+                         'fontcolor')
+
+                     )
   )
 
 
@@ -74,7 +95,9 @@ complete.nodes <-
               required_fields = "character",
               attribute_fields = "character",
               tooltip_fields = "character",
-              node_fields = "character"),
+              node_fields = "character",
+              integer_fields = "character",
+              legend_fields = "character"),
     prototype = list(data = tibble::tibble(),
                      required_fields = c("id", "type", "label"),
                      attribute_fields =   c(
@@ -112,6 +135,10 @@ complete.nodes <-
                          'concept_class_id',
                          'standard_concept',
                          'invalid_reason',
+                         'concept_class_invalid_reason_ct',
+                         'valid_concept_ct',
+                         'updated_concept_ct',
+                         'deprecated_concept_ct',
                          'complete_concept_class_ct',
                          'complete_vocabulary_ct'),
                      node_fields =
@@ -120,8 +147,41 @@ complete.nodes <-
                          'concept_class_id',
                          'standard_concept',
                          'invalid_reason',
+                         'concept_class_invalid_reason_ct',
+                         'valid_concept_ct',
+                         'updated_concept_ct',
+                         'deprecated_concept_ct',
                          'complete_concept_class_ct',
-                         'complete_vocabulary_ct'))
+                         'complete_vocabulary_ct'),
+                     integer_fields =
+                       c('concept_class_invalid_reason_ct',
+                         'valid_concept_ct',
+                         'updated_concept_ct',
+                         'deprecated_concept_ct',
+                         'complete_concept_class_ct',
+                         'complete_vocabulary_ct'),
+                     legend_fields =
+                       c('id',
+                         'domain_id',
+                         'vocabulary_id',
+                         'concept_class_id',
+                         'standard_concept',
+                         'invalid_reason',
+                         'concept_class_invalid_reason_ct',
+                         'valid_concept_ct',
+                         'updated_concept_ct',
+                         'deprecated_concept_ct',
+                         'complete_concept_class_ct',
+                         'complete_vocabulary_ct',
+                         'shape',
+                         'style',
+                         'penwidth',
+                         'color',
+                         'fillcolor',
+                         'fontcolor')
+
+
+                     )
   )
 
 #' @title ancestor.nodes S4 class
@@ -137,7 +197,8 @@ ancestor.nodes <-
               required_fields = "character",
               attribute_fields = "character",
               tooltip_fields = "character",
-              node_fields = "character"),
+              node_fields = "character",
+              integer_fields = "character"),
     prototype = list(data = tibble::tibble(),
                      required_fields = c("id", "type", "label"),
                      attribute_fields =   c(
@@ -184,7 +245,12 @@ ancestor.nodes <-
                          'standard_concept',
                          'concept_count',
                          'total_concept_class_ct',
-                         'total_vocabulary_ct'))
+                         'total_vocabulary_ct'),
+                     integer_fields =
+                       c(
+                         'total_concept_class_ct',
+                         'total_vocabulary_ct')
+                       )
   )
 
 
@@ -201,7 +267,9 @@ edges <-
               required_fields = "character",
               attribute_fields = "character",
               tooltip_fields = "character",
-              edge_fields = "character"),
+              edge_fields = "character",
+              integer_fields = "character",
+              legend_fields = "character"),
     prototype = list(data = tibble::tibble(),
                      required_fields = c("from", "to", "label", "rel"),
                      attribute_fields =   c(
@@ -280,8 +348,35 @@ edges <-
                          'standard_concept_2',
                          'concept_count_2',
                          'total_concept_class_ct_2',
-                         'total_vocabulary_ct_2')
-    ))
+                         'total_vocabulary_ct_2'),
+                     integer_fields =
+                       c('concept_count_1',
+                         'total_concept_class_ct_1',
+                         'total_vocabulary_ct_1',
+                         'concept_count_2',
+                         'total_concept_class_ct_2',
+                         'total_vocabulary_ct_2'),
+                     legend_fields =
+                       c(
+                         'id',
+                         'relationship_id',
+                         'relationship_name',
+                         'is_hierarchical',
+                         'defines_ancestry',
+                         'concept_1_coverage',
+                         'concept_1_coverage_frac',
+                         'concept_2_coverage',
+                         'concept_2_coverage_frac',
+                         'style',
+                         'penwidth',
+                         'color',
+                         'arrowsize',
+                         'arrowhead',
+                         'arrowtail',
+                         'fontcolor',
+                         'labelfontcolor')
+                       )
+    )
 
 #' @title ancestor.edges S4 class
 #' @slot data edges dataframe
@@ -296,7 +391,8 @@ ancestor.edges <-
               required_fields = "character",
               attribute_fields = "character",
               tooltip_fields = "character",
-              edge_fields = "character"),
+              edge_fields = "character",
+              integer_fields = "character"),
     prototype = list(data = tibble::tibble(),
                      required_fields = c("from", "to", "label", "rel"),
                      attribute_fields =   c(
@@ -372,8 +468,16 @@ ancestor.edges <-
                          'descendant_standard_concept',
                          'descendant_concept_count',
                          'descendant_total_concept_class_ct',
-                         'descendant_total_vocabulary_ct')
-    ))
+                         'descendant_total_vocabulary_ct'),
+                     integer_fields =
+                       c(
+                         'ancestor_concept_count',
+                         'ancestor_total_concept_class_ct',
+                         'ancestor_total_vocabulary_ct',
+                         'descendant_concept_count',
+                         'descendant_total_concept_class_ct',
+                         'descendant_total_vocabulary_ct'))
+    )
 
 
 #' @title edges S4 class
@@ -389,7 +493,9 @@ complete.edges <-
               required_fields = "character",
               attribute_fields = "character",
               tooltip_fields = "character",
-              edge_fields = "character"),
+              edge_fields = "character",
+              integer_fields = "character",
+              legend_fields = "character"),
     prototype = list(data = tibble::tibble(),
                      required_fields = c("from", "to", "label", "rel"),
                      attribute_fields =   c(
@@ -440,6 +546,10 @@ complete.edges <-
                          'concept_class_id_1',
                          'standard_concept_1',
                          'invalid_reason_1',
+                         'concept_class_invalid_reason_ct_1',
+                         'valid_concept_ct_1',
+                         'updated_concept_ct_1',
+                         'deprecated_concept_ct_1',
                          'concept_count_1',
                          'complete_concept_class_ct_1',
                          'complete_vocabulary_ct_1',
@@ -448,6 +558,10 @@ complete.edges <-
                          'concept_class_id_2',
                          'standard_concept_2',
                          'invalid_reason_2',
+                         'concept_class_invalid_reason_ct_2',
+                         'valid_concept_ct_2',
+                         'updated_concept_ct_2',
+                         'deprecated_concept_ct_2',
                          'concept_count_2',
                          'complete_concept_class_ct_2',
                          'complete_vocabulary_ct_2'),
@@ -462,6 +576,10 @@ complete.edges <-
                          'concept_class_id_1',
                          'standard_concept_1',
                          'invalid_reason_1',
+                         'concept_class_invalid_reason_ct_1',
+                         'valid_concept_ct_1',
+                         'updated_concept_ct_1',
+                         'deprecated_concept_ct_1',
                          'concept_count_1',
                          'complete_concept_class_ct_1',
                          'complete_vocabulary_ct_1',
@@ -470,9 +588,46 @@ complete.edges <-
                          'concept_class_id_2',
                          'standard_concept_2',
                          'invalid_reason_2',
+                         'concept_class_invalid_reason_ct_2',
+                         'valid_concept_ct_2',
+                         'updated_concept_ct_2',
+                         'deprecated_concept_ct_2',
                          'concept_count_2',
                          'complete_concept_class_ct_2',
-                         'complete_vocabulary_ct_2')
+                         'complete_vocabulary_ct_2'),
+                     integer_fields =
+                       c('concept_class_invalid_reason_ct_1',
+                         'valid_concept_ct_1',
+                         'updated_concept_ct_1',
+                         'deprecated_concept_ct_1',
+                         'concept_count_1',
+                         'complete_concept_class_ct_1',
+                         'complete_vocabulary_ct_1',
+                         'concept_class_invalid_reason_ct_2',
+                         'valid_concept_ct_2',
+                         'updated_concept_ct_2',
+                         'deprecated_concept_ct_2',
+                         'concept_count_2',
+                         'complete_concept_class_ct_2',
+                         'complete_vocabulary_ct_2'),
+                     legend_fields =
+                       c('id',
+                         'relationship_id',
+                         'relationship_name',
+                         'is_hierarchical',
+                         'defines_ancestry',
+                         'concept_1_coverage',
+                         'concept_1_coverage_frac',
+                         'concept_2_coverage',
+                         'concept_2_coverage_frac',
+                         'style',
+                         'penwidth',
+                         'color',
+                         'arrowsize',
+                         'arrowhead',
+                         'arrowtail',
+                         'fontcolor',
+                         'labelfontcolor')
     ))
 
 

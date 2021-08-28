@@ -807,6 +807,47 @@ fetch_complete_omop_relationships <-
     }
     Sys.sleep(0.5)
 
+    sql <- read_sql_template(file = "complete_concept_class_ct_by_invalid_reason.sql")
+    sql <- glue::glue(sql)
+
+    cli::cli_progress_step("Getting complete concept class counts by invalid reason")
+    complete_concept_class_ct_by_invalid_reason <-
+      load_from_cache(sql = sql,
+                      version_key = version_key)
+
+    if (is.null(complete_concept_class_ct_by_invalid_reason)) {
+
+      complete_concept_class_ct_by_invalid_reason <-
+        pg13::query(
+          conn = conn,
+          checks = "",
+          conn_fun = conn_fun,
+          sql_statement = sql,
+          verbose = verbose,
+          render_sql = render_sql)
+
+      save_to_cache(resultset = complete_concept_class_ct_by_invalid_reason,
+                    sql       = sql,
+                    version_key = version_key)
+
+    }
+    complete_concept_class_ct_by_invalid_reason2 <-
+      complete_concept_class_ct_by_invalid_reason %>%
+      dplyr::mutate(invalid_reason =
+                      map_to_value(invalid_reason,
+                                   map_assignment = c("U" = "updated_concept_ct",
+                                                      `NA` = "valid_concept_ct",
+                                                      "D"  = "deprecated_concept_ct"))) %>%
+      tidyr::pivot_wider(id_cols = c(vocabulary_id,
+                                     concept_class_id),
+                         names_from = invalid_reason,
+                         values_from = concept_class_invalid_reason_ct) %>%
+      dplyr::mutate_at(dplyr::vars(c(updated_concept_ct,
+                                     valid_concept_ct,
+                                     deprecated_concept_ct)),
+                       ~ifelse(is.na(.),0,.))
+    Sys.sleep(0.5)
+
     sql <- read_sql_template(file = "complete_vocabulary_ct.sql")
     sql <- glue::glue(sql)
 
@@ -1030,6 +1071,40 @@ fetch_complete_omop_relationships <-
         by = c("vocabulary_id_2" = "vocabulary_id")) %>%
       dplyr::distinct() %>%
       dplyr::rename(complete_vocabulary_ct_2 = complete_vocabulary_ct) %>%
+      dplyr::left_join(
+        complete_concept_class_ct_by_invalid_reason2,
+        by = c("vocabulary_id_1" = "vocabulary_id",
+               "concept_class_id_1" = "concept_class_id")) %>%
+      dplyr::rename(
+        updated_concept_ct_1 = updated_concept_ct,
+        valid_concept_ct_1 = valid_concept_ct,
+        deprecated_concept_ct_1 = deprecated_concept_ct) %>%
+      dplyr::left_join(
+        complete_concept_class_ct_by_invalid_reason2,
+        by = c("vocabulary_id_2" = "vocabulary_id",
+               "concept_class_id_2" = "concept_class_id")) %>%
+      dplyr::rename(
+        updated_concept_ct_2 = updated_concept_ct,
+        valid_concept_ct_2 = valid_concept_ct,
+        deprecated_concept_ct_2 = deprecated_concept_ct) %>%
+      dplyr::mutate(join_key_invalid_reason_1 = str_replace_na(invalid_reason_1)) %>%
+      dplyr::left_join(
+        complete_concept_class_ct_by_invalid_reason %>%
+          dplyr::mutate(invalid_reason = str_replace_na(invalid_reason)),
+        by = c("vocabulary_id_1" = "vocabulary_id",
+               "concept_class_id_1" = "concept_class_id",
+               "join_key_invalid_reason_1" = "invalid_reason")) %>%
+      dplyr::rename(concept_class_invalid_reason_ct_1 = concept_class_invalid_reason_ct)  %>%
+      dplyr::mutate(join_key_invalid_reason_2 = str_replace_na(invalid_reason_2)) %>%
+      dplyr::left_join(
+        complete_concept_class_ct_by_invalid_reason %>%
+          dplyr::mutate(invalid_reason = str_replace_na(invalid_reason)),
+        by = c("vocabulary_id_2" = "vocabulary_id",
+               "concept_class_id_2" = "concept_class_id",
+               "join_key_invalid_reason_2" = "invalid_reason")) %>%
+      dplyr::rename(concept_class_invalid_reason_ct_2 = concept_class_invalid_reason_ct) %>%
+      dplyr::select(-join_key_invalid_reason_1,
+                    -join_key_invalid_reason_2) %>%
       dplyr::distinct()
 
     if (nrow(deprecated_omop_relationships2) != nrow(deprecated_omop_relationships1)) {
@@ -1088,6 +1163,10 @@ fetch_complete_omop_relationships <-
             standard_concept_1,
             invalid_reason_1,
             concept_count_1,
+            concept_class_invalid_reason_ct_1,
+            valid_concept_ct_1,
+            updated_concept_ct_1,
+            deprecated_concept_ct_1,
             complete_concept_class_ct_1,
             complete_vocabulary_ct_1,
             domain_id_2,
@@ -1096,6 +1175,10 @@ fetch_complete_omop_relationships <-
             standard_concept_2,
             invalid_reason_2,
             concept_count_2,
+            concept_class_invalid_reason_ct_2,
+            valid_concept_ct_2,
+            updated_concept_ct_2,
+            deprecated_concept_ct_2,
             complete_concept_class_ct_2,
             complete_vocabulary_ct_2))
 

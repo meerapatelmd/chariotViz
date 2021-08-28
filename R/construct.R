@@ -40,6 +40,9 @@ construct_ndf <-
             paste(collapse = ""))
       )
 
+    omop_ndf <-
+      omop_ndf %>%
+      dplyr::mutate(id = NA_integer_)
     omop_ndf$id <- nodes_and_edges$nodes@data$id
 
     omop_ndf
@@ -83,6 +86,9 @@ construct_edf <-
       )
 
 
+    omop_edf <-
+      omop_edf %>%
+      dplyr::mutate(id = NA_integer_)
     omop_edf$id <- nodes_and_edges$edges@data$id
 
     omop_edf

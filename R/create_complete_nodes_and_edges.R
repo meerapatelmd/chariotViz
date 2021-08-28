@@ -74,6 +74,10 @@ create_complete_nodes_and_edges <-
                               "concept_class_id_1",
                               "standard_concept_1",
                               "invalid_reason_1",
+                              "concept_class_invalid_reason_ct_1",
+                              "valid_concept_ct_1",
+                              "updated_concept_ct_1",
+                              "deprecated_concept_ct_1",
                               "complete_concept_class_ct_1",
                               "complete_vocabulary_ct_1")) %>%
       dplyr::distinct() %>%
@@ -87,11 +91,15 @@ create_complete_nodes_and_edges <-
                               "concept_class_id_2",
                               "standard_concept_2",
                               "invalid_reason_2",
+                              "concept_class_invalid_reason_ct_2",
+                              "valid_concept_ct_2",
+                              "updated_concept_ct_2",
+                              "deprecated_concept_ct_2",
                               "complete_concept_class_ct_2",
                               "complete_vocabulary_ct_2")) %>%
       dplyr::distinct() %>%
-      dplyr::mutate(concept_1_coverage_frac = glue::glue("{concept_count_1}/{complete_concept_class_ct_1}"),
-                    concept_2_coverage_frac = glue::glue("{concept_count_2}/{complete_concept_class_ct_2}")) %>%
+      dplyr::mutate(concept_1_coverage_frac = glue::glue("{concept_class_invalid_reason_ct_1}/{complete_concept_class_ct_1}"),
+                    concept_2_coverage_frac = glue::glue("{concept_class_invalid_reason_ct_2}/{complete_concept_class_ct_2}")) %>%
       dplyr::mutate(concept_1_coverage = purrr::map(concept_1_coverage_frac, function(x) scales::percent(eval(rlang::parse_expr(x))))) %>%
       dplyr::mutate(concept_2_coverage = purrr::map(concept_2_coverage_frac, function(x) scales::percent(eval(rlang::parse_expr(x))))) %>%
       dplyr::mutate(concept_1_coverage = unlist(concept_1_coverage)) %>%
