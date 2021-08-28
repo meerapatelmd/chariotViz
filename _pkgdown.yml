@@ -13,6 +13,6 @@ navbar:
       - text: "Genomic Domain"
         href: articles/genomic-domain.html
       - text: "Invalid to Valid RxNorm Concept Mappings"
-      - href: articles/complete-rxnorm.html
+        href: articles/complete-rxnorm.html
 
 
