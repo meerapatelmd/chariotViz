@@ -117,9 +117,7 @@ With a smaller node count, chariotViz will automatically render
 the graph.  
 
 ```{r}
-chariotViz(hemonc_graph,
-           width = 2000,
-           height = 2000)
+chariotViz(hemonc_graph)
 ```
 
 
@@ -130,9 +128,7 @@ hemonc_graph2 <-
   hemonc_graph %>% 
   remap_fillcolor_by_concept_class()
 
-chariotViz(hemonc_graph2,
-           width = 2000,
-           height = 2000)
+chariotViz(hemonc_graph2)
 ```
 
 # Relationships  
@@ -205,9 +201,7 @@ hemonc_mapping_graph <-
   map_edge_attributes() %>% 
   construct_graph() 
 
-chariotViz(hemonc_mapping_graph,
-           height = 500,
-           width = 500)
+chariotViz(hemonc_mapping_graph)
 ```
 
 ## Lateral  
@@ -228,9 +222,7 @@ hemonc_lateral_graph <-
   map_edge_attributes() %>% 
   construct_graph() 
 
-chariotViz(hemonc_lateral_graph,
-           height = 2000,
-           width = 2000)
+chariotViz(hemonc_lateral_graph)
 ```
 
 With the relationships within and outside of HemOnc, the `all_hemonc_relationships` 
@@ -248,9 +240,7 @@ hemonc_lateral_graph <-
   map_edge_attributes() %>% 
   construct_graph() 
 
-chariotViz(hemonc_lateral_graph,
-           height = 2000,
-           width = 2000)
+chariotViz(hemonc_lateral_graph)
 ```
 
 ## Foreign  
@@ -333,14 +323,14 @@ foreign_hemonc_graph %>%
 
 The count of the samples can be adjusted.  
 
-```{r}
+```{r,eval=FALSE,cache=TRUE}
 foreign_hemonc_graph %>% 
   append_concept_examples(sample_size = 5) %>% 
   chariotViz(force = TRUE,
              width = 1500)
 ```
 
-```{r}
+```{r,eval=FALSE,cache=TRUE}
 foreign_hemonc_graph %>% 
   append_concept_examples(sample_size = 10) %>% 
   chariotViz(force = TRUE,
