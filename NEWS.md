@@ -3,6 +3,7 @@
 ## New Documentation  
 
 * Added README  
+
 * Converted some S4 classes to Reference Classes to customize `show` method 
 in console.  
 
@@ -21,7 +22,7 @@ in the dataframes used to render the graph.
 * Added `filter_for_*_relationships` and `filter_out_*_relationships` functions to 
 refine visualization capabilities  
 
-## OMOP Ancestor Reference Class 
+### OMOP Ancestor Reference Class 
 
 * Introduced `omop.ancestors` class for taxonomy visualization  
 * Begin developing features for ancestor visualization   
@@ -29,7 +30,7 @@ refine visualization capabilities
 to accommodate new ancestors feature  
 
 
-## OMOP Complete Relationship Reference Class  
+### OMOP Complete Relationship Reference Class  
 
 * Introduced `complete.omop.relationships` class for visualization that includes invalid concepts.  
 
@@ -47,7 +48,9 @@ and all types of `nodes.and.edges` to Reference Classes to default `show` method
 ## Existing Issues  
 
 * Write documentation for functions  
+
 * Improve the scale of rendered graphs  
+
 * Tracing concepts in such a manner that in lieu of `append_example_concepts()` where 
 each node is annotated with random examples, the node would be annotated with the actual 
 related concept for the input concept.  In terms of relationship filtering, ascending 
@@ -57,6 +60,7 @@ can map back to all the antineoplastics that regimen is associated with. For thi
 a filter must be applied. Using `is_hierarchical` filters leads to the same issue, but 
 `defines_ancestry` does not. Also chariotViz `mapping`, `taxonomy`, and `lateral` filters 
 need to be tested.   
+
 * When calling `append_example_concepts()`, errors can sometimes be thrown when the `concept_name` 
 has an unusual character (likely single quote).  
 
@@ -72,8 +76,10 @@ or `NULL`.
 # chariotViz 0.0.2
 
 * Removed deprecated functions  
+
 * Add `relationship_source` derived from `relationship_name` to omop.relationships 
 class objects.  
+
 * Add procedural logicals to nodes.and.edges class objects.  
 
 

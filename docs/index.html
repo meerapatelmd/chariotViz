@@ -146,6 +146,7 @@
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">omop_gr</span> <span class="op">&lt;-</span> 
   <span class="fu"><a href="reference/construct_graph.html">construct_graph</a></span><span class="op">(</span><span class="va">omop_ne</span><span class="op">)</span>
+<span class="co">#&gt; Warning: Unknown or uninitialised column: `id`.</span>
 
 <span class="fu"><a href="https://rdrr.io/r/base/class.html">class</a></span><span class="op">(</span><span class="va">omop_gr</span><span class="op">)</span>
 <span class="co">#&gt; [1] "omop.graph"</span>
@@ -179,6 +180,7 @@
 <span class="va">cancer_modifier_graph</span> <span class="op">&lt;-</span> 
   <span class="va">cancer_modifier_ne</span> <span class="op">%&gt;%</span> 
   <span class="fu"><a href="reference/construct_graph.html">construct_graph</a></span><span class="op">(</span><span class="op">)</span>
+<span class="co">#&gt; Warning: Unknown or uninitialised column: `id`.</span>
 
 <span class="fu"><a href="reference/chariotViz.html">chariotViz</a></span><span class="op">(</span><span class="va">cancer_modifier_graph</span><span class="op">)</span>
 <span class="co">#&gt;                              ─────────────────────</span>
@@ -191,7 +193,7 @@
 <div id="adding-pizzaz" class="section level2">
 <h2 class="hasAnchor">
 <a href="#adding-pizzaz" class="anchor"></a>Adding Pizzaz</h2>
-<p>The visualization is nice, but it needs a little oomph. A tooltip and visualization attributes can be added to the <code>nodes.and.edges</code> class object prior to graph construction.</p>
+<p>The visualization is nice, but it needs a little oomph. A tooltip and visualization attributes can be added to the <code>nodes.and.edges</code> class object prior to graph construction. (Note that the tooltip is not rendering in this README, but view articles to see examples.)</p>
 <p><img src="reference/figures/README-unnamed-chunk-9-1.png" width="100%"></p>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">cancer_modifier_relationships</span> <span class="op">&lt;-</span> 
@@ -207,6 +209,7 @@
 <span class="va">cancer_modifier_graph</span> <span class="op">&lt;-</span> 
   <span class="va">cancer_modifier_ne</span> <span class="op">%&gt;%</span> 
   <span class="fu"><a href="reference/construct_graph.html">construct_graph</a></span><span class="op">(</span><span class="op">)</span>
+<span class="co">#&gt; Warning: Unknown or uninitialised column: `id`.</span>
 
 <span class="fu"><a href="reference/chariotViz.html">chariotViz</a></span><span class="op">(</span><span class="va">cancer_modifier_graph</span><span class="op">)</span>
 <span class="co">#&gt;                              ─────────────────────</span>
@@ -229,26 +232,73 @@
   <span class="fu"><a href="reference/add_tooltip.html">add_tooltip</a></span><span class="op">(</span><span class="op">)</span> <span class="op">%&gt;%</span> 
   <span class="fu"><a href="reference/map_node_attributes.html">map_node_attributes</a></span><span class="op">(</span><span class="op">)</span> <span class="op">%&gt;%</span> 
   <span class="fu"><a href="reference/map_edge_attributes.html">map_edge_attributes</a></span><span class="op">(</span><span class="op">)</span>
+<span class="co">#&gt; ══ </span>
+<span class="co">#&gt; Node Attributes ════════════════════════════════════════</span>
 <span class="co">#&gt; ℹ Shape from: standard_concept</span>
-<span class="co">#&gt; ✓ All 2 unique values mapped.</span>
+<span class="co">#&gt; ✓ All 2 unique values mapped:</span>
+<span class="co">#&gt;                             ───────────────────────</span>
+<span class="co">#&gt;                               Attribute   Value    </span>
+<span class="co">#&gt;                             ───────────────────────</span>
+<span class="co">#&gt;                               S           circle   </span>
+<span class="co">#&gt;                               NA          circle   </span>
+<span class="co">#&gt;                             ───────────────────────</span>
 <span class="co">#&gt; ℹ Style from: standard_concept</span>
-<span class="co">#&gt; ✓ All 2 unique values mapped.</span>
+<span class="co">#&gt; ✓ All 2 unique values mapped:</span>
+<span class="co">#&gt;                             ───────────────────────</span>
+<span class="co">#&gt;                               Attribute   Value    </span>
+<span class="co">#&gt;                             ───────────────────────</span>
+<span class="co">#&gt;                               S           filled   </span>
+<span class="co">#&gt;                               NA          filled   </span>
+<span class="co">#&gt;                             ───────────────────────</span>
 <span class="co">#&gt; ℹ Color from: standard_concept</span>
-<span class="co">#&gt; ✓ All 2 unique values mapped.</span>
+<span class="co">#&gt; ✓ All 2 unique values mapped:</span>
+<span class="co">#&gt;                             ───────────────────────</span>
+<span class="co">#&gt;                               Attribute   Value    </span>
+<span class="co">#&gt;                             ───────────────────────</span>
+<span class="co">#&gt;                               S           black    </span>
+<span class="co">#&gt;                               NA          white    </span>
+<span class="co">#&gt;                             ───────────────────────</span>
 <span class="co">#&gt; ℹ Fillcolor from: vocabulary_id</span>
 <span class="co">#&gt; ! 3 values not mapped: CIM10, KCD7, and Read. Mapping to `other` value 'gray20'.</span>
 <span class="co">#&gt; ℹ Fontcolor from: standard_concept</span>
-<span class="co">#&gt; ✓ All 2 unique values mapped.</span>
+<span class="co">#&gt; ✓ All 2 unique values mapped:</span>
+<span class="co">#&gt;                             ───────────────────────</span>
+<span class="co">#&gt;                               Attribute   Value    </span>
+<span class="co">#&gt;                             ───────────────────────</span>
+<span class="co">#&gt;                               S           black    </span>
+<span class="co">#&gt;                               NA          gray40   </span>
+<span class="co">#&gt;                             ───────────────────────</span>
 <span class="co">#&gt; ℹ 3 constant attributes added: fontsize, width, and height.</span>
-<span class="co">#&gt; ✓ All 1 unique value mapped.</span>
-<span class="co">#&gt; ✓ All 1 unique value mapped.</span>
-<span class="co">#&gt; ✓ All 1 unique value mapped.</span>
-<span class="co">#&gt; ✓ All 1 unique value mapped.</span>
+<span class="co">#&gt; ✓ All 1 unique value mapped:</span>
+<span class="co">#&gt;                             ───────────────────────</span>
+<span class="co">#&gt;                               Attribute   Value    </span>
+<span class="co">#&gt;                             ───────────────────────</span>
+<span class="co">#&gt;                               0           solid    </span>
+<span class="co">#&gt;                             ───────────────────────</span>
+<span class="co">#&gt; ✓ All 1 unique value mapped:</span>
+<span class="co">#&gt;                             ───────────────────────</span>
+<span class="co">#&gt;                               Attribute   Value    </span>
+<span class="co">#&gt;                             ───────────────────────</span>
+<span class="co">#&gt;                               OMOP        black    </span>
+<span class="co">#&gt;                             ───────────────────────</span>
+<span class="co">#&gt; ✓ All 1 unique value mapped:</span>
+<span class="co">#&gt;                             ───────────────────────</span>
+<span class="co">#&gt;                               Attribute   Value    </span>
+<span class="co">#&gt;                             ───────────────────────</span>
+<span class="co">#&gt;                               0           2        </span>
+<span class="co">#&gt;                             ───────────────────────</span>
+<span class="co">#&gt; ✓ All 1 unique value mapped:</span>
+<span class="co">#&gt;                             ───────────────────────</span>
+<span class="co">#&gt;                               Attribute   Value    </span>
+<span class="co">#&gt;                             ───────────────────────</span>
+<span class="co">#&gt;                               0           vee      </span>
+<span class="co">#&gt;                             ───────────────────────</span>
 <span class="co">#&gt; ℹ 2 constant attributes added: fontsize and len.</span>
 
 <span class="va">cancer_modifier_graph</span> <span class="op">&lt;-</span> 
   <span class="va">cancer_modifier_ne</span> <span class="op">%&gt;%</span> 
   <span class="fu"><a href="reference/construct_graph.html">construct_graph</a></span><span class="op">(</span><span class="op">)</span>
+<span class="co">#&gt; Warning: Unknown or uninitialised column: `id`.</span>
 
 <span class="fu"><a href="reference/chariotViz.html">chariotViz</a></span><span class="op">(</span><span class="va">cancer_modifier_graph</span><span class="op">)</span>
 <span class="co">#&gt;                              ─────────────────────</span>
@@ -289,26 +339,73 @@
   <span class="fu"><a href="reference/add_tooltip.html">add_tooltip</a></span><span class="op">(</span><span class="op">)</span> <span class="op">%&gt;%</span> 
   <span class="fu"><a href="reference/map_node_attributes.html">map_node_attributes</a></span><span class="op">(</span><span class="op">)</span> <span class="op">%&gt;%</span> 
   <span class="fu"><a href="reference/map_edge_attributes.html">map_edge_attributes</a></span><span class="op">(</span><span class="op">)</span>
+<span class="co">#&gt; ══ </span>
+<span class="co">#&gt; Node Attributes ════════════════════════════════════════</span>
 <span class="co">#&gt; ℹ Shape from: standard_concept</span>
-<span class="co">#&gt; ✓ All 2 unique values mapped.</span>
+<span class="co">#&gt; ✓ All 2 unique values mapped:</span>
+<span class="co">#&gt;                             ───────────────────────</span>
+<span class="co">#&gt;                               Attribute   Value    </span>
+<span class="co">#&gt;                             ───────────────────────</span>
+<span class="co">#&gt;                               S           circle   </span>
+<span class="co">#&gt;                               NA          circle   </span>
+<span class="co">#&gt;                             ───────────────────────</span>
 <span class="co">#&gt; ℹ Style from: standard_concept</span>
-<span class="co">#&gt; ✓ All 2 unique values mapped.</span>
+<span class="co">#&gt; ✓ All 2 unique values mapped:</span>
+<span class="co">#&gt;                             ───────────────────────</span>
+<span class="co">#&gt;                               Attribute   Value    </span>
+<span class="co">#&gt;                             ───────────────────────</span>
+<span class="co">#&gt;                               S           filled   </span>
+<span class="co">#&gt;                               NA          filled   </span>
+<span class="co">#&gt;                             ───────────────────────</span>
 <span class="co">#&gt; ℹ Color from: standard_concept</span>
-<span class="co">#&gt; ✓ All 2 unique values mapped.</span>
+<span class="co">#&gt; ✓ All 2 unique values mapped:</span>
+<span class="co">#&gt;                             ───────────────────────</span>
+<span class="co">#&gt;                               Attribute   Value    </span>
+<span class="co">#&gt;                             ───────────────────────</span>
+<span class="co">#&gt;                               S           black    </span>
+<span class="co">#&gt;                               NA          white    </span>
+<span class="co">#&gt;                             ───────────────────────</span>
 <span class="co">#&gt; ℹ Fillcolor from: vocabulary_id</span>
 <span class="co">#&gt; ! 3 values not mapped: CIM10, KCD7, and Read. Mapping to `other` value 'gray20'.</span>
 <span class="co">#&gt; ℹ Fontcolor from: standard_concept</span>
-<span class="co">#&gt; ✓ All 2 unique values mapped.</span>
+<span class="co">#&gt; ✓ All 2 unique values mapped:</span>
+<span class="co">#&gt;                             ───────────────────────</span>
+<span class="co">#&gt;                               Attribute   Value    </span>
+<span class="co">#&gt;                             ───────────────────────</span>
+<span class="co">#&gt;                               S           black    </span>
+<span class="co">#&gt;                               NA          gray40   </span>
+<span class="co">#&gt;                             ───────────────────────</span>
 <span class="co">#&gt; ℹ 3 constant attributes added: fontsize, width, and height.</span>
-<span class="co">#&gt; ✓ All 1 unique value mapped.</span>
-<span class="co">#&gt; ✓ All 1 unique value mapped.</span>
-<span class="co">#&gt; ✓ All 1 unique value mapped.</span>
-<span class="co">#&gt; ✓ All 1 unique value mapped.</span>
+<span class="co">#&gt; ✓ All 1 unique value mapped:</span>
+<span class="co">#&gt;                             ───────────────────────</span>
+<span class="co">#&gt;                               Attribute   Value    </span>
+<span class="co">#&gt;                             ───────────────────────</span>
+<span class="co">#&gt;                               0           solid    </span>
+<span class="co">#&gt;                             ───────────────────────</span>
+<span class="co">#&gt; ✓ All 1 unique value mapped:</span>
+<span class="co">#&gt;                             ───────────────────────</span>
+<span class="co">#&gt;                               Attribute   Value    </span>
+<span class="co">#&gt;                             ───────────────────────</span>
+<span class="co">#&gt;                               OMOP        black    </span>
+<span class="co">#&gt;                             ───────────────────────</span>
+<span class="co">#&gt; ✓ All 1 unique value mapped:</span>
+<span class="co">#&gt;                             ───────────────────────</span>
+<span class="co">#&gt;                               Attribute   Value    </span>
+<span class="co">#&gt;                             ───────────────────────</span>
+<span class="co">#&gt;                               0           2        </span>
+<span class="co">#&gt;                             ───────────────────────</span>
+<span class="co">#&gt; ✓ All 1 unique value mapped:</span>
+<span class="co">#&gt;                             ───────────────────────</span>
+<span class="co">#&gt;                               Attribute   Value    </span>
+<span class="co">#&gt;                             ───────────────────────</span>
+<span class="co">#&gt;                               0           vee      </span>
+<span class="co">#&gt;                             ───────────────────────</span>
 <span class="co">#&gt; ℹ 2 constant attributes added: fontsize and len.</span>
 
 <span class="va">cancer_modifier_graph</span> <span class="op">&lt;-</span> 
   <span class="va">cancer_modifier_ne</span> <span class="op">%&gt;%</span> 
   <span class="fu"><a href="reference/construct_graph.html">construct_graph</a></span><span class="op">(</span>attr_theme <span class="op">=</span> <span class="st">"tb"</span><span class="op">)</span>
+<span class="co">#&gt; Warning: Unknown or uninitialised column: `id`.</span>
 
 <span class="fu"><a href="reference/chariotViz.html">chariotViz</a></span><span class="op">(</span><span class="va">cancer_modifier_graph</span>,
            width <span class="op">=</span> <span class="fl">2500</span>,
@@ -336,27 +433,78 @@
   <span class="fu"><a href="reference/add_tooltip.html">add_tooltip</a></span><span class="op">(</span><span class="op">)</span> <span class="op">%&gt;%</span> 
   <span class="fu"><a href="reference/map_node_attributes.html">map_node_attributes</a></span><span class="op">(</span><span class="op">)</span> <span class="op">%&gt;%</span> 
   <span class="fu"><a href="reference/map_edge_attributes.html">map_edge_attributes</a></span><span class="op">(</span><span class="op">)</span>
+<span class="co">#&gt; ══ </span>
+<span class="co">#&gt; Node Attributes ════════════════════════════════════════</span>
 <span class="co">#&gt; ℹ Shape from: standard_concept</span>
-<span class="co">#&gt; ✓ All 2 unique values mapped.</span>
+<span class="co">#&gt; ✓ All 2 unique values mapped:</span>
+<span class="co">#&gt;                             ───────────────────────</span>
+<span class="co">#&gt;                               Attribute   Value    </span>
+<span class="co">#&gt;                             ───────────────────────</span>
+<span class="co">#&gt;                               S           circle   </span>
+<span class="co">#&gt;                               NA          circle   </span>
+<span class="co">#&gt;                             ───────────────────────</span>
 <span class="co">#&gt; ℹ Style from: standard_concept</span>
-<span class="co">#&gt; ✓ All 2 unique values mapped.</span>
+<span class="co">#&gt; ✓ All 2 unique values mapped:</span>
+<span class="co">#&gt;                             ───────────────────────</span>
+<span class="co">#&gt;                               Attribute   Value    </span>
+<span class="co">#&gt;                             ───────────────────────</span>
+<span class="co">#&gt;                               S           filled   </span>
+<span class="co">#&gt;                               NA          filled   </span>
+<span class="co">#&gt;                             ───────────────────────</span>
 <span class="co">#&gt; ℹ Color from: standard_concept</span>
-<span class="co">#&gt; ✓ All 2 unique values mapped.</span>
+<span class="co">#&gt; ✓ All 2 unique values mapped:</span>
+<span class="co">#&gt;                             ───────────────────────</span>
+<span class="co">#&gt;                               Attribute   Value    </span>
+<span class="co">#&gt;                             ───────────────────────</span>
+<span class="co">#&gt;                               S           black    </span>
+<span class="co">#&gt;                               NA          white    </span>
+<span class="co">#&gt;                             ───────────────────────</span>
 <span class="co">#&gt; ℹ Fillcolor from: vocabulary_id</span>
 <span class="co">#&gt; ! 3 values not mapped: CIM10, KCD7, and Read. Mapping to `other` value 'gray20'.</span>
 <span class="co">#&gt; ℹ Fontcolor from: standard_concept</span>
-<span class="co">#&gt; ✓ All 2 unique values mapped.</span>
+<span class="co">#&gt; ✓ All 2 unique values mapped:</span>
+<span class="co">#&gt;                             ───────────────────────</span>
+<span class="co">#&gt;                               Attribute   Value    </span>
+<span class="co">#&gt;                             ───────────────────────</span>
+<span class="co">#&gt;                               S           black    </span>
+<span class="co">#&gt;                               NA          gray40   </span>
+<span class="co">#&gt;                             ───────────────────────</span>
 <span class="co">#&gt; ℹ 3 constant attributes added: fontsize, width, and height.</span>
-<span class="co">#&gt; ✓ All 1 unique value mapped.</span>
-<span class="co">#&gt; ✓ All 1 unique value mapped.</span>
-<span class="co">#&gt; ✓ All 1 unique value mapped.</span>
-<span class="co">#&gt; ✓ All 1 unique value mapped.</span>
+<span class="co">#&gt; ✓ All 1 unique value mapped:</span>
+<span class="co">#&gt;                             ───────────────────────</span>
+<span class="co">#&gt;                               Attribute   Value    </span>
+<span class="co">#&gt;                             ───────────────────────</span>
+<span class="co">#&gt;                               0           solid    </span>
+<span class="co">#&gt;                             ───────────────────────</span>
+<span class="co">#&gt; ✓ All 1 unique value mapped:</span>
+<span class="co">#&gt;                             ───────────────────────</span>
+<span class="co">#&gt;                               Attribute   Value    </span>
+<span class="co">#&gt;                             ───────────────────────</span>
+<span class="co">#&gt;                               OMOP        black    </span>
+<span class="co">#&gt;                             ───────────────────────</span>
+<span class="co">#&gt; ✓ All 1 unique value mapped:</span>
+<span class="co">#&gt;                             ───────────────────────</span>
+<span class="co">#&gt;                               Attribute   Value    </span>
+<span class="co">#&gt;                             ───────────────────────</span>
+<span class="co">#&gt;                               0           2        </span>
+<span class="co">#&gt;                             ───────────────────────</span>
+<span class="co">#&gt; ✓ All 1 unique value mapped:</span>
+<span class="co">#&gt;                             ───────────────────────</span>
+<span class="co">#&gt;                               Attribute   Value    </span>
+<span class="co">#&gt;                             ───────────────────────</span>
+<span class="co">#&gt;                               0           vee      </span>
+<span class="co">#&gt;                             ───────────────────────</span>
 <span class="co">#&gt; ℹ 2 constant attributes added: fontsize and len.</span>
 
 <span class="va">cancer_modifier_graph</span> <span class="op">&lt;-</span> 
   <span class="va">cancer_modifier_ne</span> <span class="op">%&gt;%</span> 
   <span class="fu"><a href="reference/construct_graph.html">construct_graph</a></span><span class="op">(</span><span class="op">)</span> <span class="op">%&gt;%</span> 
   <span class="fu"><a href="reference/append_concept_examples.html">append_concept_examples</a></span><span class="op">(</span>sample_size <span class="op">=</span> <span class="fl">3</span><span class="op">)</span>
+<span class="co">#&gt; Warning: Unknown or uninitialised column: `id`.</span>
+
+<span class="co">#&gt; Warning: Unknown or uninitialised column: `id`.</span>
+
+<span class="co">#&gt; Warning: Unknown or uninitialised column: `id`.</span>
 
 <span class="fu"><a href="reference/chariotViz.html">chariotViz</a></span><span class="op">(</span><span class="va">cancer_modifier_graph</span><span class="op">)</span>
 <span class="co">#&gt;                              ─────────────────────</span>

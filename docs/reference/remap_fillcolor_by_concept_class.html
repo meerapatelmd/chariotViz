@@ -147,7 +147,7 @@ FUNCTION_DESCRIPTION" />
     <pre class="usage"><span class='fu'>remap_fillcolor_by_concept_class</span><span class='op'>(</span>
   <span class='va'>omop_graph</span>,
   fillcolor_from <span class='op'>=</span> <span class='va'>concept_class_id</span>,
-  fillcolor_map <span class='op'>=</span> <span class='va'>node_color_map</span><span class='op'>@</span><span class='va'>concept_class_id</span> <span class='op'>%&gt;%</span> <span class='fu'>purrr</span><span class='fu'>::</span><span class='fu'><a href='https://purrr.tidyverse.org/reference/set_names.html'>set_names</a></span><span class='op'>(</span><span class='cn'>NULL</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
+  fillcolor_map <span class='op'>=</span> <span class='va'>node_color_map</span><span class='op'>$</span><span class='va'>concept_class_id</span> <span class='op'>%&gt;%</span> <span class='fu'>purrr</span><span class='fu'>::</span><span class='fu'><a href='https://purrr.tidyverse.org/reference/set_names.html'>set_names</a></span><span class='op'>(</span><span class='cn'>NULL</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
     <span class='fu'><a href='https://rdrr.io/r/base/unlist.html'>unlist</a></span><span class='op'>(</span><span class='op'>)</span>,
   fillcolor_map_other <span class='op'>=</span> <span class='st'>"gray20"</span>
 <span class='op'>)</span>
@@ -155,7 +155,7 @@ FUNCTION_DESCRIPTION" />
 <span class='fu'>remap_fillcolor_by_invalid_reason</span><span class='op'>(</span>
   <span class='va'>complete_omop_graph</span>,
   fillcolor_from <span class='op'>=</span> <span class='va'>invalid_reason</span>,
-  fillcolor_map <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/unlist.html'>unlist</a></span><span class='op'>(</span><span class='va'>node_color_map</span><span class='op'>@</span><span class='va'>invalid_reason</span><span class='op'>)</span>,
+  fillcolor_map <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/unlist.html'>unlist</a></span><span class='op'>(</span><span class='va'>node_color_map</span><span class='op'>$</span><span class='va'>invalid_reason</span><span class='op'>)</span>,
   fillcolor_map_other <span class='op'>=</span> <span class='st'>"gray20"</span>
 <span class='op'>)</span></pre>
 
