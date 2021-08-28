@@ -14,14 +14,22 @@ LazyData: true
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.1.1
 Imports:
-    chariot,
-    glue,
-    cli,
+    cli,                                                                                                                                        
     dplyr,
+    ggplot2,
+    glue,
+    huxtable,
+    pg13,
+    purrr,
     tidyr,
-    magrittr,
     DiagrammeR,
-    rlang
+    R.cache,
+    easyBakeOven,
+    forcats,
+    magrittr,
+    rlang,
+    stringr,
+    tibble
 Remotes:
   meerapatelmd/chariot,
   rich-iannone/DiagrammeR,
