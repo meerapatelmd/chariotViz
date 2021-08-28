@@ -57,10 +57,10 @@
       <a href="../articles/getting-started.html">Getting Started: HemOnc Example</a>
     </li>
     <li>
-      <a href="../articles/genomic-domain.html">Genomic Domain</a>
+      <a href="../articles/traverse-domains.html">Domain Traversal</a>
     </li>
     <li>
-      <a href="../articles/rxnorm-and-rxnorm-extension.html">RxNorm and RxNorm Extension</a>
+      <a href="../articles/genomic-domain.html">Genomic Domain</a>
     </li>
     <li class="dropdown-header">Invalid to Valid RxNorm Concept Mappings</li>
     <li>
@@ -104,7 +104,7 @@
 
     
     
-<p><strong>Last Update On</strong>: 2021-08-28 11:35:18</p>
+<p><strong>Last Update On</strong>: 2021-08-28 11:41:03</p>
 <table class="table  lightable-minimal"><tbody>
 <tr>
 <td style="text-align:left;">
@@ -139,17 +139,18 @@ NA
 <code class="sourceCode R"><span class="va">omop_relationships</span> <span class="op">&lt;-</span> 
   <span class="fu"><a href="../reference/fetch_omop_relationships.html">fetch_omop_relationships</a></span><span class="op">(</span>version_key <span class="op">=</span> <span class="fu"><a href="../reference/get_version_key.html">get_version_key</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span>
 <span class="co">#&gt; ℹ Getting total concept class counts</span>
-<span class="co">#&gt; ✓ Getting total concept class counts [542ms]</span>
+<span class="co">#&gt; ✓ Getting total concept class counts [531ms]</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; ℹ Getting total vocabulary counts</span>
-<span class="co">#&gt; ✓ Getting total vocabulary counts [551ms]</span>
+<span class="co">#&gt; ✓ Getting total vocabulary counts [542ms]</span>
 <span class="co">#&gt; </span>
-<span class="co">#&gt; Querying CMS Place of Service Relationships | ■■■■■■■■■■                       …</span>
-<span class="co">#&gt; Querying KCD7 Relationships | ■■■■■■■■■■■■■■■■■■■■■■■■         89/117  76% (5.1…</span>
+<span class="co">#&gt; Querying UB04 Pt dis status Relationships | ■■■■■■■■■■                       34…</span>
+<span class="co">#&gt; Querying CIM10 Relationships | ■■■■■■■■■■■■■■■■■■■■■            79/117  68% (4.…</span>
 <span class="co">#&gt; Querying RxNorm Extension Relationships | ■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■  117/…</span>
 <span class="co">#&gt; </span>
-<span class="co">#&gt; Calculating CMS Place of Service Concept Class Counts | ■■■■■■■■■■             …</span>
-<span class="co">#&gt; Calculating HCPCS Concept Class Counts | ■■■■■■■■■■■■■■■■■■■■             76/11…</span>
+<span class="co">#&gt; Calculating Domain Concept Class Counts | ■■■■■■■■■                        33/1…</span>
+<span class="co">#&gt; Calculating NCIt Concept Class Counts | ■■■■■■■■■■■■■■■■■                63/117…</span>
+<span class="co">#&gt; Calculating SNOMED Concept Class Counts | ■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■  116/…</span>
 <span class="co">#&gt; Calculating RxNorm Extension Concept Class Counts | ■■■■■■■■■■■■■■■■■■■■■■■■■■■…</span>
 <span class="co">#&gt; </span>
 <span class="va">omop_relationships</span>
