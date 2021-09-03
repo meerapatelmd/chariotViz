@@ -12,7 +12,7 @@
 create_legend <-
   function(graph) {
 
-    .Deprecated("include_legend")
+    .Deprecated("construct_node_legend")
 
     color_cols <-
       c("color",
