@@ -1,3 +1,5 @@
+# chariotViz 0.1.0
+
 # chariotViz 0.0.2.9000   
 
 ## New Documentation  
