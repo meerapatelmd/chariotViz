@@ -1,4 +1,7 @@
-# chariotViz (development version)
+# chariotViz (development version)  
+
+* Revert Reference Classes to S3 Classes  
+
 
 # chariotViz 0.1.0
 
